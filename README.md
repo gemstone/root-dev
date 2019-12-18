@@ -1,13 +1,16 @@
 <img align="right" src="img/gemstone-wide-600.png" alt="gemstone logo">
+<br/><br/><br/>
 
 # root-dev
+
+
 ### GPA Gemstone Root Development Solution
 
 This repository contains a multi-project solution used for development and debugging of related Gemstone libraries.
 
 #### Project References
 
-The [Gemstone Solution](blob/master/gemstone.sln) references all Gemstone library packages using a build configuration called `Development` .
+The [Gemstone Solution](gemstone.sln) references all Gemstone library packages using a build configuration called `Development` .
 
 The `Development` build configuration is then used to associate "project" references instead of "package" references when using this solution, e.g.:
 
