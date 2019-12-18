@@ -15,6 +15,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gemstone.pqdif", "..\pqdif\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gemstone.gemtem", "..\gemtem\src\gemstone.gemtem\gemstone.gemtem.csproj", "{B3864E55-6B66-4A0B-BAFC-98EE95D3CC01}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Development|Any CPU = Development|Any CPU
