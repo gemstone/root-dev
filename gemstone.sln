@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gemstone.threading", "..\th
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gemstone.expressions", "..\expressions\src\gemstone.expressions\gemstone.expressions.csproj", "{342E81B2-4952-4951-AC90-FD194C9F7956}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gemstone.data", "..\data\src\gemstone.data\gemstone.data.csproj", "{2B0936A3-5705-4070-AC4E-4DDA579B66A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gemstone.numeric", "..\numeric\src\gemstone.numeric\gemstone.numeric.csproj", "{15D46C55-39CA-41FB-A675-95FCDBCED250}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gemstone.data", "..\data\src\gemstone.data\gemstone.data.csproj", "{2F6A4614-9AA4-4566-B61B-16B81A5F1C9E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gemstone.pqdif", "..\pqdif\src\gemstone.pqdif\gemstone.pqdif.csproj", "{E2A89CD8-ECA4-4EE2-845A-7D1B982E5220}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gemstone.gemtem", "..\gemtem\src\gemstone.gemtem\gemstone.gemtem.csproj", "{B3864E55-6B66-4A0B-BAFC-98EE95D3CC01}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}"
 	ProjectSection(SolutionItems) = preProject
@@ -26,18 +26,18 @@ Global
 		Development|Any CPU = Development|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Development|Any CPU.ActiveCfg = Debug|Any CPU
-		{721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Development|Any CPU.Build.0 = Debug|Any CPU
-		{2C72030A-78D0-4E09-9746-33AE9305C49D}.Development|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C72030A-78D0-4E09-9746-33AE9305C49D}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Development|Any CPU.Build.0 = Development|Any CPU
+		{2C72030A-78D0-4E09-9746-33AE9305C49D}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{2C72030A-78D0-4E09-9746-33AE9305C49D}.Development|Any CPU.Build.0 = Development|Any CPU
 		{342E81B2-4952-4951-AC90-FD194C9F7956}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{342E81B2-4952-4951-AC90-FD194C9F7956}.Development|Any CPU.Build.0 = Development|Any CPU
-		{2B0936A3-5705-4070-AC4E-4DDA579B66A5}.Development|Any CPU.ActiveCfg = Development|Any CPU
-		{2B0936A3-5705-4070-AC4E-4DDA579B66A5}.Development|Any CPU.Build.0 = Development|Any CPU
-		{E2A89CD8-ECA4-4EE2-845A-7D1B982E5220}.Development|Any CPU.ActiveCfg = Debug|Any CPU
-		{E2A89CD8-ECA4-4EE2-845A-7D1B982E5220}.Development|Any CPU.Build.0 = Debug|Any CPU
-		{B3864E55-6B66-4A0B-BAFC-98EE95D3CC01}.Development|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3864E55-6B66-4A0B-BAFC-98EE95D3CC01}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{15D46C55-39CA-41FB-A675-95FCDBCED250}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{15D46C55-39CA-41FB-A675-95FCDBCED250}.Development|Any CPU.Build.0 = Development|Any CPU
+		{2F6A4614-9AA4-4566-B61B-16B81A5F1C9E}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{2F6A4614-9AA4-4566-B61B-16B81A5F1C9E}.Development|Any CPU.Build.0 = Development|Any CPU
+		{E2A89CD8-ECA4-4EE2-845A-7D1B982E5220}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{E2A89CD8-ECA4-4EE2-845A-7D1B982E5220}.Development|Any CPU.Build.0 = Development|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
