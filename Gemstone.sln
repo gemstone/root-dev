@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gemstone.common", "..\common\src\gemstone\gemstone.common.csproj", "{721D3830-2CD7-45DE-A288-4FAF1D53CEC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Common", "..\common\src\Gemstone\Gemstone.Common.csproj", "{721D3830-2CD7-45DE-A288-4FAF1D53CEC6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gemstone.threading", "..\threading\src\gemstone.threading\gemstone.threading.csproj", "{2C72030A-78D0-4E09-9746-33AE9305C49D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Threading", "..\threading\src\Gemstone.Threading\Gemstone.Threading.csproj", "{2C72030A-78D0-4E09-9746-33AE9305C49D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gemstone.expressions", "..\expressions\src\gemstone.expressions\gemstone.expressions.csproj", "{342E81B2-4952-4951-AC90-FD194C9F7956}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Expressions", "..\expressions\src\Gemstone.Expressions\Gemstone.Expressions.csproj", "{342E81B2-4952-4951-AC90-FD194C9F7956}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gemstone.numeric", "..\numeric\src\gemstone.numeric\gemstone.numeric.csproj", "{15D46C55-39CA-41FB-A675-95FCDBCED250}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Numeric", "..\numeric\src\Gemstone.Numeric\Gemstone.Numeric.csproj", "{15D46C55-39CA-41FB-A675-95FCDBCED250}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gemstone.data", "..\data\src\gemstone.data\gemstone.data.csproj", "{2F6A4614-9AA4-4566-B61B-16B81A5F1C9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Data", "..\data\src\Gemstone.Data\Gemstone.Data.csproj", "{2F6A4614-9AA4-4566-B61B-16B81A5F1C9E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gemstone.io", "..\io\src\gemstone.io\gemstone.io.csproj", "{AAAE4D5E-6297-4ED5-91A3-E2B46D8DD2FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.IO", "..\io\src\Gemstone.IO\Gemstone.IO.csproj", "{AAAE4D5E-6297-4ED5-91A3-E2B46D8DD2FC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gemstone.pqdif", "..\pqdif\src\gemstone.pqdif\gemstone.pqdif.csproj", "{E2A89CD8-ECA4-4EE2-845A-7D1B982E5220}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.PQDIF", "..\pqdif\src\Gemstone.PQDIF\Gemstone.PQDIF.csproj", "{E2A89CD8-ECA4-4EE2-845A-7D1B982E5220}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}"
 	ProjectSection(SolutionItems) = preProject
