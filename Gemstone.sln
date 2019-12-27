@@ -26,6 +26,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "..\expressions\src\UnitTests\UnitTests.csproj", "{724EE79F-5633-4BF1-B0B2-ED67CE17FD87}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{71EF20E2-0D01-4ED4-B0F9-764732ED4106}"
+	ProjectSection(SolutionItems) = preProject
+		..\common\src\UnitTests\UnitTests.csproj = ..\common\src\UnitTests\UnitTests.csproj
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{2A350112-47E5-446A-A286-A9053A473029}"
 EndProject
