@@ -11,6 +11,8 @@ exit /B
 
 :$GitPull
 
+echo.
+echo Executing git pull for %1...
 cd %1
 git pull
 cd ..
