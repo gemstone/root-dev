@@ -18,11 +18,11 @@ The [gemstone.sln](gemstone.sln) uses a single build configuration called `Devel
 
 ```
 <ItemGroup>
-  <ProjectReference Include="..\..\..\common\src\gemstone\gemstone.common.csproj" Condition="'$(Configuration)'=='Development'" />
-  <PackageReference Include="gemstone.common" Version="1.0.0" Condition="'$(Configuration)'!='Development'" />
+  <ProjectReference Include="..\..\..\common\src\Gemstone\Gemstone.Common.csproj" Condition="'$(Configuration)'=='Development'" />
+  <PackageReference Include="Gemstone.Common" Version="1.0.0" Condition="'$(Configuration)'!='Development'" />
 
-  <ProjectReference Include="..\..\..\expressions\src\gemstone.expressions\gemstone.expressions.csproj" Condition="'$(Configuration)'=='Development'" />
-  <PackageReference Include="gemstone.expressions" Version="1.0.0" Condition="'$(Configuration)'!='Development'" />
+  <ProjectReference Include="..\..\..\expressions\src\Gemstone.Expressions\Gemstone.Expressions.csproj" Condition="'$(Configuration)'=='Development'" />
+  <PackageReference Include="Gemstone.Expressions" Version="1.0.0" Condition="'$(Configuration)'!='Development'" />
 </ItemGroup>
 ```
 
@@ -30,4 +30,4 @@ In this example, dependencies are configured as local project references only fo
 
 #### Managing git for Multiple Repositories
 
-When developing using the [gemstone.sln](gemstone.sln) be mindful that only one GitHub repository can be active at once from within Visual Studio. To check-in changes to a particular repo, click the :electric_plug: icon for "Manage Connections" on the "Team Explorer" window. When the "Manage Connections" panel is opened, navigate to the "Local Git Repositories" list visible at the bottom of the panel, then right-click on desired repo and select "Open". The selected repo will now be active &mdash; proceed as normal for GitHub operations on that project repository.
+When developing using the [gemstone.sln](gemstone.sln) be mindful that only one GitHub repository can be active at once from within Visual Studio, because of this command line check-ins may be simpler. To check-in changes to a particular repo from within Visual Studio, click the :electric_plug: icon for "Manage Connections" on the "Team Explorer" window. When the "Manage Connections" panel is opened, navigate to the "Local Git Repositories" list visible at the bottom of the panel, then right-click on desired repo and select "Open". The selected repo will now be active &mdash; proceed as normal for GitHub operations on that project repository.
