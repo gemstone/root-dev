@@ -8,9 +8,17 @@
 
 This repository contains a multi-project Visual Studio solution used for development and debugging of related Gemstone libraries.
 
+#### Getting Started
+
+To begin development on Gemstone libraries, clone [this](https://github.com/gemstone/root-dev.git) repository first - it is recommended to put all the Gemstone library repositories into their own folder (see [Relative Project Paths](#relative-project-paths) below). For example, if a folder was created called `C:\Projects\gemstone\` to hold the Gemstone repositories, then after cloning, this repo would be in `C:\Projects\gemstone\root-dev`. After cloning, run the [clone-all.cmd](clone-all.cmd) script to clone all other repositories.
+
+Two other scripts, [pull-all.cmd](pull-all.cmd) and [push-all.cmd](push-all.cmd) exist to assist with multi-project git repository operations.
+
+To better ensure acceptance of pull requests, be sure to read the [coding style](https://gemstone.github.io/common/coding-style) document.
+
 #### Relative Project Paths
 
-The Visual Studio solution file [Gemstone.sln](Gemstone.sln) found in this respostitory references all Gemstone library projects with a common relative parent path. For example, assuming all cloned repositories (including this one) for the [gemstone](https://github.com/gemstone) organizational site have the same root folder, e.g., `C:\Projects\gemstone\` and each project folder matches the repo name, e.g., `C:\Projects\gemstone\threading\` for the [threading](https://github.com/gemstone/threading) library, then opening the `C:\Projects\gemstone\root-dev\Gemstone.sln` from within Visual Studio will properly open and cross-reference all gemstone libraries.
+The Visual Studio solution file [Gemstone.sln](Gemstone.sln) found in this repository references all Gemstone library projects with a common relative parent path. For example, assuming all cloned repositories (including this one) for the [gemstone](https://github.com/gemstone) organizational site have the same root folder, e.g., `C:\Projects\gemstone\` and each project folder matches the repo name, e.g., `C:\Projects\gemstone\threading\` for the [threading](https://github.com/gemstone/threading) library, then opening the `C:\Projects\gemstone\root-dev\Gemstone.sln` from within Visual Studio will properly open and cross-reference all gemstone libraries.
 
 #### Local Project References
 
