@@ -1,12 +1,10 @@
 @echo off
+
+SetLocal
+SET clonefile=%TEMP%\clonefile.bat
+COPY /Y clone-commands.txt %clonefile% > NUL
+
 cd ..
-git clone https://github.com/gemstone/shared-content.git
-git clone https://github.com/gemstone/gemtem.git
-git clone https://github.com/gemstone/common.git
-git clone https://github.com/gemstone/numeric.git
-git clone https://github.com/gemstone/threading.git
-git clone https://github.com/gemstone/io.git
-git clone https://github.com/gemstone/expressions.git
-git clone https://github.com/gemstone/data.git
-git clone https://github.com/gemstone/pqdif.git
+CALL %clonefile%
+DEL %clonefile%
 cd root-dev
