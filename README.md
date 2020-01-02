@@ -10,9 +10,9 @@ This repository contains a multi-project Visual Studio solution used for develop
 
 #### Getting Started
 
-To begin development on Gemstone libraries, clone [this](https://github.com/gemstone/root-dev.git) repository first - it is recommended to put all the Gemstone library repositories into their own folder (see [Relative Project Paths](#relative-project-paths) below). For example, if a folder was created called `C:\Projects\gemstone\` to hold the Gemstone repositories, then after cloning, this repo would be in `C:\Projects\gemstone\root-dev`. After cloning, run the [clone-all.cmd](clone-all.cmd) script to clone all other repositories.
+To begin development on Gemstone libraries, clone [this](https://github.com/gemstone/root-dev.git) repository first - it is recommended to put all the Gemstone library repositories into their own folder (see [Relative Project Paths](#relative-project-paths) below). For example, if a folder was created called `C:\Projects\gemstone\` to hold the Gemstone repositories, then after cloning, this repo would be in `C:\Projects\gemstone\root-dev`. After cloning, run the [clone-all.cmd](clone-all.cmd) (or [clone-all.sh](clone-all.sh) in POSIX environments) script to clone all other repositories.
 
-Two other scripts, [pull-all.cmd](pull-all.cmd) and [push-all.cmd](push-all.cmd) exist to assist with multi-project git repository operations.
+Two other scripts, [pull-all.cmd](pull-all.cmd) and [push-all.cmd](push-all.cmd) (or [pull-all.sh](pull-all.sh) and [push-all.sh](push-all.sh) in POSIX environments) exist to assist with multi-project git repository operations.
 
 To better ensure acceptance of pull requests, be sure to read the [coding style](https://gemstone.github.io/common/coding-style) document.
 
