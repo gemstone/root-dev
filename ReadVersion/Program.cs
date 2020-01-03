@@ -32,6 +32,8 @@ namespace ReadVersion
 {
     public class Program
     {
+        private static readonly string[] ARGS = { "ProjectFileOrPath" };
+        private static readonly string[] EXAMPLES = { @"""D:\Projects\gemstone\io\src\Gemstone.IO"""  };
         private const int EXIT_SUCCESS = 0;
         private const int EXIT_BAD_ARGS = 0xA0;
         private const int EXIT_BAD_FILENAME = 0xA1;
@@ -43,8 +45,9 @@ namespace ReadVersion
         {
             try
             {
-                if (args.Length != 1)
+                if (args.Length != ARGS.Length)
                 {
+                    Console.Error.WriteLine($"ERROR: Invalid number of command line arguments specified. Received {args.Length}, expected {ARGS.Length}.{NewLine}");
                     ShowUsage();
                     return EXIT_BAD_ARGS;
                 }
@@ -102,7 +105,12 @@ namespace ReadVersion
 
         private static void ShowUsage()
         {
-            Console.Error.WriteLine($"USAGE:{NewLine}{NewLine}    {Assembly.GetExecutingAssembly().GetName().Name} ProjectFileOrPath{NewLine}");
+            string assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
+
+            Console.Error.WriteLine($"USAGE:{NewLine}");
+            Console.Error.WriteLine($"    {assemblyName} {string.Join(' ', ARGS)}{NewLine}");
+            Console.Error.WriteLine($"EXAMPLE:{NewLine}");
+            Console.Error.WriteLine($"    {assemblyName} {string.Join(' ', EXAMPLES)}{NewLine}");
         }
     }
 }
