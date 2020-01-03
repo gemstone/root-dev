@@ -53,11 +53,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.PQDIF.UnitTests", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{19750400-E086-4B67-8A93-5BD7FB1A4B3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadVersion", "ReadVersion\ReadVersion.csproj", "{A37248E8-E8DE-437C-9C81-DBDF40B3880D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadVersion", "ReadVersion\ReadVersion.csproj", "{A37248E8-E8DE-437C-9C81-DBDF40B3880D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateVersion", "UpdateVersion\UpdateVersion.csproj", "{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdateVersion", "UpdateVersion\UpdateVersion.csproj", "{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VersionCommon", "VersionCommon\VersionCommon.shproj", "{BF383459-A583-456B-A4CF-1001954DD9D2}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		VersionCommon\VersionCommon.projitems*{bf383459-a583-456b-a4cf-1001954dd9d2}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Development|Any CPU = Development|Any CPU
 	EndGlobalSection
@@ -116,6 +121,7 @@ Global
 		{19750400-E086-4B67-8A93-5BD7FB1A4B3C} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
 		{A37248E8-E8DE-437C-9C81-DBDF40B3880D} = {19750400-E086-4B67-8A93-5BD7FB1A4B3C}
 		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA} = {19750400-E086-4B67-8A93-5BD7FB1A4B3C}
+		{BF383459-A583-456B-A4CF-1001954DD9D2} = {19750400-E086-4B67-8A93-5BD7FB1A4B3C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7EDA96F-4985-48C5-80B2-764F45AA8EA5}

@@ -2,7 +2,7 @@
   "profiles": {
     "ReadVersion": {
       "commandName": "Project",
-      "commandLineArgs": "D:\\Projects\\gemstone\\io\\src\\Gemstone.IO"
+      "commandLineArgs": "D:\\Projects\\gemstone\\common"
     }
   }
 }

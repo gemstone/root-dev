@@ -22,96 +22,44 @@
 //******************************************************************************************************
 
 using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Xml;
-using static System.Environment;
+using static VersionCommon.ConsoleHelpers;
 
 namespace ReadVersion
 {
     public class Program
     {
-        private static readonly string[] ARGS = { "ProjectFileOrPath" };
-        private static readonly string[] EXAMPLES = { @"""D:\Projects\gemstone\io\src\Gemstone.IO"""  };
-        private const int EXIT_SUCCESS = 0;
-        private const int EXIT_BAD_ARGS = 0xA0;
-        private const int EXIT_BAD_FILENAME = 0xA1;
-        private const int EXIT_BAD_PATH = 0xA2;
-        private const int EXIT_NO_VERSION = 0xA3;
-        private const int EXIT_EXCEPTION = 0xFF;
-        
         public static int Main(string[] args)
         {
+            ArgNames = new[] { "ProjectFileOrPath" };
+            ArgExamples = new[] { @"""D:\Projects\gemstone\io""" };
+
             try
             {
-                if (args.Length != ARGS.Length)
-                {
-                    Console.Error.WriteLine($"ERROR: Invalid number of command line arguments specified. Received {args.Length}, expected {ARGS.Length}.{NewLine}");
-                    ShowUsage();
-                    return EXIT_BAD_ARGS;
-                }
+                if (!ValidateArgs(args))
+                    return ExitBadArgs;
 
                 string projectFilePath = args[0].Trim();
-
-                // See if a folder name was provided instead of an actual project file name
-                if (!File.Exists(projectFilePath))
-                {
-                    if (projectFilePath.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase) || !Directory.Exists(projectFilePath))
-                    {
-                        Console.Error.WriteLine($"ERROR: Bad project name or path specified.{NewLine}");
-                        ShowUsage();
-                        return EXIT_BAD_FILENAME;
-                    }
-
-                    projectFilePath = Directory.GetFiles(projectFilePath, "*.csproj").FirstOrDefault();
-
-                    if (string.IsNullOrEmpty(projectFilePath) || !File.Exists(projectFilePath))
-                    {
-                        Console.Error.WriteLine($"ERROR: Bad project path specified.{NewLine}");
-                        ShowUsage();
-                        return EXIT_BAD_PATH;
-                    }
-                }
+                
+                if (!ValidateProjectFilePath(ref projectFilePath, out int result))
+                    return result;
 
                 // Load XML project file
-                XmlDocument projectFile = new XmlDocument();
-                projectFile.Load(projectFilePath);
+                XmlDocument projectFile = OpenProjectFile(projectFilePath);
 
-                // Find version number
-                string version = projectFile.SelectSingleNode("Project/PropertyGroup/Version")?.InnerText;
+                // Get version number
+                if (!TryGetVersionNode(projectFile, out XmlNode versionNode))
+                    return ExitNoVersion;
 
-                if (string.IsNullOrWhiteSpace(version))
-                {
-                    Console.Error.WriteLine($"ERROR: No <Version> tag found.{NewLine}");
-                    ShowUsage();
-                    return EXIT_NO_VERSION;
-                }
+                // Write version information to console without any suffix, e.g., remove any -beta suffix
+                Console.WriteLine(GetRawVersion(versionNode.InnerText));
 
-                // Get raw version without any suffix, e.g., remove any -beta suffix
-                if (version.Contains('-'))
-                    version = version.Substring(0, version.IndexOf('-'));
-
-                // Write version information to console
-                Console.WriteLine(version);
-
-                return EXIT_SUCCESS;
+                return ExitSuccess;
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine($"ERROR: {ex.Message}{NewLine}");
-                return EXIT_EXCEPTION;
+                return HandleException(ex);
             }
-        }
-
-        private static void ShowUsage()
-        {
-            string assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
-
-            Console.Error.WriteLine($"USAGE:{NewLine}");
-            Console.Error.WriteLine($"    {assemblyName} {string.Join(' ', ARGS)}{NewLine}");
-            Console.Error.WriteLine($"EXAMPLE:{NewLine}");
-            Console.Error.WriteLine($"    {assemblyName} {string.Join(' ', EXAMPLES)}{NewLine}");
         }
     }
 }

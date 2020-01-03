@@ -6,4 +6,6 @@
     <Configurations>Debug;Release;Development</Configurations>
   </PropertyGroup>
 
+  <Import Project="..\VersionCommon\VersionCommon.projitems" Label="Shared" />
+
 </Project>

@@ -2,7 +2,7 @@
   "profiles": {
     "UpdateVersion": {
       "commandName": "Project",
-      "commandLineArgs": "D:\\Projects\\gemstone\\io\\src\\Gemstone.IO 1.0.1-beta"
+      "commandLineArgs": "D:\\Projects\\gemstone\\io 1.0.1-beta"
     }
   }
 }

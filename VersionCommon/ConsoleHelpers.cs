@@ -1,0 +1,130 @@
+﻿//******************************************************************************************************
+//  ConsoleHelpers.cs - Gbtc
+//
+//  Copyright © 2020, Grid Protection Alliance.  All Rights Reserved.
+//
+//  Licensed to the Grid Protection Alliance (GPA) under one or more contributor license agreements. See
+//  the NOTICE file distributed with this work for additional information regarding copyright ownership.
+//  The GPA licenses this file to you under the MIT License (MIT), the "License"; you may not use this
+//  file except in compliance with the License. You may obtain a copy of the License at:
+//
+//      http://opensource.org/licenses/MIT
+//
+//  Unless agreed to in writing, the subject software distributed under the License is distributed on an
+//  "AS-IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. Refer to the
+//  License for the specific language governing permissions and limitations.
+//
+//  Code Modification History:
+//  ----------------------------------------------------------------------------------------------------
+//  01/03/2020 - J. Ritchie Carroll
+//       Generated original version of source code.
+//
+//******************************************************************************************************
+
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Xml;
+using static System.Environment;
+
+namespace VersionCommon
+{
+    public static class ConsoleHelpers
+    {
+        public static string[] ArgNames = Array.Empty<string>();
+        public static string[] ArgExamples = Array.Empty<string>();
+
+        public const int ExitSuccess = 0;
+        public const int ExitBadArgs = 0xA0;
+        public const int ExitBadFilename = 0xA1;
+        public const int ExitBadPath = 0xA2;
+        public const int ExitNoVersion = 0xA3;
+        public const int ExitException = 0xFF;
+
+        public static void ShowUsage()
+        {
+            string assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
+
+            Console.Error.WriteLine($"USAGE:{NewLine}");
+            Console.Error.WriteLine($"    {assemblyName} {string.Join(' ', ArgNames)}{NewLine}");
+
+            Console.Error.WriteLine($"EXAMPLE:{NewLine}");
+            Console.Error.WriteLine($"    {assemblyName} {string.Join(' ', ArgExamples)}{NewLine}");
+        }
+
+        public static bool ValidateArgs(string[] receivedArgs)
+        {
+            if (receivedArgs.Length == ArgNames.Length)
+                return true;
+
+            ShowUsage();
+            Console.Error.WriteLine($"ERROR: Invalid number of command line arguments specified. Received {receivedArgs.Length}, expected {ArgNames.Length}.{NewLine}");
+            return false;
+        }
+
+        public static int HandleException(Exception ex)
+        {
+            ShowUsage();
+            Console.Error.WriteLine($"ERROR: {ex.Message}{NewLine}");
+            return ExitException;
+        }
+
+        public static bool ValidateProjectFilePath(ref string projectFilePath, out int result)
+        {
+            // See if a folder name was provided instead of an actual project file name
+            if (!File.Exists(projectFilePath))
+            {
+                if (projectFilePath.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase) || !Directory.Exists(projectFilePath))
+                {
+                    ShowUsage();
+                    Console.Error.WriteLine($"ERROR: Bad project name or path specified.{NewLine}");
+                    result = ExitBadFilename;
+                    return false;
+                }
+
+                projectFilePath = Directory.GetFiles(projectFilePath, "*.csproj").FirstOrDefault();
+
+                if (string.IsNullOrEmpty(projectFilePath) || !File.Exists(projectFilePath))
+                {
+                    ShowUsage();
+                    Console.Error.WriteLine($"ERROR: Bad project path specified.{NewLine}");
+                    result = ExitBadPath;
+                    return false;
+                }
+            }
+
+            result = ExitSuccess;
+            return true;
+        }
+
+        public static XmlDocument OpenProjectFile(string projectFilePath)
+        {
+            XmlDocument projectFile = new XmlDocument { PreserveWhitespace = true };
+            projectFile.Load(projectFilePath);
+            return projectFile;
+        }
+
+        public static bool TryGetVersionNode(XmlDocument projectFile, out XmlNode versionNode)
+        {
+            versionNode = projectFile.SelectSingleNode("Project/PropertyGroup/Version");
+
+            if (versionNode == null)
+            {
+                ShowUsage();
+                Console.Error.WriteLine($"ERROR: No <Version> tag found.{NewLine}");
+                return false;
+            }
+
+            return true;
+        }
+
+        public static string GetRawVersion(string version)
+        {
+            if (version.Contains('-'))
+                version = version.Substring(0, version.IndexOf('-'));
+
+            return version;
+        }
+    }
+}
