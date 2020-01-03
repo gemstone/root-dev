@@ -14,7 +14,8 @@ exit /B
 echo.
 echo Executing git add . && git commit -m %2 for %1...
 cd %1
-git add . && git commit -m %2
+git add .
+git commit -m %2
 cd ..
 
 exit /B
