@@ -24,7 +24,7 @@ The Visual Studio solution file [Gemstone.sln](Gemstone.sln) found in this repos
 
 The [Gemstone.sln](Gemstone.sln) should be used with the build configuration called `Development`. The `Development` build configuration is used to associate local "project" references instead of "package" references (e.g., NuGet) that are only active when using this solution. For example, a project referencing both the [common](https://github.com/gemstone/common) and [expressions](https://github.com/gemstone/expressions) gemstone libraries would conditionally use local "project" references using the following in the `.csproj` file:
 
-```
+```xml
 <ItemGroup>
   <ProjectReference Include="..\..\..\common\src\Gemstone\Gemstone.Common.csproj" Condition="'$(Configuration)'=='Development'" />
   <PackageReference Include="Gemstone.Common" Version="1.0.0" Condition="'$(Configuration)'!='Development'" />
