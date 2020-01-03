@@ -94,7 +94,7 @@ namespace VersionCommon
                     // See if input path only specified root project folder
                     string projectFolderName = GetLastDirectoryName(projectFilePath);
 
-                    // Common folder structure is special from a namespace perspective as its root namespace is just "Gemstone"
+                    // "Gemstone.Common" project folder structure is special from a namespace perspective as its root namespace is just "Gemstone"
                     projectFolderName = projectFolderName.Equals("common", StringComparison.OrdinalIgnoreCase) ? "" : $".{projectFolderName}";
 
                     // Look for project file again
