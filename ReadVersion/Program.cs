@@ -88,6 +88,7 @@ namespace ReadVersion
                     return EXIT_NO_VERSION;
                 }
 
+                // Get raw version without any suffix, e.g., remove any -beta suffix
                 if (version.Contains('-'))
                     version = version.Substring(0, version.IndexOf('-'));
 
