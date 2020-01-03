@@ -53,21 +53,25 @@ namespace VersionCommon
             Console.Error.WriteLine($"    {assemblyName} {string.Join(' ', ArgExamples)}{NewLine}");
         }
 
+        public static void ShowError(string errorMessage)
+        {
+            Console.Error.WriteLine($"ERROR: {errorMessage}{NewLine}");
+            ShowUsage();
+        }
+
         public static bool ValidateArgs(string[] receivedArgs)
         {
             if (receivedArgs.Length == ArgNames.Length)
                 return true;
 
-            ShowUsage();
-            Console.Error.WriteLine($"ERROR: Invalid number of command line arguments specified. Received {receivedArgs.Length}, expected {ArgNames.Length}.{NewLine}");
+            ShowError($"Invalid number of command line arguments specified. Received {receivedArgs.Length}, expected {ArgNames.Length}.");
 
             return false;
         }
 
         public static int HandleException(Exception ex)
         {
-            ShowUsage();
-            Console.Error.WriteLine($"ERROR: {ex.Message}{NewLine}");
+            ShowError(ex.Message);
 
             return ExitException;
         }
@@ -79,8 +83,7 @@ namespace VersionCommon
             {
                 if (projectFilePath.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase) || !Directory.Exists(projectFilePath))
                 {
-                    ShowUsage();
-                    Console.Error.WriteLine($"ERROR: Bad project name or path specified.{NewLine}");
+                    ShowError("Bad project name or path specified.");
                     result = ExitBadFileName;
 
                     return false;
@@ -102,8 +105,7 @@ namespace VersionCommon
 
                     if (string.IsNullOrEmpty(firstProjectFile))
                     {
-                        ShowUsage();
-                        Console.Error.WriteLine($"ERROR: Bad project path specified.{NewLine}");
+                        ShowError("Bad project path specified.");
                         result = ExitBadPath;
 
                         return false;
@@ -130,15 +132,11 @@ namespace VersionCommon
         {
             versionNode = projectFile.SelectSingleNode("Project/PropertyGroup/Version");
 
-            if (versionNode == null)
-            {
-                ShowUsage();
-                Console.Error.WriteLine($"ERROR: No <Version> tag found.{NewLine}");
+            if (versionNode != null)
+                return true;
 
-                return false;
-            }
-
-            return true;
+            ShowError("No <Version> tag found.");
+            return false;
         }
 
         public static string GetRawVersion(string version)
