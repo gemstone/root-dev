@@ -43,7 +43,7 @@ namespace UpdateVersion
                 string projectFilePath = args[0].Trim();
                 string version = args[1].Trim();
 
-                if (!ValidateProjectFilePath(ref projectFilePath, out int result))
+                if (!ValidateGemstoneProjectPath(ref projectFilePath, out int result))
                     return result;
 
                 // Load XML project file

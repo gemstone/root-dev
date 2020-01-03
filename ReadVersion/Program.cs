@@ -41,7 +41,7 @@ namespace ReadVersion
 
                 string projectFilePath = args[0].Trim();
                 
-                if (!ValidateProjectFilePath(ref projectFilePath, out int result))
+                if (!ValidateGemstoneProjectPath(ref projectFilePath, out int result))
                     return result;
 
                 // Load XML project file
