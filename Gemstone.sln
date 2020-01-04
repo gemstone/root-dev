@@ -10,20 +10,44 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root-dev", ".root-dev", "{
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{71EF20E2-0D01-4ED4-B0F9-764732ED4106}"
+	ProjectSection(SolutionItems) = preProject
+		..\common\docs\README.md = ..\common\docs\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{2A350112-47E5-446A-A286-A9053A473029}"
+	ProjectSection(SolutionItems) = preProject
+		..\data\docs\README.md = ..\data\docs\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Expressions", "Expressions", "{AF908083-DEFE-45DC-BB75-EB5C4CF88DD6}"
+	ProjectSection(SolutionItems) = preProject
+		..\expressions\docs\README.md = ..\expressions\docs\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IO", "IO", "{8426B420-E188-46C9-B98C-02014D4F0EED}"
+	ProjectSection(SolutionItems) = preProject
+		..\io\docs\README.md = ..\io\docs\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Numeric", "Numeric", "{68155B52-0049-4C33-84F5-6AE3DE8415CE}"
+	ProjectSection(SolutionItems) = preProject
+		..\numeric\docs\README.md = ..\numeric\docs\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PQDIF", "PQDIF", "{EF85946C-67A6-42BB-88B9-55F2285FEC6D}"
+	ProjectSection(SolutionItems) = preProject
+		..\pqdif\docs\README.md = ..\pqdif\docs\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Threading", "Threading", "{ECB3345B-F0FB-469B-B9E6-4E2D3657B13D}"
+	ProjectSection(SolutionItems) = preProject
+		..\threading\docs\README.md = ..\threading\docs\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Σ Project Template", "Σ Project Template", "{9446BA36-14CD-448B-AFDB-CCD61A30E7B0}"
+	ProjectSection(SolutionItems) = preProject
+		..\gemtem\docs\README.md = ..\gemtem\docs\README.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Common", "..\common\src\Gemstone\Gemstone.Common.csproj", "{721D3830-2CD7-45DE-A288-4FAF1D53CEC6}"
 EndProject
