@@ -115,5 +115,5 @@ Make sure this tool is installed before proceeding with documentation.
 6. Check-in documenation when complete, GitHub pages will auto-deploy updates within a couple minutes
 7. After documentation has been posted, update "docs/README.md" home page again and add a few links to commonly used library classes
 8. Note that the home page content of the automated documentation comes from the [shared-content](https://github.com/gemstone/shared-content) repo, if the new library should be added to the list,
-   1. Add link to [common.tokens](https://githu2.com/gemstone/shared-content/blob/master/src/DocGen/common.tokens)
+   1. Add link to [common.tokens](https://github.com/gemstone/shared-content/blob/master/src/DocGen/common.tokens)
    2. Shared content udpates will be rolled into all Gemstone library repos as part of the nightly build process
