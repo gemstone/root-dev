@@ -1,6 +1,6 @@
 ### Create new Gemstone Library based on Template
 
-1. Create a new repo based on [Gemstone.GemTem Template](https://githu2.com/gemstone/gemtem/generate)
+1. Create a new repo based on [Gemstone.GemTem Template](https://github.com/gemstone/gemtem/generate)
 2. Description should be similar to "Gemstone Security Library"
 3. Once template is created, clone locally and run "RenameProject.bat" script
 4. Type a PascalCase named like "Security" (no quotes)
@@ -10,10 +10,10 @@
    1. Click "Edit" under Social preview and select "Upload an image..." and select "docs/img/gemstone-social-preview.png" from new repo
    2. Select "master branch / docs folder" under GitHub Pages Source
 8. From repo home page on GitHub, click on "environment" then click on "View deployment"
-   1. Copy URL for repo's GitHub pages site, should be similar to https://gemstone.githu2.io/security/
+   1. Copy URL for repo's GitHub pages site, should be similar to https://gemstone.github.io/security/
    2. Return to repo home page on GitHub and click the "Edit" button (will be to right of repo description, like ""Gemstone Security Library")
    3. Paste in GitHub pages URL under "Website" and click "Save"
-9. Add new repo's git URL to the [clone-all](https://githu2.com/gemstone/root-dev/blob/master/clone-commands.txt) script source 
+9. Add new repo's git URL to the [clone-all](https://github.com/gemstone/root-dev/blob/master/clone-commands.txt) script source 
 
 ### Add New Library to Root Development Solution
 
@@ -104,7 +104,7 @@
 
 ### Updated Documentation for New Library
 
-Note that build documentation will require [Sandcastle Help File Builder](https://githu2.com/EWSoftware/SHFB/releases) tools and visual studio plug-in.
+Note that build documentation will require [Sandcastle Help File Builder](https://github.com/EWSoftware/SHFB/releases) tools and visual studio plug-in.
 Make sure this tool is installed before proceeding with documentation.
 
 1. Update "docs/README.md" om the repo to properly describe library purpose (you can update class links later)
@@ -114,6 +114,6 @@ Make sure this tool is installed before proceeding with documentation.
 5. You can check out your locally compiled documentation by navigating to "...\gemstone\security\docs\help\" and opening "index.html" in a browser
 6. Check-in documenation when complete, GitHub pages will auto-deploy updates within a couple minutes
 7. After documentation has been posted, update "docs/README.md" home page again and add a few links to commonly used library classes
-8. Note that the home page content of the automated documentation comes from the [shared-content](https://githu2.com/gemstone/shared-content) repo, if the new library should be added to the list,
+8. Note that the home page content of the automated documentation comes from the [shared-content](https://github.com/gemstone/shared-content) repo, if the new library should be added to the list,
    1. Add link to [common.tokens](https://githu2.com/gemstone/shared-content/blob/master/src/DocGen/common.tokens)
    2. Shared content udpates will be rolled into all Gemstone library repos as part of the nightly build process
