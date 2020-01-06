@@ -39,6 +39,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PQDIF", "PQDIF", "{EF85946C
 		..\pqdif\docs\README.md = ..\pqdif\docs\README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security", "Security", "{AC074377-1D21-43EA-8CC6-280FD0B613AD}"
+	ProjectSection(SolutionItems) = preProject
+		..\security\docs\README.md = ..\security\docs\README.md
+	EndProjectSection
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Threading", "Threading", "{ECB3345B-F0FB-469B-B9E6-4E2D3657B13D}"
 	ProjectSection(SolutionItems) = preProject
 		..\threading\docs\README.md = ..\threading\docs\README.md
@@ -52,10 +57,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Common", "..\common\src\Gemstone\Gemstone.Common.csproj", "{721D3830-2CD7-45DE-A288-4FAF1D53CEC6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Common.UnitTests", "..\common\src\UnitTests\Gemstone.Common.UnitTests.csproj", "{41B5D5D3-9A97-48ED-840C-188A0CA95480}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Threading", "..\threading\src\Gemstone.Threading\Gemstone.Threading.csproj", "{2C72030A-78D0-4E09-9746-33AE9305C49D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Threading.UnitTests", "..\threading\src\UnitTests\Gemstone.Threading.UnitTests.csproj", "{A0EF3EDF-8C2E-439C-8A4F-47ED1FA6BD58}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Expressions", "..\expressions\src\Gemstone.Expressions\Gemstone.Expressions.csproj", "{342E81B2-4952-4951-AC90-FD194C9F7956}"
 EndProject
@@ -72,6 +73,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.IO", "..\io\src\Gemstone.IO\Gemstone.IO.csproj", "{AAAE4D5E-6297-4ED5-91A3-E2B46D8DD2FC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.IO.UnitTests", "..\io\src\UnitTests\Gemstone.IO.UnitTests.csproj", "{B8833D46-65B3-4858-BA80-84658D31A999}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Security", "..\security\src\Gemstone.Security\Gemstone.Security.csproj", "{1D1987D0-3CA1-4FAA-839A-F3510FA3A4A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Security.UnitTests", "..\security\src\UnitTests\Gemstone.Security.UnitTests.csproj", "{3DAC8F1B-00F9-4D83-B155-249D093662BC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Threading", "..\threading\src\Gemstone.Threading\Gemstone.Threading.csproj", "{2C72030A-78D0-4E09-9746-33AE9305C49D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Threading.UnitTests", "..\threading\src\UnitTests\Gemstone.Threading.UnitTests.csproj", "{A0EF3EDF-8C2E-439C-8A4F-47ED1FA6BD58}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.PQDIF", "..\pqdif\src\Gemstone.PQDIF\Gemstone.PQDIF.csproj", "{E2A89CD8-ECA4-4EE2-845A-7D1B982E5220}"
 EndProject
@@ -133,6 +142,10 @@ Global
 		{A37248E8-E8DE-437C-9C81-DBDF40B3880D}.Development|Any CPU.Build.0 = Development|Any CPU
 		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.Build.0 = Development|Any CPU
+		{1D1987D0-3CA1-4FAA-839A-F3510FA3A4A4}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{1D1987D0-3CA1-4FAA-839A-F3510FA3A4A4}.Development|Any CPU.Build.0 = Development|Any CPU
+		{3DAC8F1B-00F9-4D83-B155-249D093662BC}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{3DAC8F1B-00F9-4D83-B155-249D093662BC}.Development|Any CPU.Build.0 = Development|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -158,6 +171,8 @@ Global
 		{A37248E8-E8DE-437C-9C81-DBDF40B3880D} = {19750400-E086-4B67-8A93-5BD7FB1A4B3C}
 		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA} = {19750400-E086-4B67-8A93-5BD7FB1A4B3C}
 		{BF383459-A583-456B-A4CF-1001954DD9D2} = {19750400-E086-4B67-8A93-5BD7FB1A4B3C}
+		{1D1987D0-3CA1-4FAA-839A-F3510FA3A4A4} = {AC074377-1D21-43EA-8CC6-280FD0B613AD}
+		{3DAC8F1B-00F9-4D83-B155-249D093662BC} = {AC074377-1D21-43EA-8CC6-280FD0B613AD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7EDA96F-4985-48C5-80B2-764F45AA8EA5}
