@@ -25,7 +25,7 @@
 4. Right-click on new repo solution folder and select "Add > Existing Item..." for "...\gemstone\security\docs\README.md"
 5. Save solution and close Visual Studio
 6. Open "...gemstone\root-dev\Gemstone.sln" in a text editor, e.g., Notepad++
-7. Move the "Project" sections related to new repo to better alpha locations in file, Locate  best peer section for each:
+7. Move the "Project" sections related to new repo to better alpha locations in file. Locate best peer section for each:
    1. First section will look similar to:
    
    ```xml
@@ -90,8 +90,8 @@
    ```
 10. Complete all removals:
     1. from `GlobalSection(ProjectConfigurationPlatforms) = postSolution`
-    2. to associated `EndGlobalSection`.
-11. Failing to remove the `Debug` and `Release` build configruations will cause new clones of `root-dev` to auto-open the `Debug` build configuration which causes NuGet `package` based references instead of desired `project` based references for cross-project debugging - defeating the purpose of the solution.
+    2. to associated `EndGlobalSection`
+11. Failing to remove the `Debug` and `Release` build configruations will cause new clones of `root-dev` to auto-open the `Debug` build configuration which causes NuGet `package` based references instead of desired `project` based references for cross-project debugging - defeating the purpose of the solution
 12. Re-open root-dev solution to verify that the manual changes succeeded
 13. Commit updates with a message like "Added Gemstone.Security project to root-dev solution with project-based references"
 14. Check-in updates
