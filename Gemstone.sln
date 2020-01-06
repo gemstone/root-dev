@@ -4,11 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root-dev", ".root-dev", "{0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}"
-	ProjectSection(SolutionItems) = preProject
-		AddLibrarySteps.md = AddLibrarySteps.md
-		LICENSE = LICENSE
-		README.md = README.md
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{71EF20E2-0D01-4ED4-B0F9-764732ED4106}"
 	ProjectSection(SolutionItems) = preProject
@@ -113,6 +108,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{9F2D
 		status-all.sh = status-all.sh
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{FBE2039F-10E7-4D5C-A85C-07339CF150AA}"
+	ProjectSection(SolutionItems) = preProject
+		docs\AddLibrarySteps.md = docs\AddLibrarySteps.md
+		LICENSE = LICENSE
+		docs\README.md = docs\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		VersionCommon\VersionCommon.projitems*{bf383459-a583-456b-a4cf-1001954dd9d2}*SharedItemsImports = 13
@@ -189,6 +191,7 @@ Global
 		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA} = {19750400-E086-4B67-8A93-5BD7FB1A4B3C}
 		{BF383459-A583-456B-A4CF-1001954DD9D2} = {19750400-E086-4B67-8A93-5BD7FB1A4B3C}
 		{9F2D9572-1F19-4784-9A4F-9F0764F69EF2} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
+		{FBE2039F-10E7-4D5C-A85C-07339CF150AA} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7EDA96F-4985-48C5-80B2-764F45AA8EA5}
