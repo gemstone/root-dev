@@ -86,15 +86,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.GemTem", "..\gemte
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.GemTem.UnitTests", "..\gemtem\src\UnitTests\Gemstone.GemTem.UnitTests.csproj", "{B436EB87-75D4-4C65-AAC8-2551A21407C8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{19750400-E086-4B67-8A93-5BD7FB1A4B3C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{19750400-E086-4B67-8A93-5BD7FB1A4B3C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadVersion", "ReadVersion\ReadVersion.csproj", "{A37248E8-E8DE-437C-9C81-DBDF40B3880D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadVersion", "tools\ReadVersion\ReadVersion.csproj", "{A37248E8-E8DE-437C-9C81-DBDF40B3880D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdateVersion", "UpdateVersion\UpdateVersion.csproj", "{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdateVersion", "tools\UpdateVersion\UpdateVersion.csproj", "{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VersionCommon", "VersionCommon\VersionCommon.shproj", "{BF383459-A583-456B-A4CF-1001954DD9D2}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VersionCommon", "tools\VersionCommon\VersionCommon.shproj", "{BF383459-A583-456B-A4CF-1001954DD9D2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{9F2D9572-1F19-4784-9A4F-9F0764F69EF2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{9F2D9572-1F19-4784-9A4F-9F0764F69EF2}"
 	ProjectSection(SolutionItems) = preProject
 		clone-all.cmd = clone-all.cmd
 		clone-all.sh = clone-all.sh
@@ -117,7 +117,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{FBE2039F-1
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		VersionCommon\VersionCommon.projitems*{bf383459-a583-456b-a4cf-1001954dd9d2}*SharedItemsImports = 13
+		tools\VersionCommon\VersionCommon.projitems*{bf383459-a583-456b-a4cf-1001954dd9d2}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Development|Any CPU = Development|Any CPU
