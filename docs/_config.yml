@@ -1,1 +1,9 @@
 theme: jekyll-theme-cayman
+title: Gemstone.RootDev
+description: GPA Gemstone Root Development Solution
+github:
+  repository_name: gemstone.root-dev
+  owner_url: https://www.gridprotectionalliance.org
+  owner_name: Grid Protection Alliance
+plugins:
+  - jemoji
