@@ -80,7 +80,7 @@
 10. Complete all `Debug` and `Release` removals:
     1. From `GlobalSection(ProjectConfigurationPlatforms) = postSolution`
     2. To associated `EndGlobalSection`
-11. Failing to remove the `Debug` and `Release` build configruations will cause new clones of `root-dev` to auto-open the `Debug` build configuration which causes NuGet `package` based references instead of desired `project` based references for cross-project debugging - defeating the purpose of the solution. See [Relative Project Paths](root-dev#relative-project-paths) info.
+11. Failing to remove the `Debug` and `Release` build configruations will cause new clones of `root-dev` to auto-open the `Debug` build configuration which causes NuGet `package` based references instead of desired `project` based references for cross-project debugging - defeating the purpose of the solution. See [Relative Project Paths](README.md#relative-project-paths) info.
 12. Re-open root-dev solution to verify that the manual changes succeeded
 13. Commit updates with a message like "Added Gemstone.Security project to root-dev solution with project-based references"
 14. Check-in updates
