@@ -11,7 +11,7 @@
    2. Select "master branch / docs folder" under GitHub Pages Source
 8. From repo home page on GitHub, click on "environment" then click on "View deployment"
    1. Copy URL for repo's GitHub pages site, should be similar to https://gemstone.github.io/security/
-   2. Return to repo home page on GitHub and click the "Edit" button (will be to right of repo description, like ""Gemstone Security Library")
+   2. Return to repo home page on GitHub and click the "Edit" button (will be to right of repo description, like "Gemstone Security Library")
    3. Paste in GitHub pages URL under "Website" and click "Save"
 9. Add new repo's git URL to the [clone-all](https://github.com/gemstone/root-dev/blob/master/clone-commands.txt) script source 
 
@@ -77,10 +77,10 @@
         {41B5D5D3-9A97-48ED-840C-188A0CA95480}.Development|Any CPU.ActiveCfg = Development|Any CPU
         {41B5D5D3-9A97-48ED-840C-188A0CA95480}.Development|Any CPU.Build.0 = Development|Any CPU
    ```
-10. Complete all removals:
+10. Complete all `Debug` and `Release` removals:
     1. From `GlobalSection(ProjectConfigurationPlatforms) = postSolution`
     2. To associated `EndGlobalSection`
-11. Failing to remove the `Debug` and `Release` build configruations will cause new clones of `root-dev` to auto-open the `Debug` build configuration which causes NuGet `package` based references instead of desired `project` based references for cross-project debugging - defeating the purpose of the solution
+11. Failing to remove the `Debug` and `Release` build configruations will cause new clones of `root-dev` to auto-open the `Debug` build configuration which causes NuGet `package` based references instead of desired `project` based references for cross-project debugging - defeating the purpose of the solution. See [Relative Project Paths](root-dev#relative-project-paths) info.
 12. Re-open root-dev solution to verify that the manual changes succeeded
 13. Commit updates with a message like "Added Gemstone.Security project to root-dev solution with project-based references"
 14. Check-in updates
