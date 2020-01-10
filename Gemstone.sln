@@ -115,6 +115,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{FBE2039F-1
 		docs\README.md = docs\README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{6D3343C6-F1CE-496A-8CBD-92EC539528E2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{EF7FB29D-5AA1-430E-B350-EE953E1E82AE}"
+	ProjectSection(SolutionItems) = preProject
+		build\scripts\build-gemstone.ps1 = build\scripts\build-gemstone.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		tools\VersionCommon\VersionCommon.projitems*{bf383459-a583-456b-a4cf-1001954dd9d2}*SharedItemsImports = 13
@@ -192,6 +199,8 @@ Global
 		{BF383459-A583-456B-A4CF-1001954DD9D2} = {19750400-E086-4B67-8A93-5BD7FB1A4B3C}
 		{9F2D9572-1F19-4784-9A4F-9F0764F69EF2} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
 		{FBE2039F-10E7-4D5C-A85C-07339CF150AA} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
+		{6D3343C6-F1CE-496A-8CBD-92EC539528E2} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
+		{EF7FB29D-5AA1-430E-B350-EE953E1E82AE} = {6D3343C6-F1CE-496A-8CBD-92EC539528E2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7EDA96F-4985-48C5-80B2-764F45AA8EA5}
