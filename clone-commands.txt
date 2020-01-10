@@ -1,4 +1,4 @@
-REM This file should have "LF", not "CRLF", endings and following repos in proper build dependency order.
+REM File should have "LF", not "CRLF", endings and following repos in proper build dependency order
 git clone https://github.com/gemstone/shared-content.git
 git clone https://github.com/gemstone/common.git
 git clone https://github.com/gemstone/numeric.git
