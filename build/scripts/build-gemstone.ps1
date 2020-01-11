@@ -3,7 +3,7 @@
 param([string]$projectDir)
 
 # Uncomment the following line to hardcode the project directory for testing
-$projectDir = "D:\Projects\gembuild"
+$projectDir = "C:\Projects\gembuild"
 
 # Uncomment the following line to use WSL instead of Git for Windows
 #function git { & wsl git $args }
@@ -43,39 +43,44 @@ function Test-RepositoryChanged {
     return $commitsSinceTag.Count -ne 0
 }
 
+Set-Variable githubOrgSite -Option Constant -Scope Script -Value "https://github.com/gemstone"
+Set-Variable rootDevRepo -Option Constant -Scope Script -Value "root-dev"
+Set-Variable commonRepo -Option Constant -Scope Script -Value "common"
+Set-Variable sharedContentRepo -Option Constant -Scope Script -Value "shared-content"
+Set-Variable cloneCommandsFile -Option Constant -Scope Script -Value "clone-commands.txt"
+Set-Variable prefixLength -Option Constant -Scope Script -Value ("git clone ".Length + 1)
+Set-Variable buildConfig -Option Constant -Scope Script -Value "Release"
+
 # Get latest root-dev project
 Set-Location $projectDir
-Clone-Repository https://github.com/gemstone/root-dev.git
-
-Set-Location root-dev
+Clone-Repository "$githubOrgSite/$rootDevRepo.git"
+Set-Location $rootDevRepo
 Reset-Repository
 
 # Load repo list from clone-commands.txt - this is expected to be in desired build dependency order
-$repos = [IO.File]::ReadAllLines("$projectDir\root-dev\clone-commands.txt")
+$repos = [IO.File]::ReadAllLines("$projectDir\$rootDevRepo\$cloneCommandsFile")
 
 # Remove any comment lines from loaded repo list
-$repos = $repos | Where-Object { $_.StartsWith("REM") -ne $true }
+$repos = $repos | Where-Object { ($_.Trim().StartsWith("REM") -or [string]::IsNullOrWhiteSpace($_)) -ne $true }
 
 # Extract only repo name
-$githubOrgSite = "https://github.com/gemstone/"
-
-For ($i=0; $i -le $repos.Length; $i++) {
-    $repos[$i] = $repos[$i].Substring(10 + $githubOrgSite.Length).Trim()
+for ($i=0; $i -le $repos.Length; $i++) {
+    $repos[$i] = $repos[$i].Substring($prefixLength + $githubOrgSite.Length).Trim()
     $repos[$i] = $repos[$i].Substring(0, $repos[$i].Length - 4)
 }
 
 Set-Location $projectDir
 
 # Clone all repositories
-$repos | ForEach-Object {
-    Clone-Repository "$githubOrgSite$_.git"
+foreach ($repo in $repos) {
+    Clone-Repository "$githubOrgSite/$repo.git"
 }
 
 # Remove shared-content from repo list
-$repos = $repos | Where-Object { $_ -ne "shared-content" }
+$repos = $repos | Where-Object { $_ -ne $sharedContentRepo }
 
 # Check for changes in shared-content repo
-Set-Location "$projectDir\shared-content"
+Set-Location "$projectDir\$sharedContentRepo"
 Reset-Repository
 $changed = Test-RepositoryChanged
 
@@ -88,9 +93,8 @@ If ($changed) {
     $exclude = @("README.md")
 
     # Update all repos with shared-content updates
-    $repos | ForEach-Object {
-        $repo = $_
-        $src = "$projectDir\shared-content"
+    foreach ($repo in $repos) {
+        $src = "$projectDir\$sharedContentRepo"
         $dst = "$projectDir\$repo"
 
         Get-ChildItem -Path $src -Recurse -Exclude $exclude | Copy-Item -Destination {
@@ -107,29 +111,33 @@ If ($changed) {
     }
 }
 
-# Check for changes in any of the primary repos
+# Fetch all primary repos and check for changes
 foreach ($repo in $repos) {
     Set-Location "$projectDir\$repo"
     Reset-Repository
-    $changed = Test-RepositoryChanged
-
-    if ($changed) {
-        break
-    }
+    $changed = $changed -or (Test-RepositoryChanged)
 }
 
-If ($changed) {
-    "Building versioning tools..."
-    Set-Location "$projectDir\root-dev\tools\ReadVersion"
-    dotnet build -c Release "ReadVersion.csproj"
-    $readVersion = "$projectDir\root-dev\tools\ReadVersion\bin\Release\netcoreapp3.1\ReadVersion.exe"
+if ($changed) {
+    Set-Variable toolsFolder -Option Constant -Scope Script -Value "$projectDir\$rootDevRepo\tools"
+    Set-Variable appBuildFolder -Option Constant -Scope Script -Value "bin\$buildConfig\netcoreapp3.1"
 
-    Set-Location "$projectDir\root-dev\tools\UpdateVersion"
-    dotnet build -c Release "UpdateVersion.csproj"
-    $updateVersion = "$projectDir\root-dev\tools\UpdateVersion\bin\Release\netcoreapp3.1\UpdateVersion.exe"
+    Set-Variable readVersion -Option Constant -Scope Script -Value "ReadVersion"
+    Set-Variable readVersionApp -Option Constant -Scope Script -Value "$toolsFolder\$readVersion\$appBuildFolder\$readVersion.exe"
+
+    Set-Variable updateVersion -Option Constant -Scope Script -Value "UpdateVersion"
+    Set-Variable updateVersionApp -Option Constant -Scope Script -Value "$toolsFolder\$updateVersion\$appBuildFolder\$updateVersion.exe"
+    
+    "Building versioning tools..."
+
+    Set-Location "$toolsFolder\$readVersion"
+    dotnet build -c $buildConfig "$readVersion.csproj"
+
+    Set-Location "$toolsFolder\$updateVersion"
+    dotnet build -c $buildConfig "$updateVersion.csproj"
 
     # Get current repo version - "Gemstone.Common" defines version for all repos
-    $version = & "$readVersion" "$projectDir\common" | Out-String
+    $version = & "$readVersionApp" "$projectDir\$commonRepo" | Out-String
     $version = $version.Trim()
 
     "Current Gemstone Libraries version = $version"
@@ -143,12 +151,11 @@ If ($changed) {
     "Updated Gemstone Libraries version = $version"
 
     # Handle versioning and building of each repo
-    $repos | ForEach-Object {
-        $repo = $_
-        & "$updateVersion" "$projectDir\$repo" "$version-beta"
+    foreach ($repo in $repos) {
+        & "$updateVersionApp" "$projectDir\$repo" "$version-beta"
     }
 }
-Else {
+else {
     "Build skipped, no repos changed."
 }
 
