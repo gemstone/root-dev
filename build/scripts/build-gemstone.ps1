@@ -3,7 +3,7 @@
 param([string]$projectDir)
 
 # Uncomment the following line to hardcode the project directory for testing
-$projectDir = "C:\Projects\gembuild"
+#$projectDir = "C:\Projects\gembuild"
 
 # Uncomment the following line to use WSL instead of Git for Windows
 #function git { & wsl git $args }
@@ -165,10 +165,13 @@ if ($changed) {
         # Build new version
         dotnet build -c $buildConfig src
 
-        # Push updated nuget package
         $package = "$projectDir\$repo\build\Release\Gemstone.$repo.$version-beta.nupkg"
-        dotnet nuget push $package
-        dotnet nuget push $package --source "github"
+
+        # Push package to NuGet
+        dotnet nuget push $package -k $env:GemstoneNugetApiKey -s https://api.nuget.org/v3/index.json
+
+        # Push package to GitHub Packages
+        # dotnet nuget push $package -s https://nuget.pkg.github.com/gemstone/index.json
     }
 }
 else {
