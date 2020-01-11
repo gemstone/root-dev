@@ -1,12 +1,23 @@
 # Call the script with the path to the project directory as an argument:
 #     .\build-gemstone.ps1 "C:\Projects\gemstone"
+
+# Optionally call with skip build switch to only update shared content:
+#     .\build-gemstone.ps1 "C:\Projects\gemstone" -skipBuild
+
 param([string]$projectDir)
+param([switch]$skipBuild = $false)
+param([string]$buildConfig = "Release")
 
 # Uncomment the following line to hardcode the project directory for testing
 #$projectDir = "C:\Projects\gembuild"
 
 # Uncomment the following line to use WSL instead of Git for Windows
 #function git { & wsl git $args }
+
+# Validate script parameters
+if ([string]::IsNullOrWhiteSpace($projectDir)) {
+    throw “projectDir parameter was not provided, script terminated.”
+}
 
 function Clone-Repository($url) {
     & git clone $url
@@ -50,7 +61,6 @@ Set-Variable sharedContentRepo -Option Constant -Scope Script -Value "shared-con
 Set-Variable cloneCommandsFile -Option Constant -Scope Script -Value "clone-commands.txt"
 Set-Variable prefixLength      -Option Constant -Scope Script -Value ("git clone ".Length + 1)
 Set-Variable suffixLength      -Option Constant -Scope Script -Value ".git".Length
-Set-Variable buildConfig       -Option Constant -Scope Script -Value "Release"
 Set-Variable libBuildFolder    -Option Constant -Scope Script -Value "build\$buildConfig"
 Set-Variable appBuildFolder    -Option Constant -Scope Script -Value "bin\$buildConfig\netcoreapp3.1"
 Set-Variable toolsFolder       -Option Constant -Scope Script -Value "$projectDir\$rootDevRepo\tools"
@@ -67,7 +77,7 @@ Reset-Repository
 $repos = [IO.File]::ReadAllLines("$projectDir\$rootDevRepo\$cloneCommandsFile")
 
 # Remove any comment lines from loaded repo list
-$repos = $repos | Where-Object { ($_.Trim().StartsWith("REM") -or [string]::IsNullOrWhiteSpace($_)) -ne $true }
+$repos = $repos | Where-Object { -not ($_.Trim().StartsWith("REM") -or [string]::IsNullOrWhiteSpace($_)) }
 
 # Extract only repo name
 for ($i=0; $i -le $repos.Length; $i++) {
@@ -117,6 +127,11 @@ if ($changed) {
     }
 }
 
+if ($skipBuild) {
+    "Build skipped per command line switch."
+    return
+}
+
 # Fetch all primary repos and check for changes
 foreach ($repo in $repos) {
     Set-Location "$projectDir\$repo"
@@ -124,7 +139,7 @@ foreach ($repo in $repos) {
     $changed = $changed -or (Test-RepositoryChanged)
 }
 
-if ($changed) {    
+if ($changed) {
     "Building versioning tools..."
 
     Set-Location "$toolsFolder\ReadVersion"
