@@ -84,7 +84,7 @@ Set-Location "$projectDir\$sharedContentRepo"
 Reset-Repository
 $changed = Test-RepositoryChanged
 
-If ($changed) {
+if ($changed) {
     $changed = $false
 
     # Tag repo to mark new changes
@@ -152,7 +152,23 @@ if ($changed) {
 
     # Handle versioning and building of each repo
     foreach ($repo in $repos) {
+        # Update version in project file
         & "$updateVersionApp" "$projectDir\$repo" "$version-beta"
+
+        # Check-in version update
+        Set-Location "$projectDir\$repo"
+        Update-Repository "." "Updated gemstone/$repo version to $version"
+
+        # Tag new version
+        Tag-Repository "v$version"
+
+        # Build new version
+        dotnet build -c $buildConfig src
+
+        # Push updated nuget package
+        $package = "$projectDir\$repo\build\Release\Gemstone.$repo.$version-beta.nupkg"
+        dotnet nuget push $package
+        dotnet nuget push $package --source "github"
     }
 }
 else {
