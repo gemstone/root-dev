@@ -6,6 +6,7 @@
 
 param([string]$projectDir)
 param([switch]$skipBuild = $false)
+param([switch]$skipDocsBuild = $false)
 param([string]$buildConfig = "Release")
 
 # Uncomment the following line to hardcode the project directory for testing
@@ -28,10 +29,13 @@ function Tag-Repository($tagName) {
     & git push --tags
 }
 
-function Update-Repository($file, $message) {
+function Update-Repository($file, $message, $push = $true) {
     & git add $file
     & git commit -m "$message"
-    & git push
+
+    if ($push) {
+        & git push
+    }
 }
 
 function Reset-Repository {
@@ -58,6 +62,7 @@ function Test-RepositoryChanged {
 Set-Variable githubOrgSite     -Option Constant -Scope Script -Value "https://github.com/gemstone"
 Set-Variable rootDevRepo       -Option Constant -Scope Script -Value "root-dev"
 Set-Variable sharedContentRepo -Option Constant -Scope Script -Value "shared-content"
+Set-Variable templateRepo      -Option Constant -Scope Script -Value "gemtem"
 Set-Variable cloneCommandsFile -Option Constant -Scope Script -Value "clone-commands.txt"
 Set-Variable prefixLength      -Option Constant -Scope Script -Value ("git clone ".Length + 1)
 Set-Variable suffixLength      -Option Constant -Scope Script -Value ".git".Length
@@ -66,6 +71,7 @@ Set-Variable appBuildFolder    -Option Constant -Scope Script -Value "bin\$build
 Set-Variable toolsFolder       -Option Constant -Scope Script -Value "$projectDir\$rootDevRepo\tools"
 Set-Variable readVersion       -Option Constant -Scope Script -Value "$toolsFolder\ReadVersion\$appBuildFolder\ReadVersion.exe"
 Set-Variable updateVersion     -Option Constant -Scope Script -Value "$toolsFolder\UpdateVersion\$appBuildFolder\UpdateVersion.exe"
+Set-Variable docProject        -Option Constant -Scope Script -Value "src\DocGen\docgen.shfbproj"
 
 # Get latest root-dev project
 Set-Location $projectDir
@@ -169,13 +175,23 @@ if ($changed) {
 
         # Check-in version update
         Set-Location "$projectDir\$repo"
-        Update-Repository "." "Updated gemstone/$repo version to $version"
+        Update-Repository "." "Updated gemstone/$repo version to $version" -push = $skipDocsBuild
+
+        # Build new version
+        dotnet build -c $buildConfig src
+
+        if (-not $skipDocsBuild) {
+            msbuild -p:Configuration=$buildConfig $docProject
+            Update-Repository "." "Built v$version documentation"
+        }
 
         # Tag new version
         Tag-Repository "v$version"
 
-        # Build new version
-        dotnet build -c $buildConfig src
+        # Skip package push for template repository
+        if ($repo -eq $templateRepo) {
+            continue
+        }
 
         # Query file system for package file to get proper casing
         $packages = [IO.Directory]::GetFiles("$projectDir\$repo\$libBuildFolder", "*.nupkg")
@@ -183,11 +199,13 @@ if ($changed) {
         if ($packages.Length -gt 0) {
             $package = $packages[0]
 
-            # Push package to NuGet
-            dotnet nuget push $package -k $env:GemstoneNuGetApiKey -s https://api.nuget.org/v3/index.json
+            # Push package to NuGet if API key is defined
+            if ($env:GemstoneNuGetApiKey -ne $null) {
+                dotnet nuget push $package -k $env:GemstoneNuGetApiKey -s https://api.nuget.org/v3/index.json
+            }
 
             # Push package to GitHub Packages
-            # dotnet nuget push $package -s https://nuget.pkg.github.com/gemstone/index.json
+            dotnet nuget push $package --source "github"
         }
         else {
             "No package found, build failure?"
