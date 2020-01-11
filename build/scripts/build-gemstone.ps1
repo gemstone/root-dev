@@ -43,13 +43,19 @@ function Test-RepositoryChanged {
     return $commitsSinceTag.Count -ne 0
 }
 
-Set-Variable githubOrgSite -Option Constant -Scope Script -Value "https://github.com/gemstone"
-Set-Variable rootDevRepo -Option Constant -Scope Script -Value "root-dev"
-Set-Variable commonRepo -Option Constant -Scope Script -Value "common"
+# Define script constants
+Set-Variable githubOrgSite     -Option Constant -Scope Script -Value "https://github.com/gemstone"
+Set-Variable rootDevRepo       -Option Constant -Scope Script -Value "root-dev"
 Set-Variable sharedContentRepo -Option Constant -Scope Script -Value "shared-content"
 Set-Variable cloneCommandsFile -Option Constant -Scope Script -Value "clone-commands.txt"
-Set-Variable prefixLength -Option Constant -Scope Script -Value ("git clone ".Length + 1)
-Set-Variable buildConfig -Option Constant -Scope Script -Value "Release"
+Set-Variable prefixLength      -Option Constant -Scope Script -Value ("git clone ".Length + 1)
+Set-Variable suffixLength      -Option Constant -Scope Script -Value ".git".Length
+Set-Variable buildConfig       -Option Constant -Scope Script -Value "Release"
+Set-Variable libBuildFolder    -Option Constant -Scope Script -Value "build\$buildConfig"
+Set-Variable appBuildFolder    -Option Constant -Scope Script -Value "bin\$buildConfig\netcoreapp3.1"
+Set-Variable toolsFolder       -Option Constant -Scope Script -Value "$projectDir\$rootDevRepo\tools"
+Set-Variable readVersion       -Option Constant -Scope Script -Value "$toolsFolder\ReadVersion\$appBuildFolder\ReadVersion.exe"
+Set-Variable updateVersion     -Option Constant -Scope Script -Value "$toolsFolder\UpdateVersion\$appBuildFolder\UpdateVersion.exe"
 
 # Get latest root-dev project
 Set-Location $projectDir
@@ -66,7 +72,7 @@ $repos = $repos | Where-Object { ($_.Trim().StartsWith("REM") -or [string]::IsNu
 # Extract only repo name
 for ($i=0; $i -le $repos.Length; $i++) {
     $repos[$i] = $repos[$i].Substring($prefixLength + $githubOrgSite.Length).Trim()
-    $repos[$i] = $repos[$i].Substring(0, $repos[$i].Length - 4)
+    $repos[$i] = $repos[$i].Substring(0, $repos[$i].Length - $suffixLength)
 }
 
 Set-Location $projectDir
@@ -118,26 +124,17 @@ foreach ($repo in $repos) {
     $changed = $changed -or (Test-RepositoryChanged)
 }
 
-if ($changed) {
-    Set-Variable toolsFolder -Option Constant -Scope Script -Value "$projectDir\$rootDevRepo\tools"
-    Set-Variable appBuildFolder -Option Constant -Scope Script -Value "bin\$buildConfig\netcoreapp3.1"
-
-    Set-Variable readVersion -Option Constant -Scope Script -Value "ReadVersion"
-    Set-Variable readVersionApp -Option Constant -Scope Script -Value "$toolsFolder\$readVersion\$appBuildFolder\$readVersion.exe"
-
-    Set-Variable updateVersion -Option Constant -Scope Script -Value "UpdateVersion"
-    Set-Variable updateVersionApp -Option Constant -Scope Script -Value "$toolsFolder\$updateVersion\$appBuildFolder\$updateVersion.exe"
-    
+if ($changed) {    
     "Building versioning tools..."
 
-    Set-Location "$toolsFolder\$readVersion"
-    dotnet build -c $buildConfig "$readVersion.csproj"
+    Set-Location "$toolsFolder\ReadVersion"
+    dotnet build -c $buildConfig "ReadVersion.csproj"
 
-    Set-Location "$toolsFolder\$updateVersion"
-    dotnet build -c $buildConfig "$updateVersion.csproj"
+    Set-Location "$toolsFolder\UpdateVersion"
+    dotnet build -c $buildConfig "UpdateVersion.csproj"
 
     # Get current repo version - "Gemstone.Common" defines version for all repos
-    $version = & "$readVersionApp" "$projectDir\$commonRepo" | Out-String
+    $version = & "$readVersion" "$projectDir\common" | Out-String
     $version = $version.Trim()
 
     "Current Gemstone Libraries version = $version"
@@ -153,7 +150,7 @@ if ($changed) {
     # Handle versioning and building of each repo
     foreach ($repo in $repos) {
         # Update version in project file
-        & "$updateVersionApp" "$projectDir\$repo" "$version-beta"
+        & "$updateVersion" "$projectDir\$repo" "$version-beta"
 
         # Check-in version update
         Set-Location "$projectDir\$repo"
@@ -165,13 +162,21 @@ if ($changed) {
         # Build new version
         dotnet build -c $buildConfig src
 
-        $package = "$projectDir\$repo\build\Release\Gemstone.$repo.$version-beta.nupkg"
+        # Query file system for package file to get proper casing
+        $packages = [IO.Directory]::GetFiles("$projectDir\$repo\$libBuildFolder", "*.nupkg")
 
-        # Push package to NuGet
-        dotnet nuget push $package -k $env:GemstoneNugetApiKey -s https://api.nuget.org/v3/index.json
+        if ($packages.Length -gt 0) {
+            $package = $packages[0]
 
-        # Push package to GitHub Packages
-        # dotnet nuget push $package -s https://nuget.pkg.github.com/gemstone/index.json
+            # Push package to NuGet
+            dotnet nuget push $package -k $env:GemstoneNuGetApiKey -s https://api.nuget.org/v3/index.json
+
+            # Push package to GitHub Packages
+            # dotnet nuget push $package -s https://nuget.pkg.github.com/gemstone/index.json
+        }
+        else {
+            "No package found, build failure?"
+        }
     }
 }
 else {
