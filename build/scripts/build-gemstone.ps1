@@ -10,7 +10,7 @@ param([switch]$skipDocsBuild = $false)
 param([string]$buildConfig = "Release")
 
 # Uncomment the following line to hardcode the project directory for testing
-#$projectDir = "C:\Projects\gembuild"
+$projectDir = "C:\Projects\gembuild"
 
 # Uncomment the following line to use WSL instead of Git for Windows
 #function git { & wsl git $args }
