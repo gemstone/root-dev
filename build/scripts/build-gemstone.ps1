@@ -4,10 +4,7 @@
 # Optionally call with skip build switch to only update shared content:
 #     .\build-gemstone.ps1 "C:\Projects\gemstone" -skipBuild
 
-param([string]$projectDir)
-param([switch]$skipBuild = $false)
-param([switch]$skipDocsBuild = $false)
-param([string]$buildConfig = "Release")
+param([string]$projectDir, [switch]$skipBuild = $false, [switch]$skipDocsBuild = $false, [string]$buildConfig = "Release")
 
 # Uncomment the following line to hardcode the project directory for testing
 #$projectDir = "C:\Projects\gembuild"
@@ -100,13 +97,32 @@ function Reset-NuGetCache {
 function Publish-Package($package) {
     # Push package to NuGet if API key is defined
     if ($env:GemstoneNuGetApiKey -ne $null) {
-        & dotnet nuget push $package -k $env:GemstoneNuGetApiKey -s https://api.nuget.org/v3/index.json
+        & dotnet nuget push $package -k $env:GemstoneNuGetApiKey -s "https://api.nuget.org/v3/index.json"
     }
 
     # Push package to GitHub Packages
     if ($env:GHPackagesUser -ne $null -and $env:GHPackagesToken -ne $null) {
         # This is a work around: https://github.com/NuGet/Home/issues/8580#issuecomment-555696372
-        & curl -vX PUT -u "$env:GHPackagesUser:$env:GHPackagesToken" -F package=@$package https://nuget.pkg.github.com/gemstone/
+        $fileName = [IO.Path]::GetFileName($package)
+        $fileBytes = [IO.File]::ReadAllBytes($package)
+        $encodedData = [Text.Encoding]::GetEncoding("ISO-8859-1").GetString($fileBytes)
+        $boundary = [Guid]::NewGuid().ToString()
+        $lineFeed = "`r`n"
+
+        $bodyLines = ( 
+            "--$boundary",
+            "Content-Disposition: form-data; name=`"package`"; filename=`"$fileName`"",
+            "Content-Type: application/octet-stream$lineFeed",
+            $encodedData,
+            "--$boundary--" 
+        ) -join $lineFeed
+
+        $credentials = "${env:GHPackagesUser}:${env:GHPackagesToken}"
+        $encodedCreds = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($credentials))
+        $headers = @{ Authorization = "Basic $encodedCreds" }
+
+        Invoke-WebRequest -Method PUT -ContentType "multipart/form-data; boundary=`"$boundary`"" -Body $bodyLines `
+                          -Uri "https://nuget.pkg.github.com/gemstone/" -Headers $headers -Verbose
     }
 
     # Use this method when GitHub Packages for NuGet is fixed
@@ -216,7 +232,7 @@ if ($changed) {
 
         # Check-in version update
         Set-Location "$projectDir\$repo"
-        Update-Repository "." "Updated gemstone/$repo version to $version" -push = $skipDocsBuild
+        Update-Repository "." "Updated gemstone/$repo version to $version" -push $skipDocsBuild
 
         # Clear NuGet cache to force download of newest published packages
         Reset-NuGetCache
@@ -226,7 +242,7 @@ if ($changed) {
 
         if (-not $skipDocsBuild) {
             Build-Documentation
-            Update-Repository "." "Built v$version documentation"
+            Update-Repository "." "Built gemstone/$repo v$version documentation"
         }
 
         # Tag new version
