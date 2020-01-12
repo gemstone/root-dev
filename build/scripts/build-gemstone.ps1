@@ -10,7 +10,7 @@ param([switch]$skipDocsBuild = $false)
 param([string]$buildConfig = "Release")
 
 # Uncomment the following line to hardcode the project directory for testing
-$projectDir = "C:\Projects\gembuild"
+#$projectDir = "C:\Projects\gembuild"
 
 # Uncomment the following line to use WSL instead of Git for Windows
 #function git { & wsl git $args }
@@ -20,6 +20,17 @@ if ([string]::IsNullOrWhiteSpace($projectDir)) {
     throw “projectDir parameter was not provided, script terminated.”
 }
 
+# Script Constants
+Set-Variable githubOrgSite     -Option Constant -Scope Script -Value "https://github.com/gemstone"
+Set-Variable rootDevRepo       -Option Constant -Scope Script -Value "root-dev"
+Set-Variable sharedContentRepo -Option Constant -Scope Script -Value "shared-content"
+Set-Variable templateRepo      -Option Constant -Scope Script -Value "gemtem"
+Set-Variable cloneCommandsFile -Option Constant -Scope Script -Value "clone-commands.txt"
+Set-Variable libBuildFolder    -Option Constant -Scope Script -Value "build\$buildConfig"
+Set-Variable appBuildFolder    -Option Constant -Scope Script -Value "bin\$buildConfig\netcoreapp3.1"
+Set-Variable toolsFolder       -Option Constant -Scope Script -Value "$projectDir\$rootDevRepo\tools"
+
+# Script Functions
 function Clone-Repository($url) {
     & git clone $url
 }
@@ -58,20 +69,51 @@ function Test-RepositoryChanged {
     return $commitsSinceTag.Count -ne 0
 }
 
-# Define script constants
-Set-Variable githubOrgSite     -Option Constant -Scope Script -Value "https://github.com/gemstone"
-Set-Variable rootDevRepo       -Option Constant -Scope Script -Value "root-dev"
-Set-Variable sharedContentRepo -Option Constant -Scope Script -Value "shared-content"
-Set-Variable templateRepo      -Option Constant -Scope Script -Value "gemtem"
-Set-Variable cloneCommandsFile -Option Constant -Scope Script -Value "clone-commands.txt"
-Set-Variable prefixLength      -Option Constant -Scope Script -Value ("git clone ".Length + 1)
-Set-Variable suffixLength      -Option Constant -Scope Script -Value ".git".Length
-Set-Variable libBuildFolder    -Option Constant -Scope Script -Value "build\$buildConfig"
-Set-Variable appBuildFolder    -Option Constant -Scope Script -Value "bin\$buildConfig\netcoreapp3.1"
-Set-Variable toolsFolder       -Option Constant -Scope Script -Value "$projectDir\$rootDevRepo\tools"
-Set-Variable readVersion       -Option Constant -Scope Script -Value "$toolsFolder\ReadVersion\$appBuildFolder\ReadVersion.exe"
-Set-Variable updateVersion     -Option Constant -Scope Script -Value "$toolsFolder\UpdateVersion\$appBuildFolder\UpdateVersion.exe"
-Set-Variable docProject        -Option Constant -Scope Script -Value "src\DocGen\docgen.shfbproj"
+function Build-Code($target) {
+    & dotnet build -c $buildConfig $target
+}
+
+function Build-Documentation {
+    & msbuild -p:Configuration=$buildConfig "src\DocGen\docgen.shfbproj"
+}
+
+function Read-Version($target) {
+    $result = & "$toolsFolder\ReadVersion\$appBuildFolder\ReadVersion.exe" $target | Out-String
+    return $result.Trim()
+}
+
+function Increment-Version($version) {
+    $lastDotIndex = $version.LastIndexOf(".") + 1
+    $buildNumber = $version.Substring($lastDotIndex) -as [int]
+    $buildNumber++
+    return $version.Substring(0, $lastDotIndex) + $buildNumber
+}
+
+function Update-Version($target, $newVersion) {
+    & "$toolsFolder\UpdateVersion\$appBuildFolder\UpdateVersion.exe" $target $newVersion
+}
+
+function Reset-NuGetCache {
+    & nuget locals http-cache -clear
+}
+
+function Publish-Package($package) {
+    # Push package to NuGet if API key is defined
+    if ($env:GemstoneNuGetApiKey -ne $null) {
+        & dotnet nuget push $package -k $env:GemstoneNuGetApiKey -s https://api.nuget.org/v3/index.json
+    }
+
+    # Push package to GitHub Packages
+    if ($env:GHPackagesUser -ne $null -and $env:GHPackagesToken -ne $null) {
+        # This is a work around: https://github.com/NuGet/Home/issues/8580#issuecomment-555696372
+        & curl -vX PUT -u "$env:GHPackagesUser:$env:GHPackagesToken" -F package=@$package https://nuget.pkg.github.com/gemstone/
+    }
+
+    # Use this method when GitHub Packages for NuGet is fixed
+    # & dotnet nuget push $package --source "github"
+}
+
+# --------- Start Script ---------
 
 # Get latest root-dev project
 Set-Location $projectDir
@@ -86,6 +128,9 @@ $repos = [IO.File]::ReadAllLines("$projectDir\$rootDevRepo\$cloneCommandsFile")
 $repos = $repos | Where-Object { -not ($_.Trim().StartsWith("REM") -or [string]::IsNullOrWhiteSpace($_)) }
 
 # Extract only repo name
+$prefixLength = ("git clone ".Length + 1)
+$suffixLength = ".git".Length
+
 for ($i=0; $i -le $repos.Length; $i++) {
     $repos[$i] = $repos[$i].Substring($prefixLength + $githubOrgSite.Length).Trim()
     $repos[$i] = $repos[$i].Substring(0, $repos[$i].Length - $suffixLength)
@@ -112,11 +157,11 @@ if ($changed) {
     # Tag repo to mark new changes
     Tag-Repository $(get-date).ToString("yyyyMMddHHmmss")
 
+    $src = "$projectDir\$sharedContentRepo"
     $exclude = @("README.md")
 
     # Update all repos with shared-content updates
     foreach ($repo in $repos) {
-        $src = "$projectDir\$sharedContentRepo"
         $dst = "$projectDir\$repo"
 
         Get-ChildItem -Path $src -Recurse -Exclude $exclude | Copy-Item -Destination {
@@ -149,39 +194,38 @@ if ($changed) {
     "Building versioning tools..."
 
     Set-Location "$toolsFolder\ReadVersion"
-    dotnet build -c $buildConfig "ReadVersion.csproj"
+    Build-Code "ReadVersion.csproj"
 
     Set-Location "$toolsFolder\UpdateVersion"
-    dotnet build -c $buildConfig "UpdateVersion.csproj"
+    Build-Code "UpdateVersion.csproj"
 
     # Get current repo version - "Gemstone.Common" defines version for all repos
-    $version = & "$readVersion" "$projectDir\common" | Out-String
-    $version = $version.Trim()
+    $version = Read-Version "$projectDir\common"
 
     "Current Gemstone Libraries version = $version"
 
-    # Increment build number
-    $lastDotIndex = $version.LastIndexOf(".") + 1
-    $buildNumber = $version.Substring($lastDotIndex) -as [int]
-    $buildNumber++
-    $version = $version.Substring(0, $lastDotIndex) + $buildNumber
+    # Increment version build number
+    $version = Increment-Version $version
 
     "Updated Gemstone Libraries version = $version"
 
     # Handle versioning and building of each repo
     foreach ($repo in $repos) {
         # Update version in project file
-        & "$updateVersion" "$projectDir\$repo" "$version"
+        Update-Version "$projectDir\$repo" "$version"
 
         # Check-in version update
         Set-Location "$projectDir\$repo"
         Update-Repository "." "Updated gemstone/$repo version to $version" -push = $skipDocsBuild
 
-        # Build new version
-        dotnet build -c $buildConfig src
+        # Clear NuGet cache to force download of newest published packages
+        Reset-NuGetCache
+
+        # Build new library version using solution in "src" folder
+        Build-Code "src"
 
         if (-not $skipDocsBuild) {
-            msbuild -p:Configuration=$buildConfig $docProject
+            Build-Documentation
             Update-Repository "." "Built v$version documentation"
         }
 
@@ -194,29 +238,17 @@ if ($changed) {
         }
 
         # Query file system for package file to get proper casing
-        $packages = [IO.Directory]::GetFiles("$projectDir\$repo\$libBuildFolder", "*.nupkg")
+        $packages = [IO.Directory]::GetFiles("$projectDir\$repo\$libBuildFolder", "*.$version.nupkg")
 
         if ($packages.Length -gt 0) {
-            $package = $packages[0]
-
-            # Push package to NuGet if API key is defined
-            if ($env:GemstoneNuGetApiKey -ne $null) {
-                dotnet nuget push $package -k $env:GemstoneNuGetApiKey -s https://api.nuget.org/v3/index.json
-            }
-
-            # Push package to GitHub Packages
-            if ($env:GHPackagesUser -ne $null -and $env:GHPackagesToken -ne $null) {
-                # This is a work around: https://github.com/NuGet/Home/issues/8580#issuecomment-555696372
-                & curl -vX PUT -u "$env:GHPackagesUser:$env:GHPackagesToken" -F package=@$package https://nuget.pkg.github.com/gemstone/
-            }
-
-            # Use this method when GitHub Packages for NuGet is fixed
-            #dotnet nuget push $package --source "github"
+            Publish-Package $packages[0]
         }
         else {
             "No package found, build failure?"
         }
     }
+
+    "Build complete at " + $(get-date).ToString("yyyy-MM-dd HH:mm:ss") + "."
 }
 else {
     "Build skipped, no repos changed."
