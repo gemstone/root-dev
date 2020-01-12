@@ -14,7 +14,7 @@ param([string]$projectDir, [switch]$skipBuild = $false, [switch]$skipDocsBuild =
 
 # Validate script parameters
 if ([string]::IsNullOrWhiteSpace($projectDir)) {
-    throw “projectDir parameter was not provided, script terminated.”
+    throw "projectDir parameter was not provided, script terminated."
 }
 
 # Script Constants
@@ -95,7 +95,7 @@ function Reset-NuGetCache {
 }
 
 function Publish-Package($package) {
-    # Push package to NuGet if API key is defined
+    # Push package to NuGet
     if ($env:GemstoneNuGetApiKey -ne $null) {
         & dotnet nuget push $package -k $env:GemstoneNuGetApiKey -s "https://api.nuget.org/v3/index.json"
     }
