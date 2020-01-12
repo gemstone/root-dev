@@ -171,7 +171,7 @@ if ($changed) {
     # Handle versioning and building of each repo
     foreach ($repo in $repos) {
         # Update version in project file
-        & "$updateVersion" "$projectDir\$repo" "$version-beta"
+        & "$updateVersion" "$projectDir\$repo" "$version"
 
         # Check-in version update
         Set-Location "$projectDir\$repo"
@@ -205,7 +205,13 @@ if ($changed) {
             }
 
             # Push package to GitHub Packages
-            dotnet nuget push $package --source "github"
+            if ($env:GHPackagesUser -ne $null -and $env:GHPackagesToken -ne $null) {
+                # This is a work around: https://github.com/NuGet/Home/issues/8580#issuecomment-555696372
+                & curl -vX PUT -u "$env:GHPackagesUser:$env:GHPackagesToken" -F package=@$package https://nuget.pkg.github.com/gemstone/
+            }
+
+            # Use this method when GitHub Packages for NuGet is fixed
+            #dotnet nuget push $package --source "github"
         }
         else {
             "No package found, build failure?"
