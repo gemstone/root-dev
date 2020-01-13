@@ -207,7 +207,7 @@ if ($skipBuild) {
     return
 }
 
-# Fetch all primary repos and check for changes
+# Fetch clean primary repos and check for changes
 foreach ($repo in $repos) {
     Set-Location "$projectDir\$repo"
     Reset-Repository
@@ -231,16 +231,24 @@ if ($changed) {
     # Increment version build number
     $version = Increment-Version $version
 
-    "Updated Gemstone Libraries version = $version"
-
-    # Handle versioning and building of each repo
+    "Updating Gemstone Libraries version to $version"
+    
+    # Update version numerber in each repo project file
     foreach ($repo in $repos) {
-        # Update version in project file
         Update-Version "$projectDir\$repo" "$version"
 
         # Check-in version update
         Set-Location "$projectDir\$repo"
         Update-Repository "." "Updated gemstone/$repo version to $version" -push $skipDocsBuild
+    }
+
+    # Repos at this point are clean with updated versions - create source code zip file
+    "Creating zip archive for all Gemstone Library v$version source code..."
+    Get-ChildItem -Path $projectDir -Exclude @("nuget.config", ".git", "bin", "obj") | Compress-Archive "$projectDir\Gemstone-Source.zip" -CompressionLevel "Optimal"
+
+    # Build each repo project
+    foreach ($repo in $repos) {
+        Set-Location "$projectDir\$repo"
 
         # Clear NuGet cache to force download of newest published packages
         Reset-NuGetCache
@@ -274,7 +282,7 @@ if ($changed) {
 
     if (-not [string]::IsNullOrWhiteSpace($deployDir) -and [IO.Directory]::Exists($deployDir)) {
         try {
-            $dst = "$deployDir\release"
+            $dst = "$deployDir\release\v$version"
             $exclude = @("*.pdb")
 
             if ([IO.Directory]::Exists($dst)) {
@@ -297,6 +305,12 @@ if ($changed) {
                     }
                 } -Force -Exclude $exclude
             }
+
+            "Deploying zip archive containing v$version Gemstone Library binaries..."
+            Compress-Archive -Path "$dst\*" -DestinationPath "$dst\Gemstone-v$version-Binaries.zip" -CompressionLevel "Optimal"
+
+            "Deploying zip archive containing v$version Gemstone Library source code..."
+            Copy-Item "$projectDir\Gemstone-Source.zip" -Destination "$dst\Gemstone-v$version-Source.zip"
         }
         catch {
             "Failed while deploying libraries: $_"
