@@ -276,12 +276,12 @@ if ($changed) {
             $dst = "$deployDir\release"
             $exclude = @("*.pdb")
 
-            "Deploying libraries to $dst..."
-
             if ([IO.Directory]::Exists($dst)) {
                 "Deleting existing deployment at $dst..."
                 [IO.Directory]::Delete($dst, $true)
             }
+
+            "Deploying libraries to $dst..."
         
             [IO.Directory]::CreateDirectory($dst)
 
