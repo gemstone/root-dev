@@ -4,7 +4,13 @@
 # Optionally call with skip build switch to only update shared content:
 #     .\build-gemstone.ps1 "C:\Projects\gemstone" -skipBuild
 
-param([string]$projectDir, [switch]$skipBuild = $false, [switch]$skipDocsBuild = $false, [string]$buildConfig = "Release")
+param(
+    [string]$projectDir,
+    [switch]$skipBuild = $false,
+    [switch]$skipDocsBuild = $false,
+    [string]$buildConfig = "Release",
+    [string]$deployDir = ""
+)
 
 # Uncomment the following line to hardcode the project directory for testing
 $projectDir = "C:\Users\buildbot\Projects\gemstone"
@@ -265,6 +271,25 @@ if ($changed) {
         }
     }
 
+    if (-not [string]::IsNullOrWhiteSpace($deployDir) -and [IO.Directory]::Exists($deployDir)) {
+        $dst = $deployDir
+        $exclude = @("*.pdb")
+
+        "Deploying libraries to $dst..."
+
+        foreach ($repo in $repos) {            
+            $src ="$projectDir\$repo\$libBuildFolder"
+
+            Get-ChildItem -Path $src -Recurse -Exclude $exclude | Copy-Item -Destination {
+                if ($_.PSIsContainer) {
+                    Join-Path $dst $_.Parent.FullName.Substring($src.length)
+                } else {
+                    Join-Path $dst $_.FullName.Substring($src.length)
+                }
+            } -Force -Exclude $exclude
+        }
+    }
+    
     "Build complete at " + $(get-date).ToString("yyyy-MM-dd HH:mm:ss") + "."
 }
 else {
