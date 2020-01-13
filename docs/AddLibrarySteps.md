@@ -9,11 +9,13 @@
 7. Click on "Settings" from repo home page on GitHub, then
    1. Click "Edit" under Social preview and select "Upload an image..." and select "docs/img/gemstone-social-preview.png" from new repo
    2. Select "master branch / docs folder" under GitHub Pages Source
+   3. Click "Collaborators & teams" tab on the left, then click "Add a team" and select "Dev Team" from the list
+   4. Change the "Dev Team" permission level to "Write" - this gives developers write access to this repo
 8. From repo home page on GitHub, click on "environment" then click on "View deployment"
    1. Copy URL for repo's GitHub pages site, should be similar to https://gemstone.github.io/security/
    2. Return to repo home page on GitHub and click the "Edit" button (will be to right of repo description, like "Gemstone Security Library")
    3. Paste in GitHub pages URL under "Website" and click "Save"
-9. Add new repo's git URL to the [clone-all](https://github.com/gemstone/root-dev/blob/master/clone-commands.txt) script source 
+9. Add new repo's git URL to the `clone-all` script source: [clone-commands.txt](https://github.com/gemstone/root-dev/blob/master/clone-commands.txt) 
 
 ### Add New Library to Root Development Solution
 
