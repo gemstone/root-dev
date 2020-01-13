@@ -187,6 +187,9 @@ if ($changed) {
     foreach ($repo in $repos) {
         $dst = "$projectDir\$repo"
 
+        Set-Location $dst
+        Reset-Repository
+
         Get-ChildItem -Path $src -Recurse -Exclude $exclude | Copy-Item -Destination {
             if ($_.PSIsContainer) {
                 Join-Path $dst $_.Parent.FullName.Substring($src.length)
@@ -195,8 +198,6 @@ if ($changed) {
             }
         } -Force -Exclude $exclude
 
-        Set-Location $dst
-        
         Update-Repository "." "Updated shared content"
     }
 }
