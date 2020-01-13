@@ -13,7 +13,7 @@ param(
 )
 
 # Uncomment the following line to hardcode the project directory for testing
-$projectDir = "C:\Users\buildbot\Projects\gemstone"
+#$projectDir = "C:\Projects\gembuild"
 
 # Uncomment the following line to use WSL instead of Git for Windows
 #function git { & wsl git $args }
@@ -103,7 +103,7 @@ function Reset-NuGetCache {
 function Publish-Package($package) {
     # Push package to NuGet
     if ($env:GemstoneNuGetApiKey -ne $null) {
-        & dotnet nuget push $package --skip-duplicate -k $env:GemstoneNuGetApiKey -s "https://api.nuget.org/v3/index.json"
+        & dotnet nuget push $package -k $env:GemstoneNuGetApiKey -s "https://api.nuget.org/v3/index.json"
     }
 
     # Push package to GitHub Packages
@@ -272,21 +272,33 @@ if ($changed) {
     }
 
     if (-not [string]::IsNullOrWhiteSpace($deployDir) -and [IO.Directory]::Exists($deployDir)) {
-        $dst = $deployDir
-        $exclude = @("*.pdb")
+        try {
+            $dst = "$deployDir\release"
+            $exclude = @("*.pdb")
 
-        "Deploying libraries to $dst..."
+            "Deploying libraries to $dst..."
 
-        foreach ($repo in $repos) {            
-            $src ="$projectDir\$repo\$libBuildFolder"
+            if ([IO.Directory]::Exists($dst)) {
+                "Deleting existing deployment at $dst..."
+                [IO.Directory]::Delete($dst, $true)
+            }
+        
+            [IO.Directory]::CreateDirectory($dst)
 
-            Get-ChildItem -Path $src -Recurse -Exclude $exclude | Copy-Item -Destination {
-                if ($_.PSIsContainer) {
-                    Join-Path $dst $_.Parent.FullName.Substring($src.length)
-                } else {
-                    Join-Path $dst $_.FullName.Substring($src.length)
-                }
-            } -Force -Exclude $exclude
+            foreach ($repo in $repos) {            
+                $src ="$projectDir\$repo\$libBuildFolder"
+
+                Get-ChildItem -Path $src -Recurse -Exclude $exclude | Copy-Item -Destination {
+                    if ($_.PSIsContainer) {
+                        Join-Path $dst $_.Parent.FullName.Substring($src.length)
+                    } else {
+                        Join-Path $dst $_.FullName.Substring($src.length)
+                    }
+                } -Force -Exclude $exclude
+            }
+        }
+        catch {
+            "Failed while deploying libraries: $_"
         }
     }
     
