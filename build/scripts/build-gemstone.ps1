@@ -244,7 +244,7 @@ if ($changed) {
 
     # Repos at this point are clean with updated versions - create source code zip file
     "Creating zip archive for all Gemstone Library v$version source code..."
-    Get-ChildItem -Path $projectDir -Exclude @("nuget.config", ".git", "bin", "obj") | Compress-Archive "$projectDir\Gemstone-Source.zip" -CompressionLevel "Optimal"
+    Get-ChildItem -Path $projectDir -Exclude @("nuget.config", ".git", "bin", "obj") | Compress-Archive -DestinationPath "$projectDir\Gemstone-Source.zip" -CompressionLevel "Optimal"
 
     # Build each repo project
     foreach ($repo in $repos) {
