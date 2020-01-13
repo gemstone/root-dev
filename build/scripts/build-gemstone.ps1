@@ -141,7 +141,7 @@ Reset-Repository
 $repos = [IO.File]::ReadAllLines("$projectDir\$rootDevRepo\$cloneCommandsFile")
 
 # Remove any comment lines from loaded repo list
-$repos = $repos | Where-Object { -not ($_.Trim().StartsWith("REM") -or [string]::IsNullOrWhiteSpace($_)) }
+$repos = $repos | Where-Object { -not ([string]::IsNullOrWhiteSpace($_) -or $_.Trim().StartsWith("REM")) }
 
 # Extract only repo name
 $prefixLength = ("git clone ".Length + 1)
