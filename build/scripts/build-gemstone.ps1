@@ -7,7 +7,7 @@
 param([string]$projectDir, [switch]$skipBuild = $false, [switch]$skipDocsBuild = $false, [string]$buildConfig = "Release")
 
 # Uncomment the following line to hardcode the project directory for testing
-#$projectDir = "C:\Projects\gembuild"
+$projectDir = "C:\Users\buildbot\Projects\gemstone"
 
 # Uncomment the following line to use WSL instead of Git for Windows
 #function git { & wsl git $args }
@@ -147,7 +147,7 @@ $repos = $repos | Where-Object { -not ([string]::IsNullOrWhiteSpace($_) -or $_.T
 $prefixLength = ("git clone ".Length + 1)
 $suffixLength = ".git".Length
 
-for ($i=0; $i -le $repos.Length; $i++) {
+for ($i=0; $i -lt $repos.Length; $i++) {
     $repos[$i] = $repos[$i].Substring($prefixLength + $githubOrgSite.Length).Trim()
     $repos[$i] = $repos[$i].Substring(0, $repos[$i].Length - $suffixLength)
 }
