@@ -97,7 +97,7 @@ function Reset-NuGetCache {
 function Publish-Package($package) {
     # Push package to NuGet
     if ($env:GemstoneNuGetApiKey -ne $null) {
-        & dotnet nuget push $package -k $env:GemstoneNuGetApiKey -s "https://api.nuget.org/v3/index.json"
+        & dotnet nuget push $package --skip-duplicate -k $env:GemstoneNuGetApiKey -s "https://api.nuget.org/v3/index.json"
     }
 
     # Push package to GitHub Packages
