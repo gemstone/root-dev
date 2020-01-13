@@ -121,6 +121,7 @@ function Publish-Package($package) {
         $encodedCreds = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($credentials))
         $headers = @{ Authorization = "Basic $encodedCreds" }
 
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         Invoke-WebRequest -Method PUT -ContentType "multipart/form-data; boundary=`"$boundary`"" -Body $bodyLines `
                           -Uri "https://nuget.pkg.github.com/gemstone/" -Headers $headers -Verbose
     }
