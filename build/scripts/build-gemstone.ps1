@@ -28,7 +28,7 @@ Set-Variable githubOrgSite     -Option Constant -Scope Script -Value "https://gi
 Set-Variable rootDevRepo       -Option Constant -Scope Script -Value "root-dev"
 Set-Variable sharedContentRepo -Option Constant -Scope Script -Value "shared-content"
 Set-Variable templateRepo      -Option Constant -Scope Script -Value "gemtem"
-Set-Variable cloneCommandsFile -Option Constant -Scope Script -Value "clone-commands.txt"
+Set-Variable reposFile         -Option Constant -Scope Script -Value "repos.txt"
 Set-Variable libBuildFolder    -Option Constant -Scope Script -Value "build\$buildConfig"
 Set-Variable appBuildFolder    -Option Constant -Scope Script -Value "bin\$buildConfig\netcoreapp3.1"
 Set-Variable toolsFolder       -Option Constant -Scope Script -Value "$projectDir\$rootDevRepo\tools"
@@ -307,20 +307,11 @@ Clone-Repository "$githubOrgSite/$rootDevRepo.git"
 Set-Location $rootDevRepo
 Reset-Repository
 
-# Load repo list from clone-commands.txt - this is expected to be in desired build dependency order
-$repos = [IO.File]::ReadAllLines("$projectDir\$rootDevRepo\$cloneCommandsFile")
+# Load repo list from repos.txt - this is expected to be in desired build dependency order
+$repos = [IO.File]::ReadAllLines("$projectDir\$rootDevRepo\$reposFile")
 
 # Remove any comment lines from loaded repo list
-$repos = $repos | Where-Object { -not ([string]::IsNullOrWhiteSpace($_) -or $_.Trim().StartsWith("REM")) }
-
-# Extract only repo name
-$prefixLength = ("git clone ".Length + 1)
-$suffixLength = ".git".Length
-
-for ($i=0; $i -lt $repos.Length; $i++) {
-    $repos[$i] = $repos[$i].Substring($prefixLength + $githubOrgSite.Length).Trim()
-    $repos[$i] = $repos[$i].Substring(0, $repos[$i].Length - $suffixLength)
-}
+$repos = $repos | Where-Object { -not ([string]::IsNullOrWhiteSpace($_) -or $_.Trim().StartsWith("::")) }
 
 Set-Location $projectDir
 

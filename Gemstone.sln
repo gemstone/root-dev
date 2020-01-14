@@ -97,13 +97,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{9F2D9572-1F19-4784-9A4F-9F0764F69EF2}"
 	ProjectSection(SolutionItems) = preProject
 		clone-all.cmd = clone-all.cmd
+		clone-all.ps1 = clone-all.ps1
 		clone-all.sh = clone-all.sh
-		clone-commands.txt = clone-commands.txt
 		commit-all.cmd = commit-all.cmd
 		pull-all.cmd = pull-all.cmd
 		pull-all.sh = pull-all.sh
 		push-all.cmd = push-all.cmd
 		push-all.sh = push-all.sh
+		repos.txt = repos.txt
 		status-all.cmd = status-all.cmd
 		status-all.sh = status-all.sh
 	EndProjectSection

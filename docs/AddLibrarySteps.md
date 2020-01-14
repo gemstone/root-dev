@@ -15,7 +15,7 @@
    1. Copy URL for repo's GitHub pages site, should be similar to https://gemstone.github.io/security/
    2. Return to repo home page on GitHub and click the "Edit" button (will be to right of repo description, like "Gemstone Security Library")
    3. Paste in GitHub pages URL under "Website" and click "Save"
-9. Add new repo's git URL to the `clone-all` script source: [clone-commands.txt](https://github.com/gemstone/root-dev/blob/master/clone-commands.txt) 
+9. Add new repository name, e.g., `security`, to [repos.txt](https://github.com/gemstone/root-dev/blob/master/repos.txt) in build depdency order
 
 ### Add New Library to Root Development Solution
 

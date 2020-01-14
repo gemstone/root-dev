@@ -1,6 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 clonefile=/tmp/clonefile
-cp "clone-commands.txt" "$clonefile"
+input="repos.txt"
+
+touch $clonefile
+
+while IFS= read -r line
+do
+    if ! [[ $line =~ ^::.* ]]; then
+		line=`echo $line | sed 's/\r//'` 
+		echo "git clone https://github.com/gemstone/${line}.git" >> $clonefile
+	fi
+done < "$input"
+
 chmod +x "$clonefile"
 
 cd ..

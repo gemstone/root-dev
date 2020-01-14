@@ -1,0 +1,11 @@
+:: Following repos should be in proper build dependency order
+shared-content
+gemtem
+pqdif
+common
+numeric
+expressions
+threading
+io
+data
+security
