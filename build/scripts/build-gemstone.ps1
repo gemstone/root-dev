@@ -13,7 +13,7 @@ param(
 )
 
 # Uncomment the following line to hardcode the project directory for testing
-#$projectDir = "C:\Projects\gembuild"
+#$projectDir = "D:\Projects\gembuild"
 
 # Uncomment the following line to use WSL instead of Git for Windows
 #function git { & wsl git $args }
@@ -87,8 +87,8 @@ function Build-Documentation {
 }
 
 function Read-Version($target, [ref] $result) {
-    $result = & "$toolsFolder\ReadVersion\$appBuildFolder\ReadVersion.exe" $target | Out-String
-    $result =  $result.Trim()    
+    $result.Value = & "$toolsFolder\ReadVersion\$appBuildFolder\ReadVersion.exe" $target | Out-String
+    $result.Value = $result.Value.Trim()    
     return $?
 }
 
@@ -150,14 +150,14 @@ function Build-Repos($repos) {
 
         Set-Location "$toolsFolder\ReadVersion"
 
-        if (-not Build-Code("ReadVersion.csproj")) {
+        if (-not (Build-Code "ReadVersion.csproj")) {
             "ERROR: Failed to build ReadVersion tool."
             return $false
         }
 
         Set-Location "$toolsFolder\UpdateVersion"
 
-        if (-not Build-Code("UpdateVersion.csproj")) {
+        if (-not (Build-Code "UpdateVersion.csproj")) {
             "ERROR: Failed to build UpdateVersion tool."
             return $false
         }
@@ -165,7 +165,7 @@ function Build-Repos($repos) {
         $version = "0.0.0"
 
         # Get current repo version - "Gemstone.Common" defines version for all repos
-        if (-not Read-Version("$projectDir\common", ([ref]$version))) {
+        if (-not (Read-Version "$projectDir\common" ([ref]$version))) {
             "ERROR: Failed to read gemstone/common version."
             return $false
         }
@@ -179,7 +179,7 @@ function Build-Repos($repos) {
         
         # Update version number in each repo project file
         foreach ($repo in $repos) {        
-            if (-not Update-Version("$projectDir\$repo", $version)) {
+            if (-not (Update-Version "$projectDir\$repo", $version)) {
                 "ERROR: Failed to update gemstone/$repo version."
                 return $false
             }
@@ -209,7 +209,7 @@ function Build-Repos($repos) {
             Reset-NuGetCache
 
             # Build new library version using solution in "src" folder
-            if (-not Build-Code("src")) {
+            if (-not (Build-Code "src")) {
                 "ERROR: Failed to build gemstone/$repo."
                 return $false
             }
@@ -381,7 +381,7 @@ if ($changed) {
             if ([IO.Directory]::Exists($deployDir)) {
                 Deploy-Repos $repos
             } else {
-                "WARNING: Deployment skipped, deployment directory ""$deployDir"" does not exist.")
+                "WARNING: Deployment skipped, deployment directory ""$deployDir"" does not exist."
             }
         }
 
