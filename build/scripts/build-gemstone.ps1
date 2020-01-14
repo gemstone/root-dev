@@ -233,7 +233,7 @@ if ($changed) {
 
     "Updating Gemstone Libraries version to $version"
     
-    # Update version numerber in each repo project file
+    # Update version number in each repo project file
     foreach ($repo in $repos) {
         Update-Version "$projectDir\$repo" "$version"
 
@@ -244,7 +244,15 @@ if ($changed) {
 
     # Repos at this point are clean with updated versions - create source code zip file
     "Creating zip archive for all Gemstone Library v$version source code..."
-    Get-ChildItem -Path $projectDir -Exclude @("nuget.config", ".git", "bin", "obj") | Compress-Archive -DestinationPath "$projectDir\Gemstone-Source.zip" -CompressionLevel "Optimal"
+
+    # Remove any existing zip file
+    Remove-Item "$projectDir\Gemstone-Source.zip"
+
+    # Add desired source items to new zip file
+    Get-ChildItem -Path $projectDir -Exclude @("nuget.config") |
+        Where { $_.Name -ne "bin" -and $_.Name -ne "obj" } |
+        Where { $_.FullName -notlike "*\bin\*" -and $_.FullName -notlike "*\obj\*" } |
+        Compress-Archive -DestinationPath "$projectDir\Gemstone-Source.zip" -CompressionLevel "Optimal"
 
     # Build each repo project
     foreach ($repo in $repos) {
