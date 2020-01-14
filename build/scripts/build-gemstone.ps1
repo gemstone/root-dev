@@ -43,13 +43,17 @@ function Tag-Repository($tagName) {
     & git push --tags
 }
 
-function Update-Repository($file, $message, $push = $true) {
+function Commit-Repository($file, $message) {
     & git add $file
     & git commit -m "$message"
+}
 
-    if ($push) {
-        & git push
-    }
+function Push-Repository {
+    & git push
+}
+
+function Reset-RepositoryTarget($target) {
+    & git checkout -- $target
 }
 
 function Reset-Repository {
@@ -74,15 +78,18 @@ function Test-RepositoryChanged {
 
 function Build-Code($target) {
     & dotnet build -c $buildConfig $target
+    return $?
 }
 
 function Build-Documentation {
     & msbuild -p:Configuration=$buildConfig "src\DocGen\docgen.shfbproj"
+    return $?
 }
 
-function Read-Version($target) {
+function Read-Version($target, [ref] $result) {
     $result = & "$toolsFolder\ReadVersion\$appBuildFolder\ReadVersion.exe" $target | Out-String
-    return $result.Trim()
+    $result =  $result.Trim()    
+    return $?
 }
 
 function Increment-Version($version) {
@@ -94,6 +101,7 @@ function Increment-Version($version) {
 
 function Update-Version($target, $newVersion) {
     & "$toolsFolder\UpdateVersion\$appBuildFolder\UpdateVersion.exe" $target $newVersion
+    return $?
 }
 
 function Reset-NuGetCache {
@@ -134,6 +142,161 @@ function Publish-Package($package) {
 
     # Use this method when GitHub Packages for NuGet is fixed
     # & dotnet nuget push $package --source "github"
+}
+
+function Build-Repos($repos) {
+    try {
+        "Building versioning tools..."
+
+        Set-Location "$toolsFolder\ReadVersion"
+
+        if (-not Build-Code("ReadVersion.csproj")) {
+            "ERROR: Failed to build ReadVersion tool."
+            return $false
+        }
+
+        Set-Location "$toolsFolder\UpdateVersion"
+
+        if (-not Build-Code("UpdateVersion.csproj")) {
+            "ERROR: Failed to build UpdateVersion tool."
+            return $false
+        }
+
+        $version = "0.0.0"
+
+        # Get current repo version - "Gemstone.Common" defines version for all repos
+        if (-not Read-Version("$projectDir\common", ([ref]$version))) {
+            "ERROR: Failed to read gemstone/common version."
+            return $false
+        }
+
+        "Current Gemstone Libraries version = $version"
+
+        # Increment version build number
+        $version = Increment-Version $version
+
+        "Updating Gemstone Libraries version to $version"
+        
+        # Update version number in each repo project file
+        foreach ($repo in $repos) {        
+            if (-not Update-Version("$projectDir\$repo", $version)) {
+                "ERROR: Failed to update gemstone/$repo version."
+                return $false
+            }
+
+            # Commit version update
+            Set-Location "$projectDir\$repo"
+            Commit-Repository "." "Updated gemstone/$repo version to $version"
+        }
+
+        # Repos at this point are clean with updated versions - create source code zip file
+        "Creating zip archive for all Gemstone Library v$version source code..."
+
+        # Remove any existing zip file
+        Remove-Item "$projectDir\Gemstone-Source.zip"
+
+        # Add desired source items to new zip file
+        Get-ChildItem -Path $projectDir -Exclude @("nuget.config") |
+            Where { $_.Name -ne "bin" -and $_.Name -ne "obj" } |
+            Where { $_.FullName -notlike "*\bin\*" -and $_.FullName -notlike "*\obj\*" } |
+            Compress-Archive -DestinationPath "$projectDir\Gemstone-Source.zip" -CompressionLevel "Optimal"
+
+        # Build each repo project
+        foreach ($repo in $repos) {
+            Set-Location "$projectDir\$repo"
+
+            # Clear NuGet cache to force download of newest published packages
+            Reset-NuGetCache
+
+            # Build new library version using solution in "src" folder
+            if (-not Build-Code("src")) {
+                "ERROR: Failed to build gemstone/$repo."
+                return $false
+            }
+
+            # Build library documentation
+            if (-not $skipDocsBuild) {
+                if (Build-Documentation) {
+                    Commit-Repository "." "Built gemstone/$repo v$version documentation"
+                }
+                else {
+                    "ERROR: Failed while building gemstone/$repo v$version documentation."
+                    "RESUMING: Failure to build documentation is considered non-fatal, build will continue..."
+                    "Undoing changes to build documentation..."
+                    Reset-RepositoryTarget "docs/help"
+                }
+            }
+
+            # Tag new version
+            Tag-Repository "v$version"
+
+            # Skip package push for template repository
+            if ($repo -eq $templateRepo) {
+                continue
+            }
+
+            # Query file system for package file to get proper casing
+            $packages = [IO.Directory]::GetFiles("$projectDir\$repo\$libBuildFolder", "*.$version.nupkg")
+
+            if ($packages.Length -gt 0) {
+                Publish-Package $packages[0]
+            }
+            else {
+                "WARNING: No gemstone/$repo v$version package found, build failure? No package pushed."
+            }
+        }
+
+        return $true
+    }
+    catch {
+        "ERROR: Failed while building gemstone libraries: $_"
+        return $false
+    }
+}
+
+function Push-Repos($repos) {
+    foreach ($repo in $repos) {
+        Set-Location "$projectDir\$repo"
+        Push-Repository
+    }
+}
+
+function Deploy-Repos($repos) {
+    try {
+        $dst = "$deployDir\release\v$version"
+        $exclude = @("*.pdb")
+
+        if ([IO.Directory]::Exists($dst)) {
+            "Deleting existing deployment at $dst..."
+            [IO.Directory]::Delete($dst, $true)
+        }
+
+        "Deploying libraries to $dst..."
+    
+        [IO.Directory]::CreateDirectory($dst)
+
+        foreach ($repo in $repos) {            
+            $src ="$projectDir\$repo\$libBuildFolder"
+
+            Get-ChildItem -Path $src -Recurse -Exclude $exclude | Copy-Item -Destination {
+                if ($_.PSIsContainer) {
+                    Join-Path $dst $_.Parent.FullName.Substring($src.length)
+                } else {
+                    Join-Path $dst $_.FullName.Substring($src.length)
+                }
+            } -Force -Exclude $exclude
+        }
+
+        "Deploying zip archive containing v$version Gemstone Library binaries..."
+        Compress-Archive -Path "$dst\*" -DestinationPath "$dst\Gemstone-v$version-Binaries.zip" -CompressionLevel "Optimal"
+
+        "Deploying zip archive containing v$version Gemstone Library source code..."
+        Copy-Item "$projectDir\Gemstone-Source.zip" -Destination "$dst\Gemstone-v$version-Source.zip"
+    }
+    catch {
+        "ERROR: Failed while deploying gemstone libraries: $_"
+        "RESUMING: Failure to deploy libraries is considered non-fatal, build will continue..."
+    }
 }
 
 # --------- Start Script ---------
@@ -198,12 +361,13 @@ if ($changed) {
             }
         } -Force -Exclude $exclude
 
-        Update-Repository "." "Updated shared content"
+        Commit-Repository "." "Updated shared content"
+        Push-Repository
     }
 }
 
 if ($skipBuild) {
-    "Build skipped per command line switch."
+    "SKIPPED: Build skipped at " + $(get-date).ToString("yyyy-MM-dd HH:mm:ss") + " --  per command line switch."
     return
 }
 
@@ -214,121 +378,30 @@ foreach ($repo in $repos) {
     $changed = $changed -or (Test-RepositoryChanged)
 }
 
-if ($changed) {
-    "Building versioning tools..."
+if ($changed) {    
+    if (Build-Repos($repos)) {
+        "Completed building gemstone libraries, pushing changes to GitHub..."
+        Push-Repos $repos
 
-    Set-Location "$toolsFolder\ReadVersion"
-    Build-Code "ReadVersion.csproj"
-
-    Set-Location "$toolsFolder\UpdateVersion"
-    Build-Code "UpdateVersion.csproj"
-
-    # Get current repo version - "Gemstone.Common" defines version for all repos
-    $version = Read-Version "$projectDir\common"
-
-    "Current Gemstone Libraries version = $version"
-
-    # Increment version build number
-    $version = Increment-Version $version
-
-    "Updating Gemstone Libraries version to $version"
-    
-    # Update version number in each repo project file
-    foreach ($repo in $repos) {
-        Update-Version "$projectDir\$repo" "$version"
-
-        # Check-in version update
-        Set-Location "$projectDir\$repo"
-        Update-Repository "." "Updated gemstone/$repo version to $version" -push $skipDocsBuild
-    }
-
-    # Repos at this point are clean with updated versions - create source code zip file
-    "Creating zip archive for all Gemstone Library v$version source code..."
-
-    # Remove any existing zip file
-    Remove-Item "$projectDir\Gemstone-Source.zip"
-
-    # Add desired source items to new zip file
-    Get-ChildItem -Path $projectDir -Exclude @("nuget.config") |
-        Where { $_.Name -ne "bin" -and $_.Name -ne "obj" } |
-        Where { $_.FullName -notlike "*\bin\*" -and $_.FullName -notlike "*\obj\*" } |
-        Compress-Archive -DestinationPath "$projectDir\Gemstone-Source.zip" -CompressionLevel "Optimal"
-
-    # Build each repo project
-    foreach ($repo in $repos) {
-        Set-Location "$projectDir\$repo"
-
-        # Clear NuGet cache to force download of newest published packages
-        Reset-NuGetCache
-
-        # Build new library version using solution in "src" folder
-        Build-Code "src"
-
-        if (-not $skipDocsBuild) {
-            Build-Documentation
-            Update-Repository "." "Built gemstone/$repo v$version documentation"
-        }
-
-        # Tag new version
-        Tag-Repository "v$version"
-
-        # Skip package push for template repository
-        if ($repo -eq $templateRepo) {
-            continue
-        }
-
-        # Query file system for package file to get proper casing
-        $packages = [IO.Directory]::GetFiles("$projectDir\$repo\$libBuildFolder", "*.$version.nupkg")
-
-        if ($packages.Length -gt 0) {
-            Publish-Package $packages[0]
+        if ([string]::IsNullOrWhiteSpace($deployDir)) {
+            "SKIPPED: Deployment skipped,  no deployment directory specified."
         }
         else {
-            "No package found, build failure?"
-        }
-    }
-
-    if (-not [string]::IsNullOrWhiteSpace($deployDir) -and [IO.Directory]::Exists($deployDir)) {
-        try {
-            $dst = "$deployDir\release\v$version"
-            $exclude = @("*.pdb")
-
-            if ([IO.Directory]::Exists($dst)) {
-                "Deleting existing deployment at $dst..."
-                [IO.Directory]::Delete($dst, $true)
+            if ([IO.Directory]::Exists($deployDir)) {
+                Deploy-Repos $repos
+            } else {
+                "WARNING: Deployment skipped, deployment directory ""$deployDir"" does not exist.")
             }
-
-            "Deploying libraries to $dst..."
-        
-            [IO.Directory]::CreateDirectory($dst)
-
-            foreach ($repo in $repos) {            
-                $src ="$projectDir\$repo\$libBuildFolder"
-
-                Get-ChildItem -Path $src -Recurse -Exclude $exclude | Copy-Item -Destination {
-                    if ($_.PSIsContainer) {
-                        Join-Path $dst $_.Parent.FullName.Substring($src.length)
-                    } else {
-                        Join-Path $dst $_.FullName.Substring($src.length)
-                    }
-                } -Force -Exclude $exclude
-            }
-
-            "Deploying zip archive containing v$version Gemstone Library binaries..."
-            Compress-Archive -Path "$dst\*" -DestinationPath "$dst\Gemstone-v$version-Binaries.zip" -CompressionLevel "Optimal"
-
-            "Deploying zip archive containing v$version Gemstone Library source code..."
-            Copy-Item "$projectDir\Gemstone-Source.zip" -Destination "$dst\Gemstone-v$version-Source.zip"
         }
-        catch {
-            "Failed while deploying libraries: $_"
-        }
+
+        "SUCCESS: Build complete at " + $(get-date).ToString("yyyy-MM-dd HH:mm:ss") + "."
     }
-    
-    "Build complete at " + $(get-date).ToString("yyyy-MM-dd HH:mm:ss") + "."
+    else {
+        "FAILED: Build canceled at " + $(get-date).ToString("yyyy-MM-dd HH:mm:ss") + "."
+    }
 }
 else {
-    "Build skipped, no repos changed."
+    "SKIPPED: Build skipped at " + $(get-date).ToString("yyyy-MM-dd HH:mm:ss") + " -- no repos changed."
 }
 
 Set-Location $projectDir
