@@ -23,6 +23,9 @@ if ([string]::IsNullOrWhiteSpace($projectDir)) {
     throw "projectDir parameter was not provided, script terminated."
 }
 
+# Script Variables
+Set-Variable version -Scope Script -Value "0.0.0"
+
 # Script Constants
 Set-Variable githubOrgSite     -Option Constant -Scope Script -Value "https://github.com/gemstone"
 Set-Variable rootDevRepo       -Option Constant -Scope Script -Value "root-dev"
@@ -161,8 +164,6 @@ function Build-Repos($repos) {
             "ERROR: Failed to build UpdateVersion tool."
             return $false
         }
-
-        $version = "0.0.0"
 
         # Get current repo version - "Gemstone.Common" defines version for all repos
         if (-not (Read-Version "$projectDir\common" ([ref]$version))) {
