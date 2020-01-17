@@ -19,7 +19,7 @@ Ideally Gemstone libraries should [target multiple frameworks]( https://docs.mic
 3. Once template is created, clone locally and run "RenameProject.bat" script
 4. Type a PascalCase named like "Security" (no quotes)
 5. After renaming completes, delete "RenameProject.bat" file and "build /tools" folder in new repo
-6. Check-in renamed project with a commit message like "Renamed template to Gemstone.Security"
+6. Commit renamed project with a message like "Renamed template to Gemstone.Security", and push to GitHub
 7. Click on "Settings" from repo home page on GitHub, then
    1. Click "Edit" under Social preview and select "Upload an image..." and select "docs/img/gemstone-social-preview.png" from new repo
    2. Select "master branch / docs folder" under GitHub Pages Source
