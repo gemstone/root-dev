@@ -2,15 +2,15 @@
  
 ### Philosophies
 
-As its name infers, the Gemstone Libraries GitHub organizational site, https://github.com/gemstone, is for "libraries", i.e., sets of reusable code that can be packaged and referenced by other libraries and applications. As such, an "application" project would not be a suitable project type. Libraries can contain helper applications as part of their source code, but the primary project should be a library, i.e., ` <OutputType>Library</OutputType>`.
+As its name infers, the Gemstone Libraries GitHub organizational site, https://github.com/gemstone, is for "libraries", i.e., sets of reusable code that can be packaged and referenced by other libraries and applications. As such, an "application" project would not be a suitable project type. Libraries can contain helper applications as part of their source code, but the primary project should be a library, i.e., `<OutputType>Library</OutputType>`.
 
-Each new library in Gemstone should be as standalone as possible to make it readily accessible as a package and usable by a variety of projects. It is OK to reference other Gemstone libraries as well as other packages, but this should be limited to exactly what is needed. External package sources should be limited to either Nuget or Github.
+Each new library in Gemstone should be as standalone as possible to make it readily accessible as a package and usable by a variety of projects. It is OK to reference other Gemstone libraries as well as other packages, but this should be limited to exactly what is needed. External package sources should be limited to either NuGet or GitHub.
 
 When choosing external packages to reference, care should be taken to evaluate the source quality. Consequently, only libraries that are open source should be used so that source quality _can_ be evaluated. Additionally, make sure the license of referenced packages is compatible with the [Gemstone MIT license]( https://github.com/gemstone/root-dev/blob/master/LICENSE).
 
 When possible, Gemstone libraries should use [.NET standard]( https://dotnet.microsoft.com/platform/dotnet-standard) to make the library more widely accessible. Exceptions will be for technologies, such as [ASP.NET Core]( https://github.com/dotnet/aspnetcore), that may only be available for [.NET Core]( https://github.com/dotnet/core).
 
-Ideally Gemstone libraries should [target multiple frameworks]( https://docs.microsoft.com/en-us/dotnet/standard/frameworks) to accommodate more deployment options. As new C# and/or .NET features become available that improve a library’s security, performance, or portability, dropping older _less used_ target frameworks should be preferred to using [`#if/#else/endif` preprocessor directives]( https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/preprocessor-directives/preprocessor-if) for multiple code implementations, as this becomes more difficult to maintain. If the change separates one or more _highly used_ framework targets, use your best judgement, as a primary goal is always to make the library widely usable.
+Ideally Gemstone libraries should [target multiple frameworks]( https://docs.microsoft.com/en-us/dotnet/standard/frameworks) to accommodate more deployment options. As new C# and/or .NET features become available that improve a library's security, performance, or portability, dropping older _less used_ target frameworks should be preferred to using [`#if/#else/endif` preprocessor directives]( https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/preprocessor-directives/preprocessor-if) for multiple code implementations, as this becomes more difficult to maintain. If the change separates one or more _highly used_ framework targets, use your best judgment, as a primary goal is always to make the library widely usable.
 
 ### Create new Gemstone Library based on Template
  
@@ -29,7 +29,7 @@ Ideally Gemstone libraries should [target multiple frameworks]( https://docs.mic
    1. Copy URL for repo's GitHub pages site, should be similar to https://gemstone.github.io/security/
    2. Return to repo home page on GitHub and click the "Edit" button (will be to right of repo description, like "Gemstone Security Library")
    3. Paste in GitHub pages URL under "Website" and click "Save"
-9. Add new repository name, e.g., `security`, to [repos.txt](https://github.com/gemstone/root-dev/blob/master/repos.txt) in build depdency order
+9. Add new repository name, e.g., `security`, to [repos.txt](https://github.com/gemstone/root-dev/blob/master/repos.txt) in build dependency order
  
 ### Add New Library to Root Development Solution
  
