@@ -10,6 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{71EF20
 		..\common\docs\README.md = ..\common\docs\README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Communication", "Communication", "{FFF67D8B-0B81-4D25-BAB8-A742AA3CA241}"
+	ProjectSection(SolutionItems) = preProject
+		..\communication\docs\README.md = ..\communication\docs\README.md
+	EndProjectSection
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{2A350112-47E5-446A-A286-A9053A473029}"
 	ProjectSection(SolutionItems) = preProject
 		..\data\docs\README.md = ..\data\docs\README.md
@@ -53,6 +58,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Common", "..\common\src\Gemstone\Gemstone.Common.csproj", "{721D3830-2CD7-45DE-A288-4FAF1D53CEC6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Common.UnitTests", "..\common\src\UnitTests\Gemstone.Common.UnitTests.csproj", "{41B5D5D3-9A97-48ED-840C-188A0CA95480}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Communication", "..\communication\src\Gemstone.Communication\Gemstone.Communication.csproj", "{564FAD94-82B0-4E1B-A806-84C67AE6A15F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Communication.UnitTests", "..\communication\src\UnitTests\Gemstone.Communication.UnitTests.csproj", "{78E98006-F8FF-42D9-851E-92EFDFBECC57}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Expressions", "..\expressions\src\Gemstone.Expressions\Gemstone.Expressions.csproj", "{342E81B2-4952-4951-AC90-FD194C9F7956}"
 EndProject
@@ -171,6 +180,10 @@ Global
 		{A37248E8-E8DE-437C-9C81-DBDF40B3880D}.Development|Any CPU.Build.0 = Development|Any CPU
 		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.Build.0 = Development|Any CPU
+		{564FAD94-82B0-4E1B-A806-84C67AE6A15F}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{564FAD94-82B0-4E1B-A806-84C67AE6A15F}.Development|Any CPU.Build.0 = Development|Any CPU
+		{78E98006-F8FF-42D9-851E-92EFDFBECC57}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{78E98006-F8FF-42D9-851E-92EFDFBECC57}.Development|Any CPU.Build.0 = Development|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -202,6 +215,8 @@ Global
 		{FBE2039F-10E7-4D5C-A85C-07339CF150AA} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
 		{6D3343C6-F1CE-496A-8CBD-92EC539528E2} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
 		{EF7FB29D-5AA1-430E-B350-EE953E1E82AE} = {6D3343C6-F1CE-496A-8CBD-92EC539528E2}
+		{564FAD94-82B0-4E1B-A806-84C67AE6A15F} = {FFF67D8B-0B81-4D25-BAB8-A742AA3CA241}
+		{78E98006-F8FF-42D9-851E-92EFDFBECC57} = {FFF67D8B-0B81-4D25-BAB8-A742AA3CA241}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7EDA96F-4985-48C5-80B2-764F45AA8EA5}
