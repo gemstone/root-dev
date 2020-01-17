@@ -3,6 +3,15 @@
 
 # root-dev
 
+The [Gemstone Libraries](https://github.com/gemstone), maintained by the [Grid Protection Alliance](https://gridprotectionalliance.org/) (GPA), are a collection of useful open source .NET code based on [continuous development since 2004](https://github.com/GridProtectionAlliance/gsf/graphs/contributors). These libraries represent a focused re-envisioning of the best code, i.e., the "gems", from the [Grid Solutions Framework](https://github.com/GridProtectionAlliance/gsf/) (GSF), which has long been in use by various open source projects and electric power utilities worldwide.
+
+The Gemstone Libraries contain a large variety of code useful for any .NET project with of hundreds of class libraries that extend or expand the functionality provided with .NET, including many tools and protocol parsers that are useful for the electric power industry.
+
+* **Learn:** _To start learning about the code available in the Gemstone Libraries, start with documentation for **[gemstone/common](https://gemstone.github.io/common/)**._
+
+* **Use:** _To start using the Gemstone Libraries in an existing .NET application, reference one of the packages from **[NuGet](https://www.nuget.org/packages?q=Gemstone)** or **[GitHub](https://github.com/orgs/gemstone/packages)**._
+
+* **Develop:** _To compile or develop with the Gemstone Libraries at a source code level, start with the following instructions:_
 
 ### GPA Gemstone Root Development Solution
 

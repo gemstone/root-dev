@@ -1,8 +1,8 @@
 # Adding a New Gemstone Library
- 
+
 ### Philosophies
 
-As its name infers, the Gemstone Libraries GitHub organizational site, https://github.com/gemstone, is for "libraries", i.e., sets of reusable code that can be packaged and referenced by other libraries and applications. As such, an "application" project would not be a suitable project type. Libraries can contain helper applications as part of their source code, but the primary project should be a library, i.e., `<OutputType>Library</OutputType>`.
+As its name infers, the Gemstone Libraries site is for "libraries", i.e., sets of reusable code that can be packaged and referenced by other libraries and applications. As such, an "application" project would not be a suitable project type. Libraries can contain helper applications as part of their source code, but the primary project should be a library, i.e., `<OutputType>Library</OutputType>`.
 
 Each new library in Gemstone should be as standalone as possible to make it readily accessible as a package and usable by a variety of projects. It is OK to reference other Gemstone libraries as well as other packages, but this should be limited to exactly what is needed. External package sources should be limited to either NuGet or GitHub.
 
