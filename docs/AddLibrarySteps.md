@@ -1,10 +1,24 @@
-### Create new Gemstone Library based on Template
+# Adding a New Gemstone Library
+ 
+### Philosophies
 
+As its name infers, the Gemstone Libraries GitHub organizational site, https://github.com/gemstone, is for "libraries", i.e., sets of reusable code that can be packaged and referenced by other libraries and applications. As such, an "application" project would not be a suitable project type. Libraries can contain helper applications as part of their source code, but the primary project should be a library, i.e., ` <OutputType>Library</OutputType>`.
+
+Each new library in Gemstone should be as standalone as possible to make it readily accessible as a package and usable by a variety of projects. It is OK to reference other Gemstone libraries as well as other packages, but this should be limited to exactly what is needed. External package sources should be limited to either Nuget or Github.
+
+When choosing external packages to reference, care should be taken to evaluate the source quality. Consequently, only libraries that are open source should be used so that source quality _can_ be evaluated. Additionally, make sure the license of referenced packages is compatible with the [Gemstone MIT license]( https://github.com/gemstone/root-dev/blob/master/LICENSE).
+
+When possible, Gemstone libraries should use [.NET standard]( https://dotnet.microsoft.com/platform/dotnet-standard) to make the library more widely accessible. Exceptions will be for technologies, such as [ASP.NET Core]( https://github.com/dotnet/aspnetcore), that may only be available for [.NET Core]( https://github.com/dotnet/core).
+
+Ideally Gemstone libraries should [target multiple frameworks]( https://docs.microsoft.com/en-us/dotnet/standard/frameworks) to accommodate more deployment options. As new C# and/or .NET features become available that improve a library’s security, performance, or portability, dropping older _less used_ target frameworks should be preferred to using [`#if/#else/endif` preprocessor directives]( https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/preprocessor-directives/preprocessor-if) for multiple code implementations, as this becomes more difficult to maintain. If the change separates one or more _highly used_ framework targets, use your best judgement, as a primary goal is always to make the library widely usable.
+
+### Create new Gemstone Library based on Template
+ 
 1. Create a new repo based on [Gemstone.GemTem Template](https://github.com/gemstone/gemtem/generate)
 2. Description should be similar to "Gemstone Security Library"
 3. Once template is created, clone locally and run "RenameProject.bat" script
 4. Type a PascalCase named like "Security" (no quotes)
-5. After rename completes, delete "RenameProject.bat" file and "build /tools" folder in new repo
+5. After renaming completes, delete "RenameProject.bat" file and "build /tools" folder in new repo
 6. Check-in renamed project with a commit message like "Renamed template to Gemstone.Security"
 7. Click on "Settings" from repo home page on GitHub, then
    1. Click "Edit" under Social preview and select "Upload an image..." and select "docs/img/gemstone-social-preview.png" from new repo
@@ -16,9 +30,9 @@
    2. Return to repo home page on GitHub and click the "Edit" button (will be to right of repo description, like "Gemstone Security Library")
    3. Paste in GitHub pages URL under "Website" and click "Save"
 9. Add new repository name, e.g., `security`, to [repos.txt](https://github.com/gemstone/root-dev/blob/master/repos.txt) in build depdency order
-
+ 
 ### Add New Library to Root Development Solution
-
+ 
 1. Open "...\gemstone\root-dev\Gemstone.sln" from Visual Studio
 2. Right-click on root "Gemstone" solution in "Solution Explorer" and select "Add > New Solution Folder" - name should match repo, PascalCase
 3. Right-click on new repo solution folder and select "Add > Existing Project..." for each of the following C# project files similar to the following:
@@ -86,18 +100,18 @@
 12. Re-open root-dev solution to verify that the manual changes succeeded
 13. Commit updates with a message like "Added Gemstone.Security project to root-dev solution with project-based references"
 14. Check-in updates
-
+ 
 ### Setup Continuous Integration Process for New Library
-
+ 
 1. Project should be added to [AppVeyor](https://www.appveyor.com/) for build testing and configured with similar settings to another Gemstone project, e.g., [Gemstone.Common](https://ci.appveyor.com/project/ritchiecarroll/common)
    1. Once the AppVeyor project exists, click on "Badges" under "Settings" and copy the "Sample markdown code"
    2. Edit "docs/README.md" on the repo and update the "Build status" link with the copied markdown
-
+ 
 ### Updated Documentation for New Library
-
+ 
 Note that build documentation will require [Sandcastle Help File Builder](https://github.com/EWSoftware/SHFB/releases) tools and visual studio plug-in.
 Make sure this tool is installed before proceeding with documentation.
-
+ 
 1. Update "docs/README.md" in the repo to properly describe library purpose (you can update class links later)
 2. Assuming some code with XML comments has been added, open local solution file, e.g., "...\gemstone\security\src\Gemstone.Security.sln"
 3. Build Gemstone library, then navigate to "docs/help" in the solution and build the "docgen" project
@@ -108,3 +122,4 @@ Make sure this tool is installed before proceeding with documentation.
 8. Note that the home page content of the automated documentation comes from the [shared-content](https://github.com/gemstone/shared-content) repo, if the new library should be added to the list,
    1. Add link to [common.tokens](https://github.com/gemstone/shared-content/blob/master/src/DocGen/common.tokens)
    2. Shared content udpates will be rolled into all Gemstone library repos as part of the nightly build process
+
