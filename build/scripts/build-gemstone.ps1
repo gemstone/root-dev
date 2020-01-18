@@ -6,10 +6,10 @@
 
 param(
     [string]$projectDir,
-    [switch]$skipBuild = $false,
-    [switch]$skipDocsBuild = $false,
     [string]$buildConfig = "Release",
-    [string]$deployDir = ""
+    [string]$deployDir = "",
+    [switch]$skipBuild = $false,
+    [switch]$skipDocsBuild = $false
 )
 
 # Uncomment the following line to hardcode the project directory for testing
@@ -312,7 +312,25 @@ Reset-Repository
 $repos = [IO.File]::ReadAllLines("$projectDir\$rootDevRepo\$reposFile")
 
 # Remove any comment lines from loaded repo list
-$repos = $repos | Where-Object { -not ([string]::IsNullOrWhiteSpace($_) -or $_.Trim().StartsWith("::")) }
+$repos = $repos | Where-Object { -not $_.Trim().StartsWith("::") }
+$projects = New-Object "string[]" $repos.Length;
+
+# Separate repos names from project names
+for ($i = 0; $i -lt $repos.Length; $i++) {
+    $parts = $repos[$i].Trim().Split('/');
+
+    if ($parts.Length -eq 2) {
+        $repos[$i] = $parts[0].Trim()
+        $projects[$i] = $parts[1].Trim()
+	}
+    else {
+        $repos[$i] = ""
+        $projects[$i] = ""
+	}
+}
+
+$repos = $repos | Where-Object { -not [string]::IsNullOrWhiteSpace($_) }
+$projects = $projects | Where-Object { -not [string]::IsNullOrWhiteSpace($_) }
 
 Set-Location $projectDir
 
@@ -339,19 +357,23 @@ if ($changed) {
     $exclude = @("README.md")
 
     # Update all repos with shared-content updates
-    foreach ($repo in $repos) {
+    for ($i = 0; $i -lt $repos.Length; $i++) {
+        $repo = $repos[$i]
+        $project = $projects[$i]
         $dst = "$projectDir\$repo"
 
         Set-Location $dst
         Reset-Repository
 
+        # Recursively copy all items replacing any encountered template parameters
         Get-ChildItem -Path $src -Recurse -Exclude $exclude | Copy-Item -Destination {
             if ($_.PSIsContainer) {
                 Join-Path $dst $_.Parent.FullName.Substring($src.length)
             } else {
                 Join-Path $dst $_.FullName.Substring($src.length)
             }
-        } -Force -Exclude $exclude
+        } -Force -Exclude $exclude -PassThru |
+        ((((Get-Content -Path $_.FullName -Raw) -replace "{sc:repo-name}", $repo) -replace "{sc:ProjectName}", $project) | Set-Content $_.FullName)
 
         Commit-Repository "." "Updated shared content"
         Push-Repository

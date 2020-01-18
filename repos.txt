@@ -1,12 +1,14 @@
 :: Following repos should be in proper build dependency order
-shared-content
-gemtem
-pqdif
-common
-numeric
-expressions
-threading
-io
-data
-security
-communication
+:: Format is "repo-name/ProjectName" as kebab-case/PascalCase
+:: Repos with no build depdencies are typycally listed first
+shared-content/SharedContent
+gemtem/GemTem
+pqdif/PQDIF
+common/Common
+numeric/Numeric
+expressions/Expressions
+threading/Threading
+io/IO
+data/Data
+security/Security
+communication/Communication

@@ -18,7 +18,21 @@ function Clone-Repository($url) {
 $repos = [IO.File]::ReadAllLines("$rootDevDir\$reposFile")
 
 # Remove any comment lines from loaded repo list
-$repos = $repos | Where-Object { -not ([string]::IsNullOrWhiteSpace($_) -or $_.Trim().StartsWith("::")) }
+$repos = $repos | Where-Object { -not $_.Trim().StartsWith("::") }
+
+# Separate repos names from project names
+for ($i = 0; $i -lt $repos.Length; $i++){
+    $parts = $repos[$i].Trim().Split('/');
+
+    if ($parts.Length -eq 2) {
+        $repos[$i] = $parts[0].Trim()
+	}
+    else {
+        $repos[$i] = ""
+	}
+}
+
+$repos = $repos | Where-Object { -not [string]::IsNullOrWhiteSpace($_) }
 
 Set-Location ".."
 
