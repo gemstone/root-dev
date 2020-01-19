@@ -177,6 +177,9 @@ function Build-Repos($repos) {
 
         # Increment version build number
         $version = Increment-Version $version
+        
+        # Update outer scope variable
+        $script:version = $version
 
         "Updating Gemstone Libraries version to $version"
         
