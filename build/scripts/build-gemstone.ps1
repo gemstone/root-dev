@@ -13,7 +13,7 @@ param(
 )
 
 # Uncomment the following line to hardcode the project directory for testing
-#$projectDir = "D:\Projects\gembuild"
+#$projectDir = "C:\Projects\gembuild"
 
 # Uncomment the following line to use WSL instead of Git for Windows
 #function git { & wsl git $args }
@@ -30,6 +30,7 @@ Set-Variable version -Scope Script -Value "0.0.0"
 Set-Variable githubOrgSite     -Option Constant -Scope Script -Value "https://github.com/gemstone"
 Set-Variable rootDevRepo       -Option Constant -Scope Script -Value "root-dev"
 Set-Variable sharedContentRepo -Option Constant -Scope Script -Value "shared-content"
+Set-Variable sharedContentProj -Option Constant -Scope Script -Value "SharedContent"
 Set-Variable templateRepo      -Option Constant -Scope Script -Value "gemtem"
 Set-Variable reposFile         -Option Constant -Scope Script -Value "repos.txt"
 Set-Variable libBuildFolder    -Option Constant -Scope Script -Value "build\$buildConfig"
@@ -89,9 +90,9 @@ function Build-Documentation {
     return $?
 }
 
-function Read-Version($target, [ref] $result) {
+function Read-Version($target, [ref]$result) {
     $result.Value = & "$toolsFolder\ReadVersion\$appBuildFolder\ReadVersion.exe" $target | Out-String
-    $result.Value = $result.Value.Trim()    
+    $result.Value = $result.Value.Trim()
     return $?
 }
 
@@ -264,35 +265,35 @@ function Push-Repos($repos) {
 
 function Deploy-Repos($repos) {
     try {
-        $dst = "$deployDir\release\v$version"
+        $dstPath = "$deployDir\release\v$version"
         $exclude = @("*.pdb")
 
-        if ([IO.Directory]::Exists($dst)) {
-            "Deleting existing deployment at $dst..."
-            [IO.Directory]::Delete($dst, $true)
+        if ([IO.Directory]::Exists($dstPath)) {
+            "Deleting existing deployment at $dstPath..."
+            [IO.Directory]::Delete($dstPath, $true)
         }
 
-        "Deploying libraries to $dst..."
+        "Deploying libraries to $dstPath..."
     
-        [IO.Directory]::CreateDirectory($dst)
+        [IO.Directory]::CreateDirectory($dstPath)
 
         foreach ($repo in $repos) {            
-            $src ="$projectDir\$repo\$libBuildFolder"
+            $srcPath ="$projectDir\$repo\$libBuildFolder"
 
-            Get-ChildItem -Path $src -Recurse -Exclude $exclude | Copy-Item -Destination {
+            Get-ChildItem -Path $srcPath -Recurse -Exclude $exclude | Copy-Item -Destination {
                 if ($_.PSIsContainer) {
-                    Join-Path $dst $_.Parent.FullName.Substring($src.length)
+                    Join-Path $dstPath $_.Parent.FullName.Substring($srcPath.length)
                 } else {
-                    Join-Path $dst $_.FullName.Substring($src.length)
+                    Join-Path $dstPath $_.FullName.Substring($srcPath.length)
                 }
             } -Force -Exclude $exclude
         }
 
         "Deploying zip archive containing v$version Gemstone Library binaries..."
-        Compress-Archive -Path "$dst\*" -DestinationPath "$dst\Gemstone-v$version-Binaries.zip" -CompressionLevel "Optimal"
+        Compress-Archive -Path "$dstPath\*" -DestinationPath "$dstPath\Gemstone-v$version-Binaries.zip" -CompressionLevel "Optimal"
 
         "Deploying zip archive containing v$version Gemstone Library source code..."
-        Copy-Item "$projectDir\Gemstone-Source.zip" -Destination "$dst\Gemstone-v$version-Source.zip"
+        Copy-Item "$projectDir\Gemstone-Source.zip" -Destination "$dstPath\Gemstone-v$version-Source.zip"
     }
     catch {
         "ERROR: Failed while deploying gemstone libraries: $_"
@@ -322,11 +323,11 @@ for ($i = 0; $i -lt $repos.Length; $i++) {
     if ($parts.Length -eq 2) {
         $repos[$i] = $parts[0].Trim()
         $projects[$i] = $parts[1].Trim()
-	}
+    }
     else {
         $repos[$i] = ""
         $projects[$i] = ""
-	}
+    }
 }
 
 $repos = $repos | Where-Object { -not [string]::IsNullOrWhiteSpace($_) }
@@ -339,8 +340,9 @@ foreach ($repo in $repos) {
     Clone-Repository "$githubOrgSite/$repo.git"
 }
 
-# Remove shared-content from repo list
+# Remove shared-content from repo and project lists
 $repos = $repos | Where-Object { $_ -ne $sharedContentRepo }
+$projects = $projects | Where-Object { $_ -ne $sharedContentProj }
 
 # Check for changes in shared-content repo
 Set-Location "$projectDir\$sharedContentRepo"
@@ -353,27 +355,46 @@ if ($changed) {
     # Tag repo to mark new changes
     Tag-Repository $(get-date).ToString("yyyyMMddHHmmss")
 
-    $src = "$projectDir\$sharedContentRepo"
+    $srcPath = "$projectDir\$sharedContentRepo"
     $exclude = @("README.md")
 
     # Update all repos with shared-content updates
     for ($i = 0; $i -lt $repos.Length; $i++) {
         $repo = $repos[$i]
         $project = $projects[$i]
-        $dst = "$projectDir\$repo"
+        $dstPath = "$projectDir\$repo"
 
-        Set-Location $dst
+        Set-Location $dstPath
         Reset-Repository
 
         # Recursively copy all items replacing any encountered template parameters
-        Get-ChildItem -Path $src -Recurse -Exclude $exclude | Copy-Item -Destination {
-            if ($_.PSIsContainer) {
-                Join-Path $dst $_.Parent.FullName.Substring($src.length)
-            } else {
-                Join-Path $dst $_.FullName.Substring($src.length)
+        foreach ($srcFile in Get-ChildItem -Path $srcPath -Recurse -Exclude $exclude) {
+            if ($srcFile.PSIsContainer) {
+                # This is a folder, make sure it exists
+                $dstDir = Join-Path $dstPath $srcFile.Parent.FullName.Substring($srcPath.length)
+
+                if (-not [IO.Directory]::Exists($dstDir)) {
+                    [IO.Directory]::CreateDirectory($dstDir)
+                }
             }
-        } -Force -Exclude $exclude -PassThru |
-        ((((Get-Content -Path $_.FullName -Raw) -replace "{sc:repo-name}", $repo) -replace "{sc:ProjectName}", $project) | Set-Content $_.FullName)
+            else {
+                # This is a file, copy it to destination path
+                $dstFile = Join-Path $dstPath $srcFile.FullName.Substring($srcPath.length)
+                Copy-Item -Path $srcFile -Destination $dstFile -Force
+
+                # Replace any tokens in file
+                (Get-Content $dstFile -Raw) |
+                    Foreach-Object { $_ -replace "{sc:repo-name}", $repo } |
+                    Foreach-Object { $_ -replace "{sc:ProjectName}", $project } |
+                    Foreach-Object { $_ -replace "{sc:yyyy}", $(get-date).ToString("yyyy") } |
+                    Foreach-Object { $_ -replace "{sc:MM}", $(get-date).ToString("MM") } |
+                    Foreach-Object { $_ -replace "{sc:dd}", $(get-date).ToString("dd") } |
+                    Foreach-Object { $_ -replace "{sc:HH}", $(get-date).ToString("HH") } |
+                    Foreach-Object { $_ -replace "{sc:mm}", $(get-date).ToString("mm") } |
+                    Foreach-Object { $_ -replace "{sc:ss}", $(get-date).ToString("ss") } |
+                    Set-Content $dstFile
+            }
+        }
 
         Commit-Repository "." "Updated shared content"
         Push-Repository
