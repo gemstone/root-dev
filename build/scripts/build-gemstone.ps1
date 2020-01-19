@@ -302,30 +302,6 @@ function Deploy-Repos($repos) {
     }
 }
 
-function Test-IsTextFile($fileName) {
-    # Check for binary extension first
-    if ($binaryExtensions.Contains([IO.Path]::GetExtension($fileName))) {
-        return $false
-    }
-
-    try {
-        # Use a brute force approach to test if file is text
-        $tempFile = (New-TemporaryFile).FullName
-        $lines = [IO.File]::ReadAllLines($fileName)
-        [IO.File]::WriteAllLines($tempFile, $lines)
-        $srcData = [IO.File]::ReadAllText($fileName)
-        $dstData = [IO.File]::ReadAllText($tempFile)
-        return ([string]::Compare($srcData.Trim(), $dstData.Trim()) -eq 0)
-    }
-    catch {
-        "ERROR: Failed while testing if a file was text: $_"
-        return $false
-    }
-    finally {
-        Remove-Item $tempFile -Force
-    }
-}
-
 # --------- Start Script ---------
 
 # Get latest root-dev project
@@ -403,6 +379,8 @@ if ($changed) {
         Set-Location $dstPath
         Reset-Repository
 
+        "Updating shared content in ""$dstPath""..."
+
         # Recursively copy all items replacing any encountered template parameters
         foreach ($srcFile in Get-ChildItem -Path $srcPath -Recurse -Exclude $exclude) {
             if ($srcFile.PSIsContainer) {
@@ -419,7 +397,7 @@ if ($changed) {
                 Copy-Item -Path $srcFile -Destination $dstFile -Force
 
                 # Replace any tokens in file
-                if (Test-IsTextFile $dstFile) {
+                if (-not $binaryExtensions.Contains([IO.Path]::GetExtension($dstFile))) {
                     $data = [IO.File]::ReadAllText($dstFile)
 
                     foreach ($kvp in $tokens.GetEnumerator()) {
