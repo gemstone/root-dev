@@ -25,6 +25,7 @@ if ([string]::IsNullOrWhiteSpace($projectDir)) {
 
 # Script Variables
 Set-Variable version -Scope Script -Value "0.0.0"
+[Collections.Generic.HashSet[string]] $binaryExtensions = (".ico", ".png", ".jpg", ".zip")
 
 # Script Constants
 Set-Variable githubOrgSite     -Option Constant -Scope Script -Value "https://github.com/gemstone"
@@ -301,6 +302,30 @@ function Deploy-Repos($repos) {
     }
 }
 
+function Test-IsTextFile($fileName) {
+    # Check for binary extension first
+    if ($binaryExtensions.Contains([IO.Path]::GetExtension($fileName))) {
+        return $false
+    }
+
+    try {
+        # Use a brute force approach to test if file is text
+        $tempFile = (New-TemporaryFile).FullName
+        $lines = [IO.File]::ReadAllLines($fileName)
+        [IO.File]::WriteAllLines($tempFile, $lines)
+        $srcData = [IO.File]::ReadAllText($fileName)
+        $dstData = [IO.File]::ReadAllText($tempFile)
+        return ([string]::Compare($srcData.Trim(), $dstData.Trim()) -eq 0)
+    }
+    catch {
+        "ERROR: Failed while testing if a file was text: $_"
+        return $false
+    }
+    finally {
+        Remove-Item $tempFile -Force
+    }
+}
+
 # --------- Start Script ---------
 
 # Get latest root-dev project
@@ -314,7 +339,7 @@ $repos = [IO.File]::ReadAllLines("$projectDir\$rootDevRepo\$reposFile")
 
 # Remove any comment lines from loaded repo list
 $repos = $repos | Where-Object { -not $_.Trim().StartsWith("::") }
-$projects = New-Object "string[]" $repos.Length;
+$projects = New-Object string[] $repos.Length;
 
 # Separate repos names from project names
 for ($i = 0; $i -lt $repos.Length; $i++) {
@@ -357,12 +382,23 @@ if ($changed) {
 
     $srcPath = "$projectDir\$sharedContentRepo"
     $exclude = @("README.md")
+    $tokens = @{
+        "{sc:repo-name}"   = "<repo-name>";
+        "{sc:ProjectName}" = "<ProjectName>";
+        "{sc:year}"        = $(get-date).ToString("yyyy");
+        "{sc:month}"       = $(get-date).ToString("MM");
+        "{sc:day}"         = $(get-date).ToString("dd");
+        "{sc:hour}"        = $(get-date).ToString("HH");
+        "{sc:minute}"      = $(get-date).ToString("mm");
+        "{sc:second}"      = $(get-date).ToString("ss")
+    }
 
     # Update all repos with shared-content updates
     for ($i = 0; $i -lt $repos.Length; $i++) {
         $repo = $repos[$i]
-        $project = $projects[$i]
         $dstPath = "$projectDir\$repo"
+        $tokens["{sc:repo-name}"] = $repo
+        $tokens["{sc:ProjectName}"] = $projects[$i]
 
         Set-Location $dstPath
         Reset-Repository
@@ -383,16 +419,15 @@ if ($changed) {
                 Copy-Item -Path $srcFile -Destination $dstFile -Force
 
                 # Replace any tokens in file
-                (Get-Content $dstFile -Raw) |
-                    Foreach-Object { $_ -replace "{sc:repo-name}", $repo } |
-                    Foreach-Object { $_ -replace "{sc:ProjectName}", $project } |
-                    Foreach-Object { $_ -replace "{sc:yyyy}", $(get-date).ToString("yyyy") } |
-                    Foreach-Object { $_ -replace "{sc:MM}", $(get-date).ToString("MM") } |
-                    Foreach-Object { $_ -replace "{sc:dd}", $(get-date).ToString("dd") } |
-                    Foreach-Object { $_ -replace "{sc:HH}", $(get-date).ToString("HH") } |
-                    Foreach-Object { $_ -replace "{sc:mm}", $(get-date).ToString("mm") } |
-                    Foreach-Object { $_ -replace "{sc:ss}", $(get-date).ToString("ss") } |
-                    Set-Content $dstFile
+                if (Test-IsTextFile $dstFile) {
+                    $data = [IO.File]::ReadAllText($dstFile)
+
+                    foreach ($kvp in $tokens.GetEnumerator()) {
+                        $data = $data.Replace($kvp.Key, $kvp.Value)
+                    }
+
+                    [IO.File]::WriteAllText($dstFile, $data)
+                }
             }
         }
 

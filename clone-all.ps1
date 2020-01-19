@@ -26,10 +26,10 @@ for ($i = 0; $i -lt $repos.Length; $i++){
 
     if ($parts.Length -eq 2) {
         $repos[$i] = $parts[0].Trim()
-	}
+    }
     else {
         $repos[$i] = ""
-	}
+    }
 }
 
 $repos = $repos | Where-Object { -not [string]::IsNullOrWhiteSpace($_) }
