@@ -1,6 +1,7 @@
-:: Following repos should be in proper build dependency order
+:: The following repos should be in proper build dependency order
 :: Format is "repo-name/ProjectName" as kebab-case/PascalCase
 :: Repos with no build dependencies are typically listed first
+:: The "root-dev" repo should not be added to this list
 shared-content/SharedContent
 gemtem/GemTem
 pqdif/PQDIF
