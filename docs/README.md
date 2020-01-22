@@ -25,7 +25,7 @@ Two other scripts, [pull-all.cmd](https://github.com/gemstone/root-dev/blob/mast
 
 To better ensure acceptance of pull requests, be sure to read the [coding style](https://gemstone.github.io/common/coding-style) document.
 
-To add a new Gemstone library repsository, see the [Add Library Steps](AddLibrarySteps.md).
+To add a new Gemstone library repository, see the [Add Library Steps](AddLibrarySteps.md).
 
 #### Relative Project Paths
 
