@@ -134,6 +134,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{EF7F
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		tools\VersionCommon\VersionCommon.projitems*{06752938-b8ee-4a6c-aec1-aec2175bedea}*SharedItemsImports = 5
+		tools\VersionCommon\VersionCommon.projitems*{a37248e8-e8de-437c-9c81-dbdf40b3880d}*SharedItemsImports = 5
 		tools\VersionCommon\VersionCommon.projitems*{bf383459-a583-456b-a4cf-1001954dd9d2}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -144,6 +146,10 @@ Global
 		{721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Development|Any CPU.Build.0 = Development|Any CPU
 		{41B5D5D3-9A97-48ED-840C-188A0CA95480}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{41B5D5D3-9A97-48ED-840C-188A0CA95480}.Development|Any CPU.Build.0 = Development|Any CPU
+		{564FAD94-82B0-4E1B-A806-84C67AE6A15F}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{564FAD94-82B0-4E1B-A806-84C67AE6A15F}.Development|Any CPU.Build.0 = Development|Any CPU
+		{78E98006-F8FF-42D9-851E-92EFDFBECC57}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{78E98006-F8FF-42D9-851E-92EFDFBECC57}.Development|Any CPU.Build.0 = Development|Any CPU
 		{342E81B2-4952-4951-AC90-FD194C9F7956}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{342E81B2-4952-4951-AC90-FD194C9F7956}.Development|Any CPU.Build.0 = Development|Any CPU
 		{724EE79F-5633-4BF1-B0B2-ED67CE17FD87}.Development|Any CPU.ActiveCfg = Development|Any CPU
@@ -180,10 +186,6 @@ Global
 		{A37248E8-E8DE-437C-9C81-DBDF40B3880D}.Development|Any CPU.Build.0 = Development|Any CPU
 		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.Build.0 = Development|Any CPU
-		{564FAD94-82B0-4E1B-A806-84C67AE6A15F}.Development|Any CPU.ActiveCfg = Development|Any CPU
-		{564FAD94-82B0-4E1B-A806-84C67AE6A15F}.Development|Any CPU.Build.0 = Development|Any CPU
-		{78E98006-F8FF-42D9-851E-92EFDFBECC57}.Development|Any CPU.ActiveCfg = Development|Any CPU
-		{78E98006-F8FF-42D9-851E-92EFDFBECC57}.Development|Any CPU.Build.0 = Development|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -191,6 +193,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{721D3830-2CD7-45DE-A288-4FAF1D53CEC6} = {71EF20E2-0D01-4ED4-B0F9-764732ED4106}
 		{41B5D5D3-9A97-48ED-840C-188A0CA95480} = {71EF20E2-0D01-4ED4-B0F9-764732ED4106}
+		{564FAD94-82B0-4E1B-A806-84C67AE6A15F} = {FFF67D8B-0B81-4D25-BAB8-A742AA3CA241}
+		{78E98006-F8FF-42D9-851E-92EFDFBECC57} = {FFF67D8B-0B81-4D25-BAB8-A742AA3CA241}
 		{342E81B2-4952-4951-AC90-FD194C9F7956} = {AF908083-DEFE-45DC-BB75-EB5C4CF88DD6}
 		{724EE79F-5633-4BF1-B0B2-ED67CE17FD87} = {AF908083-DEFE-45DC-BB75-EB5C4CF88DD6}
 		{15D46C55-39CA-41FB-A675-95FCDBCED250} = {68155B52-0049-4C33-84F5-6AE3DE8415CE}
@@ -215,8 +219,6 @@ Global
 		{FBE2039F-10E7-4D5C-A85C-07339CF150AA} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
 		{6D3343C6-F1CE-496A-8CBD-92EC539528E2} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
 		{EF7FB29D-5AA1-430E-B350-EE953E1E82AE} = {6D3343C6-F1CE-496A-8CBD-92EC539528E2}
-		{564FAD94-82B0-4E1B-A806-84C67AE6A15F} = {FFF67D8B-0B81-4D25-BAB8-A742AA3CA241}
-		{78E98006-F8FF-42D9-851E-92EFDFBECC57} = {FFF67D8B-0B81-4D25-BAB8-A742AA3CA241}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7EDA96F-4985-48C5-80B2-764F45AA8EA5}
