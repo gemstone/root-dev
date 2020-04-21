@@ -14,3 +14,4 @@ data/Data
 security/Security
 communication/Communication
 web/Web
+diagnostics/Diagnostics
