@@ -151,29 +151,29 @@ function Publish-Package($package) {
 
 function Build-Repos($repos) {
     try {
-        "Building versioning tools..."
+        Write-Host "Building versioning tools..."
 
         Set-Location "$toolsFolder\ReadVersion"
 
         if (-not (Build-Code "ReadVersion.csproj")) {
-            "ERROR: Failed to build ReadVersion tool."
+            Write-Host "ERROR: Failed to build ReadVersion tool."
             return $false
         }
 
         Set-Location "$toolsFolder\UpdateVersion"
 
         if (-not (Build-Code "UpdateVersion.csproj")) {
-            "ERROR: Failed to build UpdateVersion tool."
+            Write-Host "ERROR: Failed to build UpdateVersion tool."
             return $false
         }
 
         # Get current repo version - "Gemstone.Common" defines version for all repos
         if (-not (Read-Version "$projectDir\common" ([ref]$version))) {
-            "ERROR: Failed to read gemstone/common version."
+            Write-Host "ERROR: Failed to read gemstone/common version."
             return $false
         }
 
-        "Current Gemstone Libraries version = $version"
+        Write-Host "Current Gemstone Libraries version = $version"
 
         # Increment version build number
         $version = Increment-Version $version
@@ -181,12 +181,12 @@ function Build-Repos($repos) {
         # Update outer scope variable
         $script:version = $version
 
-        "Updating Gemstone Libraries version to $version"
+        Write-Host "Updating Gemstone Libraries version to $version"
         
         # Update version number in each repo project file
         foreach ($repo in $repos) {        
             if (-not (Update-Version "$projectDir\$repo", $version)) {
-                "ERROR: Failed to update gemstone/$repo version."
+                Write-Host "ERROR: Failed to update gemstone/$repo version."
                 return $false
             }
 
@@ -196,7 +196,7 @@ function Build-Repos($repos) {
         }
 
         # Repos at this point are clean with updated versions - create source code zip file
-        "Creating zip archive for all Gemstone Library v$version source code..."
+        Write-Host "Creating zip archive for all Gemstone Library v$version source code..."
 
         # Remove any existing zip file
         Remove-Item "$projectDir\Gemstone-Source.zip"
@@ -216,7 +216,7 @@ function Build-Repos($repos) {
 
             # Build new library version using solution in "src" folder
             if (-not (Build-Code "src")) {
-                "ERROR: Failed to build gemstone/$repo."
+                Write-Host "ERROR: Failed to build gemstone/$repo."
                 return $false
             }
 
@@ -226,9 +226,9 @@ function Build-Repos($repos) {
                     Commit-Repository "." "Built gemstone/$repo v$version documentation"
                 }
                 else {
-                    "ERROR: Failed while building gemstone/$repo v$version documentation."
-                    "RESUMING: Failure to build documentation is considered non-fatal, build will continue..."
-                    "Undoing changes to build documentation..."
+                    Write-Host "ERROR: Failed while building gemstone/$repo v$version documentation."
+                    Write-Host "RESUMING: Failure to build documentation is considered non-fatal, build will continue..."
+                    Write-Host "Undoing changes to build documentation..."
                     Reset-RepositoryTarget "docs/help"
                 }
             }
@@ -248,14 +248,14 @@ function Build-Repos($repos) {
                 Publish-Package $packages[0]
             }
             else {
-                "WARNING: No gemstone/$repo v$version package found, build failure? No package pushed."
+                Write-Host "WARNING: No gemstone/$repo v$version package found, build failure? No package pushed."
             }
         }
 
         return $true
     }
     catch {
-        "ERROR: Failed while building gemstone libraries: $_"
+        Write-Host "ERROR: Failed while building gemstone libraries: $_"
         return $false
     }
 }
@@ -273,11 +273,11 @@ function Deploy-Repos($repos) {
         $exclude = @("*.pdb")
 
         if ([IO.Directory]::Exists($dstPath)) {
-            "Deleting existing deployment at $dstPath..."
+            Write-Host "Deleting existing deployment at $dstPath..."
             [IO.Directory]::Delete($dstPath, $true)
         }
 
-        "Deploying libraries to $dstPath..."
+        Write-Host "Deploying libraries to $dstPath..."
     
         [IO.Directory]::CreateDirectory($dstPath)
 
@@ -293,15 +293,15 @@ function Deploy-Repos($repos) {
             } -Force -Exclude $exclude
         }
 
-        "Deploying zip archive containing v$version Gemstone Library binaries..."
+        Write-Host "Deploying zip archive containing v$version Gemstone Library binaries..."
         Compress-Archive -Path "$dstPath\*" -DestinationPath "$dstPath\Gemstone-v$version-Binaries.zip" -CompressionLevel "Optimal"
 
-        "Deploying zip archive containing v$version Gemstone Library source code..."
+        Write-Host "Deploying zip archive containing v$version Gemstone Library source code..."
         Copy-Item "$projectDir\Gemstone-Source.zip" -Destination "$dstPath\Gemstone-v$version-Source.zip"
     }
     catch {
-        "ERROR: Failed while deploying gemstone libraries: $_"
-        "RESUMING: Failure to deploy libraries is considered non-fatal, build will continue..."
+        Write-Host "ERROR: Failed while deploying gemstone libraries: $_"
+        Write-Host "RESUMING: Failure to deploy libraries is considered non-fatal, build will continue..."
     }
 }
 
@@ -382,7 +382,7 @@ if ($changed) {
         Set-Location $dstPath
         Reset-Repository
 
-        "Updating shared content in ""$dstPath""..."
+        Write-Host "Updating shared content in ""$dstPath""..."
 
         # Recursively copy all items replacing any encountered template parameters
         foreach ($srcFile in Get-ChildItem -Path $srcPath -Recurse -Exclude $exclude) {
@@ -418,7 +418,7 @@ if ($changed) {
 }
 
 if ($skipBuild) {
-    "SKIPPED: Build skipped at " + $(get-date).ToString("yyyy-MM-dd HH:mm:ss") + " --  per command line switch."
+    Write-Host "SKIPPED: Build skipped at " + $(get-date).ToString("yyyy-MM-dd HH:mm:ss") + " --  per command line switch."
     return
 }
 
@@ -431,28 +431,28 @@ foreach ($repo in $repos) {
 
 if ($changed) {    
     if (Build-Repos($repos)) {
-        "Completed building gemstone libraries, pushing changes to GitHub..."
+        Write-Host "Completed building gemstone libraries, pushing changes to GitHub..."
         Push-Repos $repos
 
         if ([string]::IsNullOrWhiteSpace($deployDir)) {
-            "SKIPPED: Deployment skipped,  no deployment directory specified."
+            Write-Host "SKIPPED: Deployment skipped,  no deployment directory specified."
         }
         else {
             if ([IO.Directory]::Exists($deployDir)) {
                 Deploy-Repos $repos
             } else {
-                "WARNING: Deployment skipped, deployment directory ""$deployDir"" does not exist."
+                Write-Host "WARNING: Deployment skipped, deployment directory ""$deployDir"" does not exist."
             }
         }
 
-        "SUCCESS: Build complete at " + $(get-date).ToString("yyyy-MM-dd HH:mm:ss") + "."
+        Write-Host "SUCCESS: Build complete at " + $(get-date).ToString("yyyy-MM-dd HH:mm:ss") + "."
     }
     else {
-        "FAILED: Build canceled at " + $(get-date).ToString("yyyy-MM-dd HH:mm:ss") + "."
+        Write-Host "FAILED: Build canceled at " + $(get-date).ToString("yyyy-MM-dd HH:mm:ss") + "."
     }
 }
 else {
-    "SKIPPED: Build skipped at " + $(get-date).ToString("yyyy-MM-dd HH:mm:ss") + " -- no repos changed."
+    Write-Host "SKIPPED: Build skipped at " + $(get-date).ToString("yyyy-MM-dd HH:mm:ss") + " -- no repos changed."
 }
 
 Set-Location $projectDir
