@@ -3,9 +3,9 @@
 :: Repos with no build dependencies are typically listed first
 :: The "root-dev" repo should not be added to this list
 shared-content/SharedContent
-gemtem/GemTem
 pqdif/PQDIF
 common/Common
+gemtem/GemTem
 configuration/Configuration
 numeric/Numeric
 expressions/Expressions
