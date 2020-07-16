@@ -40,34 +40,40 @@ Set-Variable toolsFolder       -Option Constant -Scope Script -Value "$projectDi
 
 # Script Functions
 function Clone-Repository($url) {
-    & git clone $url
+    & git clone $url | Write-Host
 }
 
 function Tag-Repository($tagName) {
-    & git tag $tagName
-    & git push --tags
+    Invoke-Command -ScriptBlock {
+        & git tag $tagName
+        & git push --tags
+	} | Write-Host
 }
 
 function Commit-Repository($file, $message) {
-    & git add $file
-    & git commit -m "$message"
+    Invoke-Command -ScriptBlock {
+        & git add $file
+        & git commit -m "$message"
+	} | Write-Host
 }
 
 function Push-Repository {
-    & git push
+    & git push | Write-Host
 }
 
 function Reset-RepositoryTarget($target) {
-    & git checkout -- $target
+    & git checkout -- $target | Write-Host
 }
 
 function Reset-Repository {
-    & git gc
-    & git fetch
-    & git reset --hard HEAD
-    & git checkout master
-    & git reset --hard origin/master
-    & git clean -f -d -x
+    Invoke-Command -ScriptBlock {
+        & git gc
+        & git fetch
+        & git reset --hard HEAD
+        & git checkout master
+        & git reset --hard origin/master
+        & git clean -f -d -x
+	} | Write-Host
 }
 
 function Test-RepositoryChanged {
@@ -82,12 +88,12 @@ function Test-RepositoryChanged {
 }
 
 function Build-Code($target) {
-    & dotnet build -c $buildConfig $target
+    & dotnet build -c $buildConfig $target | Write-Host
     return $?
 }
 
 function Build-Documentation {
-    & msbuild -p:Configuration=$buildConfig "src\DocGen\docgen.shfbproj"
+    & msbuild -p:Configuration=$buildConfig "src\DocGen\docgen.shfbproj" | Write-Host
     return $?
 }
 
@@ -105,48 +111,50 @@ function Increment-Version($version) {
 }
 
 function Update-Version($target, $newVersion) {
-    & "$toolsFolder\UpdateVersion\$appBuildFolder\UpdateVersion.exe" $target $newVersion
+    & "$toolsFolder\UpdateVersion\$appBuildFolder\UpdateVersion.exe" $target $newVersion | Write-Host
     return $?
 }
 
 function Reset-NuGetCache {
-    & nuget locals http-cache -clear
+    & nuget locals http-cache -clear | Write-Host
 }
 
 function Publish-Package($package) {
-    # Push package to NuGet
-    if ($env:GemstoneNuGetApiKey -ne $null) {
-        & dotnet nuget push $package -k $env:GemstoneNuGetApiKey -s "https://api.nuget.org/v3/index.json"
-    }
+    Invoke-Command -ScriptBlock {
+        # Push package to NuGet
+        if ($env:GemstoneNuGetApiKey -ne $null) {
+            & dotnet nuget push $package -k $env:GemstoneNuGetApiKey -s "https://api.nuget.org/v3/index.json"
+        }
 
-    # Push package to GitHub Packages
-    if ($env:GHPackagesUser -ne $null -and $env:GHPackagesToken -ne $null) {
-        # This is a work around: https://github.com/NuGet/Home/issues/8580#issuecomment-555696372
-        $fileName = [IO.Path]::GetFileName($package)
-        $fileBytes = [IO.File]::ReadAllBytes($package)
-        $encodedData = [Text.Encoding]::GetEncoding("ISO-8859-1").GetString($fileBytes)
-        $boundary = [Guid]::NewGuid().ToString()
-        $lineFeed = "`r`n"
+        # Push package to GitHub Packages
+        if ($env:GHPackagesUser -ne $null -and $env:GHPackagesToken -ne $null) {
+            # This is a work around: https://github.com/NuGet/Home/issues/8580#issuecomment-555696372
+            $fileName = [IO.Path]::GetFileName($package)
+            $fileBytes = [IO.File]::ReadAllBytes($package)
+            $encodedData = [Text.Encoding]::GetEncoding("ISO-8859-1").GetString($fileBytes)
+            $boundary = [Guid]::NewGuid().ToString()
+            $lineFeed = "`r`n"
 
-        $bodyLines = ( 
-            "--$boundary",
-            "Content-Disposition: form-data; name=`"package`"; filename=`"$fileName`"",
-            "Content-Type: application/octet-stream$lineFeed",
-            $encodedData,
-            "--$boundary--" 
-        ) -join $lineFeed
+            $bodyLines = ( 
+                "--$boundary",
+                "Content-Disposition: form-data; name=`"package`"; filename=`"$fileName`"",
+                "Content-Type: application/octet-stream$lineFeed",
+                $encodedData,
+                "--$boundary--" 
+            ) -join $lineFeed
 
-        $credentials = "${env:GHPackagesUser}:${env:GHPackagesToken}"
-        $encodedCreds = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($credentials))
-        $headers = @{ Authorization = "Basic $encodedCreds" }
+            $credentials = "${env:GHPackagesUser}:${env:GHPackagesToken}"
+            $encodedCreds = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($credentials))
+            $headers = @{ Authorization = "Basic $encodedCreds" }
 
-        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-        Invoke-WebRequest -Method PUT -ContentType "multipart/form-data; boundary=`"$boundary`"" -Body $bodyLines `
-                          -Uri "https://nuget.pkg.github.com/gemstone/" -Headers $headers -Verbose
-    }
+            [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+            Invoke-WebRequest -Method PUT -ContentType "multipart/form-data; boundary=`"$boundary`"" -Body $bodyLines `
+                              -Uri "https://nuget.pkg.github.com/gemstone/" -Headers $headers -Verbose
+        }
 
-    # Use this method when GitHub Packages for NuGet is fixed
-    # & dotnet nuget push $package --source "github"
+        # Use this method when GitHub Packages for NuGet is fixed
+        # & dotnet nuget push $package --source "github"
+	} | Write-Host
 }
 
 function Build-Repos($repos) {
