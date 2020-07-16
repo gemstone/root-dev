@@ -24,6 +24,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml;
 using static VersionCommon.ConsoleHelpers;
 
@@ -48,14 +49,14 @@ namespace UpdateVersion
                 if (!ValidateGemstoneProjectPath(projectFilePaths, projectFileSearchPath, out int result))
                     return result;
 
-                foreach (string projectFilePath in projectFilePaths)
+                bool TryUpdateVersion(string projectFilePath)
                 {
                     // Load XML project file
                     XmlDocument projectFile = OpenProjectFile(projectFilePath);
 
                     // Get version number
                     if (!TryGetVersionNode(projectFile, out XmlNode versionNode))
-                        return ExitNoVersion;
+                        return false;
 
                     // Update version number
                     versionNode.InnerText = version;
@@ -84,6 +85,20 @@ namespace UpdateVersion
                     projectFile.Save(projectFilePath);
 
                     Console.WriteLine($"Successfully updated version to \"{version}\" in \"{Path.GetFileName(projectFilePath)}\" project file.");
+
+                    return true;
+                }
+
+                // Call ToList() to ensure that no projects
+                // are skipped due to deferred execution
+                List<string> updatedProjects = projectFilePaths
+                    .Where(TryUpdateVersion)
+                    .ToList();
+
+                if (!updatedProjects.Any())
+                {
+                    ShowError("No <Version> tag found.");
+                    return ExitNoVersion;
                 }
 
                 return ExitSuccess;

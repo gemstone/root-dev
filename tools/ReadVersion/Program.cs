@@ -47,17 +47,23 @@ namespace ReadVersion
                 if (!ValidateGemstoneProjectPath(projectFilePaths, projectFileSearchPath, out int result))
                     return result;
 
-                // Load XML project file
-                XmlDocument projectFile = OpenProjectFile(projectFilePaths.First());
+                foreach (string projectFilePath in projectFilePaths)
+                {
+                    // Load XML project file
+                    XmlDocument projectFile = OpenProjectFile(projectFilePath);
 
-                // Get version number
-                if (!TryGetVersionNode(projectFile, out XmlNode versionNode))
-                    return ExitNoVersion;
+                    // Get version number
+                    if (!TryGetVersionNode(projectFile, out XmlNode versionNode))
+                        continue;
 
-                // Write version information to console without any suffix, e.g., remove any -beta suffix
-                Console.WriteLine(GetRawVersion(versionNode.InnerText));
+                    // Write version information to console without any suffix, e.g., remove any -beta suffix
+                    Console.WriteLine(GetRawVersion(versionNode.InnerText));
 
-                return ExitSuccess;
+                    return ExitSuccess;
+                }
+
+                ShowError("No <Version> tag found.");
+                return ExitNoVersion;
             }
             catch (Exception ex)
             {
