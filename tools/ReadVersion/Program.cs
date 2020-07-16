@@ -22,6 +22,8 @@
 //******************************************************************************************************
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using static VersionCommon.ConsoleHelpers;
 
@@ -39,13 +41,14 @@ namespace ReadVersion
                 if (!ValidateArgs(args))
                     return ExitBadArgs;
 
-                string projectFilePath = args[0].Trim();
+                string projectFileSearchPath = args[0].Trim();
+                List<string> projectFilePaths = new List<string>();
                 
-                if (!ValidateGemstoneProjectPath(ref projectFilePath, out int result))
+                if (!ValidateGemstoneProjectPath(projectFilePaths, projectFileSearchPath, out int result))
                     return result;
 
                 // Load XML project file
-                XmlDocument projectFile = OpenProjectFile(projectFilePath);
+                XmlDocument projectFile = OpenProjectFile(projectFilePaths.First());
 
                 // Get version number
                 if (!TryGetVersionNode(projectFile, out XmlNode versionNode))

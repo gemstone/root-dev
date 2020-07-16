@@ -22,6 +22,7 @@
 //******************************************************************************************************
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using static VersionCommon.ConsoleHelpers;
@@ -40,46 +41,50 @@ namespace UpdateVersion
                 if (!ValidateArgs(args))
                     return ExitBadArgs;
 
-                string projectFilePath = args[0].Trim();
+                string projectFileSearchPath = args[0].Trim();
                 string version = args[1].Trim();
+                List<string> projectFilePaths = new List<string>();
 
-                if (!ValidateGemstoneProjectPath(ref projectFilePath, out int result))
+                if (!ValidateGemstoneProjectPath(projectFilePaths, projectFileSearchPath, out int result))
                     return result;
 
-                // Load XML project file
-                XmlDocument projectFile = OpenProjectFile(projectFilePath);
-
-                // Get version number
-                if (!TryGetVersionNode(projectFile, out XmlNode versionNode))
-                    return ExitNoVersion;
-
-                // Update version number
-                versionNode.InnerText = version;
-
-                // Update informational version tags
-                XmlNodeList infoVersionNodes = projectFile.SelectNodes("Project/PropertyGroup/InformationalVersion");
-
-                foreach (XmlNode infoVersionNode in infoVersionNodes)
+                foreach (string projectFilePath in projectFilePaths)
                 {
-                    string infoVersion = infoVersionNode.InnerText;
+                    // Load XML project file
+                    XmlDocument projectFile = OpenProjectFile(projectFilePath);
 
-                    // If contains space, assuming node is prefixed with version number up to first space
-                    infoVersion = infoVersion.Contains(' ') ? $"{version}{infoVersion.Substring(infoVersion.IndexOf(' '))}" : version;
-                    infoVersionNode.InnerText = infoVersion;
+                    // Get version number
+                    if (!TryGetVersionNode(projectFile, out XmlNode versionNode))
+                        return ExitNoVersion;
+
+                    // Update version number
+                    versionNode.InnerText = version;
+
+                    // Update informational version tags
+                    XmlNodeList infoVersionNodes = projectFile.SelectNodes("Project/PropertyGroup/InformationalVersion");
+
+                    foreach (XmlNode infoVersionNode in infoVersionNodes)
+                    {
+                        string infoVersion = infoVersionNode.InnerText;
+
+                        // If contains space, assuming node is prefixed with version number up to first space
+                        infoVersion = infoVersion.Contains(' ') ? $"{version}{infoVersion.Substring(infoVersion.IndexOf(' '))}" : version;
+                        infoVersionNode.InnerText = infoVersion;
+                    }
+
+                    // Get raw version without any suffix, e.g., remove any -beta suffix
+                    string rawVersion = GetRawVersion(version);
+
+                    // Update Gemstone package reference versions
+                    XmlNodeList packageReferenceNodes = projectFile.SelectNodes("Project/ItemGroup/PackageReference[starts-with(@Include,'Gemstone.')]");
+
+                    foreach (XmlNode packageReferenceNode in packageReferenceNodes)
+                        packageReferenceNode.Attributes["Version"].Value = rawVersion;
+
+                    projectFile.Save(projectFilePath);
+
+                    Console.WriteLine($"Successfully updated version to \"{version}\" in \"{Path.GetFileName(projectFilePath)}\" project file.");
                 }
-
-                // Get raw version without any suffix, e.g., remove any -beta suffix
-                string rawVersion = GetRawVersion(version);
-
-                // Update Gemstone package reference versions
-                XmlNodeList packageReferenceNodes = projectFile.SelectNodes("Project/ItemGroup/PackageReference[starts-with(@Include,'Gemstone.')]");
-
-                foreach (XmlNode packageReferenceNode in packageReferenceNodes)
-                    packageReferenceNode.Attributes["Version"].Value = rawVersion;
-
-                projectFile.Save(projectFilePath);
-
-                Console.WriteLine($"Successfully updated version to \"{version}\" in \"{Path.GetFileName(projectFilePath)}\" project file.");
 
                 return ExitSuccess;
             }

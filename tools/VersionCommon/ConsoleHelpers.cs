@@ -22,6 +22,7 @@
 //******************************************************************************************************
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -76,43 +77,48 @@ namespace VersionCommon
             return ExitException;
         }
 
-        public static bool ValidateGemstoneProjectPath(ref string projectFilePath, out int result)
+        public static bool ValidateGemstoneProjectPath(List<string> projectFilePaths, string projectFileSearchPath, out int result)
         {
-            // See if a folder name was provided instead of an actual project file name
-            if (!File.Exists(projectFilePath))
+            if (File.Exists(projectFileSearchPath))
             {
-                if (projectFilePath.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase) || !Directory.Exists(projectFilePath))
+                if (!projectFileSearchPath.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase))
                 {
-                    ShowError("Bad project name or path specified.");
+                    ShowError("Bad project name specified.");
                     result = ExitBadFileName;
 
                     return false;
                 }
 
-                // Directory name specified, look for a project file
-                string firstProjectFile = Directory.GetFiles(projectFilePath, "*.csproj").FirstOrDefault();
+                projectFilePaths.Add(projectFileSearchPath);
+            }
+            else if (Directory.Exists(projectFileSearchPath))
+            {
+                // For the recursive search, ignore hidden folders like .git or .vs
+                static IEnumerable<string> EnumerateDirectories(string path) => Directory
+                    .EnumerateDirectories(path)
+                    .Where(path => !Path.GetFileName(path).StartsWith('.'))
+                    .SelectMany(EnumerateDirectories)
+                    .Prepend(path);
 
-                if (string.IsNullOrEmpty(firstProjectFile))
+                IEnumerable<string> projectFileSearch = EnumerateDirectories(projectFileSearchPath)
+                    .SelectMany(subdir => Directory.GetFiles(subdir, "*.csproj", SearchOption.AllDirectories));
+
+                projectFilePaths.AddRange(projectFileSearch);
+
+                if (!projectFilePaths.Any())
                 {
-                    // See if input path only specified root project folder
-                    string projectFolderName = GetLastDirectoryName(projectFilePath);
+                    ShowError("Bad project path specified.");
+                    result = ExitBadPath;
 
-                    // "Gemstone.Common" project folder structure is special from a namespace perspective as its root namespace is just "Gemstone"
-                    projectFolderName = projectFolderName.Equals("common", StringComparison.OrdinalIgnoreCase) ? "" : $".{projectFolderName}";
-
-                    // Look for project file again
-                    firstProjectFile = Directory.GetFiles(Path.Combine(projectFilePath, $"src\\Gemstone{projectFolderName}"), "*.csproj").FirstOrDefault();
-
-                    if (string.IsNullOrEmpty(firstProjectFile))
-                    {
-                        ShowError("Bad project path specified.");
-                        result = ExitBadPath;
-
-                        return false;
-                    }
+                    return false;
                 }
+            }
+            else
+            {
+                ShowError("Bad project name or path specified.");
+                result = ExitBadFileName;
 
-                projectFilePath = firstProjectFile;
+                return false;
             }
 
             result = ExitSuccess;
