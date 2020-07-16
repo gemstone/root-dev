@@ -252,12 +252,13 @@ function Build-Repos($repos) {
             # Query file system for package file to get proper casing
             $packages = [IO.Directory]::GetFiles("$projectDir\$repo\$libBuildFolder", "*.$version.nupkg")
 
-            if ($packages.Length -gt 0) {
-                Publish-Package $packages[0]
-            }
-            else {
+            if ($packages.Length -eq 0) {
                 Write-Host "WARNING: No gemstone/$repo v$version package found, build failure? No package pushed."
             }
+
+            foreach ($package in $packages) {
+                Publish-Package $package
+			}
         }
 
         return $true
