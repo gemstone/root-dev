@@ -123,6 +123,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{FBE2039F-1
 		docs\AddLibrarySteps.md = docs\AddLibrarySteps.md
 		LICENSE = LICENSE
 		docs\README.md = docs\README.md
+		docs\SECURITY.md = docs\SECURITY.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{6D3343C6-F1CE-496A-8CBD-92EC539528E2}"
