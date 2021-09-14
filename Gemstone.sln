@@ -40,6 +40,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PQDIF", "PQDIF", "{EF85946C
 		..\pqdif\docs\README.md = ..\pqdif\docs\README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PQDS", "PQDS", "{6232ADE8-36DF-40C4-A87D-2E4BAC32333B}"
+	ProjectSection(SolutionItems) = preProject
+		..\pqds\docs\README.md = ..\pqds\docs\README.md
+	EndProjectSection
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security", "Security", "{AC074377-1D21-43EA-8CC6-280FD0B613AD}"
 	ProjectSection(SolutionItems) = preProject
 		..\security\docs\README.md = ..\security\docs\README.md
@@ -90,6 +95,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.PQDIF", "..\pqdif\src\Gemstone.PQDIF\Gemstone.PQDIF.csproj", "{E2A89CD8-ECA4-4EE2-845A-7D1B982E5220}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.PQDIF.UnitTests", "..\pqdif\src\UnitTests\Gemstone.PQDIF.UnitTests.csproj", "{3B26052F-CA9E-4CAE-9CB0-842BD420A321}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.PQDS", "..\pqds\src\Gemstone.PQDS\Gemstone.PQDS.csproj", "{3939005B-F419-4A33-A3ED-3347682B5FBE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.PQDS.UnitTests", "..\pqds\src\UnitTests\Gemstone.PQDS.UnitTests.csproj", "{56867867-AB9E-4346-88C9-FCA3564FBB07}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.GemTem", "..\gemtem\src\Gemstone.GemTem\Gemstone.GemTem.csproj", "{4EB75B38-C40D-40DE-8EC3-E99D80F59A08}"
 EndProject
@@ -187,6 +196,10 @@ Global
 		{A37248E8-E8DE-437C-9C81-DBDF40B3880D}.Development|Any CPU.Build.0 = Development|Any CPU
 		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.Build.0 = Development|Any CPU
+		{3939005B-F419-4A33-A3ED-3347682B5FBE}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{3939005B-F419-4A33-A3ED-3347682B5FBE}.Development|Any CPU.Build.0 = Development|Any CPU
+		{56867867-AB9E-4346-88C9-FCA3564FBB07}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{56867867-AB9E-4346-88C9-FCA3564FBB07}.Development|Any CPU.Build.0 = Development|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -220,6 +233,8 @@ Global
 		{FBE2039F-10E7-4D5C-A85C-07339CF150AA} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
 		{6D3343C6-F1CE-496A-8CBD-92EC539528E2} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
 		{EF7FB29D-5AA1-430E-B350-EE953E1E82AE} = {6D3343C6-F1CE-496A-8CBD-92EC539528E2}
+		{3939005B-F419-4A33-A3ED-3347682B5FBE} = {6232ADE8-36DF-40C4-A87D-2E4BAC32333B}
+		{56867867-AB9E-4346-88C9-FCA3564FBB07} = {6232ADE8-36DF-40C4-A87D-2E4BAC32333B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7EDA96F-4985-48C5-80B2-764F45AA8EA5}
