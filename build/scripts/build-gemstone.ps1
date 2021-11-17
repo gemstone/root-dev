@@ -123,7 +123,7 @@ function Publish-Package($package) {
     Invoke-Command -ScriptBlock {
         # Sign NuGet package
         if ($env:NuGetCertFingerprint -ne $null) {
-            & dotnet nuget sign $package --certificate-fingerprint $env:NuGetCertFingerprint -timestamper http://timestamp.digicert.com
+            & dotnet nuget sign $package --certificate-fingerprint $env:NuGetCertFingerprint --timestamper http://timestamp.digicert.com
         }
 
         # Push package to NuGet
