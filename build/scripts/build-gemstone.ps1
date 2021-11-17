@@ -47,14 +47,14 @@ function Tag-Repository($tagName) {
     Invoke-Command -ScriptBlock {
         & git tag $tagName
         & git push --tags
-	} | Write-Host
+    } | Write-Host
 }
 
 function Commit-Repository($file, $message) {
     Invoke-Command -ScriptBlock {
         & git add $file
         & git commit -m "$message"
-	} | Write-Host
+    } | Write-Host
 }
 
 function Push-Repository {
@@ -73,7 +73,7 @@ function Reset-Repository {
         & git checkout master
         & git reset --hard origin/master
         & git clean -f -d -x
-	} | Write-Host
+    } | Write-Host
 }
 
 function Test-RepositoryChanged {
@@ -121,6 +121,11 @@ function Reset-NuGetCache {
 
 function Publish-Package($package) {
     Invoke-Command -ScriptBlock {
+        # Sign NuGet package
+        if ($env:NuGetCertFingerprint -ne $null) {
+            & dotnet nuget sign $package -CertificateFingerprint $env:NuGetCertFingerprint -Timestamper http://timestamp.digicert.com
+        }
+
         # Push package to NuGet
         if ($env:GemstoneNuGetApiKey -ne $null) {
             & dotnet nuget push $package -k $env:GemstoneNuGetApiKey -s "https://api.nuget.org/v3/index.json"
@@ -154,7 +159,7 @@ function Publish-Package($package) {
 
         # Use this method when GitHub Packages for NuGet is fixed
         # & dotnet nuget push $package --source "github"
-	} | Write-Host
+    } | Write-Host
 }
 
 function Build-Repos($repos) {
@@ -258,7 +263,7 @@ function Build-Repos($repos) {
 
             foreach ($package in $packages) {
                 Publish-Package $package
-			}
+            }
         }
 
         return $true
