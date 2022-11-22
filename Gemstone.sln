@@ -176,6 +176,60 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{EF7F
 		build\scripts\build-gemstone.ps1 = build\scripts\build-gemstone.ps1
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Σ Shared Content", "Σ Shared Content", "{4992A2F4-2977-4D3A-997B-1BBF930F3AD5}"
+	ProjectSection(SolutionItems) = preProject
+		..\shared-content\.editorconfig = ..\shared-content\.editorconfig
+		..\shared-content\.gitignore = ..\shared-content\.gitignore
+		..\shared-content\LICENSE = ..\shared-content\LICENSE
+		..\shared-content\NOTICE.txt = ..\shared-content\NOTICE.txt
+		..\shared-content\README.md = ..\shared-content\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{AFBFF47A-6C0D-4320-A40E-B6646FA5CD19}"
+	ProjectSection(SolutionItems) = preProject
+		..\shared-content\docs\coding-style.md = ..\shared-content\docs\coding-style.md
+		..\shared-content\docs\SECURITY.md = ..\shared-content\docs\SECURITY.md
+		..\shared-content\docs\_config.yml = ..\shared-content\docs\_config.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E5A661A1-DB89-409B-83AC-8971DF56DC92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_includes", "_includes", "{558958BA-83C8-46E0-8271-754A86108999}"
+	ProjectSection(SolutionItems) = preProject
+		..\shared-content\docs\_includes\anchor_headings.html = ..\shared-content\docs\_includes\anchor_headings.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_layouts", "_layouts", "{A8E8BEE8-BEFC-4D78-A656-0E177CD1F5E8}"
+	ProjectSection(SolutionItems) = preProject
+		..\shared-content\docs\_layouts\default.html = ..\shared-content\docs\_layouts\default.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{2B20DBCF-486C-4F84-9199-B69E8C6940F2}"
+	ProjectSection(SolutionItems) = preProject
+		..\shared-content\docs\img\favicon.ico = ..\shared-content\docs\img\favicon.ico
+		..\shared-content\docs\img\gemstone-social-preview.png = ..\shared-content\docs\img\gemstone-social-preview.png
+		..\shared-content\docs\img\gemstone-square-1000.png = ..\shared-content\docs\img\gemstone-square-1000.png
+		..\shared-content\docs\img\gemstone-square-128.png = ..\shared-content\docs\img\gemstone-square-128.png
+		..\shared-content\docs\img\gemstone-wide-600.png = ..\shared-content\docs\img\gemstone-wide-600.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DocGen", "DocGen", "{CB035F36-AEA4-4DAC-B51F-A0680B7BD8F7}"
+	ProjectSection(SolutionItems) = preProject
+		..\shared-content\src\DocGen\common.tokens = ..\shared-content\src\DocGen\common.tokens
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "icons", "icons", "{E0C6F140-1597-4896-8749-3FC11FAF1919}"
+	ProjectSection(SolutionItems) = preProject
+		..\shared-content\src\DocGen\icons\favicon.ico = ..\shared-content\src\DocGen\icons\favicon.ico
+		..\shared-content\src\DocGen\icons\gemstone-square-48.png = ..\shared-content\src\DocGen\icons\gemstone-square-48.png
+		..\shared-content\src\DocGen\icons\help.png = ..\shared-content\src\DocGen\icons\help.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "styles", "styles", "{37AB420A-8231-49D0-B38C-62BA5E9DD9FB}"
+	ProjectSection(SolutionItems) = preProject
+		..\shared-content\src\DocGen\styles\branding.css = ..\shared-content\src\DocGen\styles\branding.css
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Development|Any CPU = Development|Any CPU
@@ -225,16 +279,16 @@ Global
 		{3939005B-F419-4A33-A3ED-3347682B5FBE}.Development|Any CPU.Build.0 = Development|Any CPU
 		{56867867-AB9E-4346-88C9-FCA3564FBB07}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{56867867-AB9E-4346-88C9-FCA3564FBB07}.Development|Any CPU.Build.0 = Development|Any CPU
-		{A37248E8-E8DE-437C-9C81-DBDF40B3880D}.Development|Any CPU.ActiveCfg = Development|Any CPU
-		{A37248E8-E8DE-437C-9C81-DBDF40B3880D}.Development|Any CPU.Build.0 = Development|Any CPU
-		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.ActiveCfg = Development|Any CPU
-		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.Build.0 = Development|Any CPU
 		{0D17B042-B320-43E1-A4C1-0AF9B140927E}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{0D17B042-B320-43E1-A4C1-0AF9B140927E}.Development|Any CPU.Build.0 = Development|Any CPU
 		{6C55355D-6A32-47F5-BEDE-8AA5E87E9727}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{6C55355D-6A32-47F5-BEDE-8AA5E87E9727}.Development|Any CPU.Build.0 = Development|Any CPU
 		{3CD0C1D6-B6E9-4B4E-8704-B4DBCCCDE393}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{3CD0C1D6-B6E9-4B4E-8704-B4DBCCCDE393}.Development|Any CPU.Build.0 = Development|Any CPU
+		{A37248E8-E8DE-437C-9C81-DBDF40B3880D}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{A37248E8-E8DE-437C-9C81-DBDF40B3880D}.Development|Any CPU.Build.0 = Development|Any CPU
+		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.Build.0 = Development|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -262,6 +316,9 @@ Global
 		{3B26052F-CA9E-4CAE-9CB0-842BD420A321} = {EF85946C-67A6-42BB-88B9-55F2285FEC6D}
 		{3939005B-F419-4A33-A3ED-3347682B5FBE} = {6232ADE8-36DF-40C4-A87D-2E4BAC32333B}
 		{56867867-AB9E-4346-88C9-FCA3564FBB07} = {6232ADE8-36DF-40C4-A87D-2E4BAC32333B}
+		{0D17B042-B320-43E1-A4C1-0AF9B140927E} = {C166538D-ECB8-45DD-B88F-B262E348407A}
+		{6C55355D-6A32-47F5-BEDE-8AA5E87E9727} = {C166538D-ECB8-45DD-B88F-B262E348407A}
+		{3CD0C1D6-B6E9-4B4E-8704-B4DBCCCDE393} = {C166538D-ECB8-45DD-B88F-B262E348407A}
 		{19750400-E086-4B67-8A93-5BD7FB1A4B3C} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
 		{A37248E8-E8DE-437C-9C81-DBDF40B3880D} = {19750400-E086-4B67-8A93-5BD7FB1A4B3C}
 		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA} = {19750400-E086-4B67-8A93-5BD7FB1A4B3C}
@@ -270,9 +327,14 @@ Global
 		{FBE2039F-10E7-4D5C-A85C-07339CF150AA} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
 		{6D3343C6-F1CE-496A-8CBD-92EC539528E2} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
 		{EF7FB29D-5AA1-430E-B350-EE953E1E82AE} = {6D3343C6-F1CE-496A-8CBD-92EC539528E2}
-		{0D17B042-B320-43E1-A4C1-0AF9B140927E} = {C166538D-ECB8-45DD-B88F-B262E348407A}
-		{6C55355D-6A32-47F5-BEDE-8AA5E87E9727} = {C166538D-ECB8-45DD-B88F-B262E348407A}
-		{3CD0C1D6-B6E9-4B4E-8704-B4DBCCCDE393} = {C166538D-ECB8-45DD-B88F-B262E348407A}
+		{AFBFF47A-6C0D-4320-A40E-B6646FA5CD19} = {4992A2F4-2977-4D3A-997B-1BBF930F3AD5}
+		{E5A661A1-DB89-409B-83AC-8971DF56DC92} = {4992A2F4-2977-4D3A-997B-1BBF930F3AD5}
+		{558958BA-83C8-46E0-8271-754A86108999} = {AFBFF47A-6C0D-4320-A40E-B6646FA5CD19}
+		{A8E8BEE8-BEFC-4D78-A656-0E177CD1F5E8} = {AFBFF47A-6C0D-4320-A40E-B6646FA5CD19}
+		{2B20DBCF-486C-4F84-9199-B69E8C6940F2} = {AFBFF47A-6C0D-4320-A40E-B6646FA5CD19}
+		{CB035F36-AEA4-4DAC-B51F-A0680B7BD8F7} = {E5A661A1-DB89-409B-83AC-8971DF56DC92}
+		{E0C6F140-1597-4896-8749-3FC11FAF1919} = {CB035F36-AEA4-4DAC-B51F-A0680B7BD8F7}
+		{37AB420A-8231-49D0-B38C-62BA5E9DD9FB} = {CB035F36-AEA4-4DAC-B51F-A0680B7BD8F7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7EDA96F-4985-48C5-80B2-764F45AA8EA5}
