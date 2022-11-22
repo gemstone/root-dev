@@ -38,68 +38,17 @@ Ideally Gemstone libraries should [target multiple frameworks]( https://docs.mic
 3. Right-click on new repo solution folder and select "Add > Existing Project..." for each of the following C# project files similar to the following:
    1. "...\gemstone\security\src\gemstone.security\Gemstone.Security.csproj"
    2. "...\gemstone\security\src\UnitTests\Gemstone.Security.UnitTests.csproj"
-4. Right-click on new repo solution folder and select "Add > Existing Item..." for "...\gemstone\security\docs\README.md"
-5. Save solution and close Visual Studio
-6. Open "...gemstone\root-dev\Gemstone.sln" in a text editor, e.g., Notepad++
-7. Move the "Project" sections related to new repo to better alpha locations in file. Locate best peer section for each:
-   1. First section will look similar to:   
-   ```xml
-        Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security", "Security", "{AC074377-1D21-43EA-8CC6-280FD0B613AD}"
-            ProjectSection(SolutionItems) = preProject
-                ..\security\docs\README.md = ..\security\docs\README.md
-            EndProjectSection
-        EndProject
-   ```   
-   2. Second section will look similar to:   
-   ```xml
-        Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Security", "..\security\src\Gemstone.Security\Gemstone.Security.csproj", "{1D1987D0-3CA1-4FAA-839A-F3510FA3A4A4}"
-        EndProject
-        Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Security.UnitTests", "..\security\src\UnitTests\Gemstone.Security.UnitTests.csproj", "{3DAC8F1B-00F9-4D83-B155-249D093662BC}"
-        EndProject
-   ```
-8. The root-dev solution is only for development purposes and Visual Studio will now have added all possible build configurations :-p
-   1. Change the following:   
-   ```xml
-        GlobalSection(SolutionConfigurationPlatforms) = preSolution
-            Debug|Any CPU = Debug|Any CPU
-            Development|Any CPU = Development|Any CPU
-            Release|Any CPU = Release|Any CPU
-        EndGlobalSection
-   ```   
-   2. To a section with only the `Development` build configuration:
-   ```xml
-        GlobalSection(SolutionConfigurationPlatforms) = preSolution
-            Development|Any CPU = Development|Any CPU
-        EndGlobalSection
-   ```   
-9. Now remove all solution configurations related to `Debug` and `Release` leaving only build configurations for `Development`, for example:
-   1. The following:
-   ```xml
-        {721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Development|Any CPU.ActiveCfg = Development|Any CPU
-        {721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Development|Any CPU.Build.0 = Development|Any CPU
-        {721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Release|Any CPU.Build.0 = Release|Any CPU
-        {41B5D5D3-9A97-48ED-840C-188A0CA95480}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {41B5D5D3-9A97-48ED-840C-188A0CA95480}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {41B5D5D3-9A97-48ED-840C-188A0CA95480}.Development|Any CPU.ActiveCfg = Development|Any CPU
-        {41B5D5D3-9A97-48ED-840C-188A0CA95480}.Development|Any CPU.Build.0 = Development|Any CPU
-   ```   
-   2. Would become:
-   ```xml
-        {721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Development|Any CPU.ActiveCfg = Development|Any CPU
-        {721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Development|Any CPU.Build.0 = Development|Any CPU
-        {41B5D5D3-9A97-48ED-840C-188A0CA95480}.Development|Any CPU.ActiveCfg = Development|Any CPU
-        {41B5D5D3-9A97-48ED-840C-188A0CA95480}.Development|Any CPU.Build.0 = Development|Any CPU
-   ```
-10. Complete all `Debug` and `Release` removals:
-    1. From `GlobalSection(ProjectConfigurationPlatforms) = postSolution`
-    2. To associated `EndGlobalSection`
-11. Failing to remove the `Debug` and `Release` build configruations will cause new clones of `root-dev` to auto-open the `Debug` build configuration which causes NuGet `package` based references instead of desired `project` based references for cross-project debugging - defeating the purpose of the solution. See [Relative Project Paths](README.md#relative-project-paths) info.
-12. Re-open root-dev solution to verify that the manual changes succeeded
-13. Commit updates with a message like "Added Gemstone.Security project to root-dev solution with project-based references"
-14. Check-in updates
+4. Right-click on new repo solution folder and select "Add > Existing Item..." for "...\gemstone\security\docs\README.md". Repeat for:
+   1. "...\gemstone\security\appveyor.yml"
+   2. "...\gemstone\security\.github\workflows\codeql-analysis.yml"
+5. Now remove the `Debug` and `Release` configurations that were added to the solution:
+   1. Open the `Configuration Manager...` from Visual Studio
+   2. Select the drop-down for "Active solution configuration:" and select `<Edit...>`
+   3. Remove the `Debug` and `Release` configurations, leaving only `Development`
+   4. Save configuration updates and save Visual Studio
+6. Failing to remove the `Debug` and `Release` build configurations will cause new clones of `root-dev` to auto-open the `Debug` build configuration which causes NuGet `package` based references instead of desired `project` based references for cross-project debugging - defeating the purpose of the solution. See [Relative Project Paths](README.md#relative-project-paths) info.
+7. Commit updates with a message like "Added Gemstone.Security project to root-dev solution with project-based references"
+8. Check-in updates
  
 ### Setup Continuous Integration Process for New Library
  
@@ -123,3 +72,63 @@ Make sure this tool is installed before proceeding with documentation.
    1. Add link to [common.tokens](https://github.com/gemstone/shared-content/blob/master/src/DocGen/common.tokens)
    2. Shared content udpates will be rolled into all Gemstone library repos as part of the nightly build process
 
+#### Old Steps for Manual Removal of Debug/Release Build Configurations:
+
+1. Save solution and close Visual Studio
+2. Open "...gemstone\root-dev\Gemstone.sln" in a text editor, e.g., Notepad++
+3. Move the "Project" sections related to new repo to better alpha locations in file. Locate best peer section for each:
+   1. First section will look similar to:   
+   ```xml
+        Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security", "Security", "{AC074377-1D21-43EA-8CC6-280FD0B613AD}"
+            ProjectSection(SolutionItems) = preProject
+                ..\security\docs\README.md = ..\security\docs\README.md
+            EndProjectSection
+        EndProject
+   ```   
+   2. Second section will look similar to:   
+   ```xml
+        Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Security", "..\security\src\Gemstone.Security\Gemstone.Security.csproj", "{1D1987D0-3CA1-4FAA-839A-F3510FA3A4A4}"
+        EndProject
+        Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Security.UnitTests", "..\security\src\UnitTests\Gemstone.Security.UnitTests.csproj", "{3DAC8F1B-00F9-4D83-B155-249D093662BC}"
+        EndProject
+   ```
+4. The root-dev solution is only for development purposes and Visual Studio will now have added all possible build configurations :-p
+   1. Change the following:   
+   ```xml
+        GlobalSection(SolutionConfigurationPlatforms) = preSolution
+            Debug|Any CPU = Debug|Any CPU
+            Development|Any CPU = Development|Any CPU
+            Release|Any CPU = Release|Any CPU
+        EndGlobalSection
+   ```   
+   2. To a section with only the `Development` build configuration:
+   ```xml
+        GlobalSection(SolutionConfigurationPlatforms) = preSolution
+            Development|Any CPU = Development|Any CPU
+        EndGlobalSection
+   ```   
+5. Now remove all solution configurations related to `Debug` and `Release` leaving only build configurations for `Development`, for example:
+   1. The following:
+   ```xml
+        {721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Development|Any CPU.ActiveCfg = Development|Any CPU
+        {721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Development|Any CPU.Build.0 = Development|Any CPU
+        {721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Release|Any CPU.Build.0 = Release|Any CPU
+        {41B5D5D3-9A97-48ED-840C-188A0CA95480}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {41B5D5D3-9A97-48ED-840C-188A0CA95480}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {41B5D5D3-9A97-48ED-840C-188A0CA95480}.Development|Any CPU.ActiveCfg = Development|Any CPU
+        {41B5D5D3-9A97-48ED-840C-188A0CA95480}.Development|Any CPU.Build.0 = Development|Any CPU
+   ```   
+   2. Would become:
+   ```xml
+        {721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Development|Any CPU.ActiveCfg = Development|Any CPU
+        {721D3830-2CD7-45DE-A288-4FAF1D53CEC6}.Development|Any CPU.Build.0 = Development|Any CPU
+        {41B5D5D3-9A97-48ED-840C-188A0CA95480}.Development|Any CPU.ActiveCfg = Development|Any CPU
+        {41B5D5D3-9A97-48ED-840C-188A0CA95480}.Development|Any CPU.Build.0 = Development|Any CPU
+   ```
+6. Complete all `Debug` and `Release` removals:
+    1. From `GlobalSection(ProjectConfigurationPlatforms) = postSolution`
+    2. To associated `EndGlobalSection`
+7. Re-open `root-dev` "Gemstone.sln" solution file to verify that the manual changes succeeded
