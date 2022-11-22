@@ -1,62 +1,90 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29519.87
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root-dev", ".root-dev", "{0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{71EF20E2-0D01-4ED4-B0F9-764732ED4106}"
 	ProjectSection(SolutionItems) = preProject
+		..\common\appveyor.yml = ..\common\appveyor.yml
+		..\common\.github\workflows\codeql-analysis.yml = ..\common\.github\workflows\codeql-analysis.yml
 		..\common\docs\README.md = ..\common\docs\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Communication", "Communication", "{FFF67D8B-0B81-4D25-BAB8-A742AA3CA241}"
 	ProjectSection(SolutionItems) = preProject
+		..\communication\appveyor.yml = ..\communication\appveyor.yml
+		..\communication\.github\workflows\codeql-analysis.yml = ..\communication\.github\workflows\codeql-analysis.yml
 		..\communication\docs\README.md = ..\communication\docs\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{2A350112-47E5-446A-A286-A9053A473029}"
 	ProjectSection(SolutionItems) = preProject
+		..\data\appveyor.yml = ..\data\appveyor.yml
+		..\data\.github\workflows\codeql-analysis.yml = ..\data\.github\workflows\codeql-analysis.yml
 		..\data\docs\README.md = ..\data\docs\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Expressions", "Expressions", "{AF908083-DEFE-45DC-BB75-EB5C4CF88DD6}"
 	ProjectSection(SolutionItems) = preProject
+		..\expressions\appveyor.yml = ..\expressions\appveyor.yml
+		..\expressions\.github\workflows\codeql-analysis.yml = ..\expressions\.github\workflows\codeql-analysis.yml
 		..\expressions\docs\README.md = ..\expressions\docs\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IO", "IO", "{8426B420-E188-46C9-B98C-02014D4F0EED}"
 	ProjectSection(SolutionItems) = preProject
+		..\io\appveyor.yml = ..\io\appveyor.yml
+		..\io\.github\workflows\codeql-analysis.yml = ..\io\.github\workflows\codeql-analysis.yml
 		..\io\docs\README.md = ..\io\docs\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Numeric", "Numeric", "{68155B52-0049-4C33-84F5-6AE3DE8415CE}"
 	ProjectSection(SolutionItems) = preProject
+		..\numeric\appveyor.yml = ..\numeric\appveyor.yml
+		..\numeric\.github\workflows\codeql-analysis.yml = ..\numeric\.github\workflows\codeql-analysis.yml
 		..\numeric\docs\README.md = ..\numeric\docs\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PQDIF", "PQDIF", "{EF85946C-67A6-42BB-88B9-55F2285FEC6D}"
 	ProjectSection(SolutionItems) = preProject
+		..\pqdif\appveyor.yml = ..\pqdif\appveyor.yml
+		..\pqdif\.github\workflows\codeql-analysis.yml = ..\pqdif\.github\workflows\codeql-analysis.yml
 		..\pqdif\docs\README.md = ..\pqdif\docs\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PQDS", "PQDS", "{6232ADE8-36DF-40C4-A87D-2E4BAC32333B}"
 	ProjectSection(SolutionItems) = preProject
+		..\pqds\appveyor.yml = ..\pqds\appveyor.yml
+		..\pqds\.github\workflows\codeql-analysis.yml = ..\pqds\.github\workflows\codeql-analysis.yml
 		..\pqds\docs\README.md = ..\pqds\docs\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security", "Security", "{AC074377-1D21-43EA-8CC6-280FD0B613AD}"
 	ProjectSection(SolutionItems) = preProject
+		..\security\appveyor.yml = ..\security\appveyor.yml
+		..\security\.github\workflows\codeql-analysis.yml = ..\security\.github\workflows\codeql-analysis.yml
 		..\security\docs\README.md = ..\security\docs\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Threading", "Threading", "{ECB3345B-F0FB-469B-B9E6-4E2D3657B13D}"
 	ProjectSection(SolutionItems) = preProject
+		..\threading\appveyor.yml = ..\threading\appveyor.yml
+		..\threading\.github\workflows\codeql-analysis.yml = ..\threading\.github\workflows\codeql-analysis.yml
 		..\threading\docs\README.md = ..\threading\docs\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{C166538D-ECB8-45DD-B88F-B262E348407A}"
+	ProjectSection(SolutionItems) = preProject
+		..\web\appveyor.yml = ..\web\appveyor.yml
+		..\web\.github\workflows\codeql-analysis.yml = ..\web\.github\workflows\codeql-analysis.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Σ Project Template", "Σ Project Template", "{9446BA36-14CD-448B-AFDB-CCD61A30E7B0}"
 	ProjectSection(SolutionItems) = preProject
+		..\gemtem\appveyor.yml = ..\gemtem\appveyor.yml
+		..\gemtem\.github\workflows\codeql-analysis.yml = ..\gemtem\.github\workflows\codeql-analysis.yml
 		..\gemtem\docs\README.md = ..\gemtem\docs\README.md
 	EndProjectSection
 EndProject
@@ -80,6 +108,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Data", "..\data\sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Data.UnitTests", "..\data\src\UnitTests\Gemstone.Data.UnitTests.csproj", "{D10D67A4-A275-4418-923B-0BF2A6C60ED5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.GemTem", "..\gemtem\src\Gemstone.GemTem\Gemstone.GemTem.csproj", "{D1A7960F-53D6-4972-BB49-C2A60107540C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.GemTem.UnitTests", "..\gemtem\src\UnitTests\Gemstone.GemTem.UnitTests.csproj", "{FF680A97-F76F-4DF5-A55F-34F9AA1D8C40}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.IO", "..\io\src\Gemstone.IO\Gemstone.IO.csproj", "{AAAE4D5E-6297-4ED5-91A3-E2B46D8DD2FC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.IO.UnitTests", "..\io\src\UnitTests\Gemstone.IO.UnitTests.csproj", "{B8833D46-65B3-4858-BA80-84658D31A999}"
@@ -100,9 +132,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.PQDS", "..\pqds\sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.PQDS.UnitTests", "..\pqds\src\UnitTests\Gemstone.PQDS.UnitTests.csproj", "{56867867-AB9E-4346-88C9-FCA3564FBB07}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.GemTem", "..\gemtem\src\Gemstone.GemTem\Gemstone.GemTem.csproj", "{4EB75B38-C40D-40DE-8EC3-E99D80F59A08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Web", "..\web\src\Gemstone.Web\Gemstone.Web.csproj", "{0D17B042-B320-43E1-A4C1-0AF9B140927E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.GemTem.UnitTests", "..\gemtem\src\UnitTests\Gemstone.GemTem.UnitTests.csproj", "{B436EB87-75D4-4C65-AAC8-2551A21407C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Web.Razor", "..\web\src\Gemstone.Web.Razor\Gemstone.Web.Razor.csproj", "{6C55355D-6A32-47F5-BEDE-8AA5E87E9727}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Web.UnitTests", "..\web\src\UnitTests\Gemstone.Web.UnitTests.csproj", "{3CD0C1D6-B6E9-4B4E-8704-B4DBCCCDE393}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{19750400-E086-4B67-8A93-5BD7FB1A4B3C}"
 EndProject
@@ -143,11 +177,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{EF7F
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		tools\VersionCommon\VersionCommon.projitems*{06752938-b8ee-4a6c-aec1-aec2175bedea}*SharedItemsImports = 5
-		tools\VersionCommon\VersionCommon.projitems*{a37248e8-e8de-437c-9c81-dbdf40b3880d}*SharedItemsImports = 5
-		tools\VersionCommon\VersionCommon.projitems*{bf383459-a583-456b-a4cf-1001954dd9d2}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Development|Any CPU = Development|Any CPU
 	EndGlobalSection
@@ -172,6 +201,10 @@ Global
 		{2F6A4614-9AA4-4566-B61B-16B81A5F1C9E}.Development|Any CPU.Build.0 = Development|Any CPU
 		{D10D67A4-A275-4418-923B-0BF2A6C60ED5}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{D10D67A4-A275-4418-923B-0BF2A6C60ED5}.Development|Any CPU.Build.0 = Development|Any CPU
+		{D1A7960F-53D6-4972-BB49-C2A60107540C}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{D1A7960F-53D6-4972-BB49-C2A60107540C}.Development|Any CPU.Build.0 = Development|Any CPU
+		{FF680A97-F76F-4DF5-A55F-34F9AA1D8C40}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{FF680A97-F76F-4DF5-A55F-34F9AA1D8C40}.Development|Any CPU.Build.0 = Development|Any CPU
 		{AAAE4D5E-6297-4ED5-91A3-E2B46D8DD2FC}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{AAAE4D5E-6297-4ED5-91A3-E2B46D8DD2FC}.Development|Any CPU.Build.0 = Development|Any CPU
 		{B8833D46-65B3-4858-BA80-84658D31A999}.Development|Any CPU.ActiveCfg = Development|Any CPU
@@ -188,18 +221,20 @@ Global
 		{E2A89CD8-ECA4-4EE2-845A-7D1B982E5220}.Development|Any CPU.Build.0 = Development|Any CPU
 		{3B26052F-CA9E-4CAE-9CB0-842BD420A321}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{3B26052F-CA9E-4CAE-9CB0-842BD420A321}.Development|Any CPU.Build.0 = Development|Any CPU
-		{4EB75B38-C40D-40DE-8EC3-E99D80F59A08}.Development|Any CPU.ActiveCfg = Development|Any CPU
-		{4EB75B38-C40D-40DE-8EC3-E99D80F59A08}.Development|Any CPU.Build.0 = Development|Any CPU
-		{B436EB87-75D4-4C65-AAC8-2551A21407C8}.Development|Any CPU.ActiveCfg = Development|Any CPU
-		{B436EB87-75D4-4C65-AAC8-2551A21407C8}.Development|Any CPU.Build.0 = Development|Any CPU
-		{A37248E8-E8DE-437C-9C81-DBDF40B3880D}.Development|Any CPU.ActiveCfg = Development|Any CPU
-		{A37248E8-E8DE-437C-9C81-DBDF40B3880D}.Development|Any CPU.Build.0 = Development|Any CPU
-		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.ActiveCfg = Development|Any CPU
-		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.Build.0 = Development|Any CPU
 		{3939005B-F419-4A33-A3ED-3347682B5FBE}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{3939005B-F419-4A33-A3ED-3347682B5FBE}.Development|Any CPU.Build.0 = Development|Any CPU
 		{56867867-AB9E-4346-88C9-FCA3564FBB07}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{56867867-AB9E-4346-88C9-FCA3564FBB07}.Development|Any CPU.Build.0 = Development|Any CPU
+		{A37248E8-E8DE-437C-9C81-DBDF40B3880D}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{A37248E8-E8DE-437C-9C81-DBDF40B3880D}.Development|Any CPU.Build.0 = Development|Any CPU
+		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.Build.0 = Development|Any CPU
+		{0D17B042-B320-43E1-A4C1-0AF9B140927E}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{0D17B042-B320-43E1-A4C1-0AF9B140927E}.Development|Any CPU.Build.0 = Development|Any CPU
+		{6C55355D-6A32-47F5-BEDE-8AA5E87E9727}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{6C55355D-6A32-47F5-BEDE-8AA5E87E9727}.Development|Any CPU.Build.0 = Development|Any CPU
+		{3CD0C1D6-B6E9-4B4E-8704-B4DBCCCDE393}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{3CD0C1D6-B6E9-4B4E-8704-B4DBCCCDE393}.Development|Any CPU.Build.0 = Development|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -215,6 +250,8 @@ Global
 		{57DC58CC-CA6B-4922-938B-BC9EDAB80E21} = {68155B52-0049-4C33-84F5-6AE3DE8415CE}
 		{2F6A4614-9AA4-4566-B61B-16B81A5F1C9E} = {2A350112-47E5-446A-A286-A9053A473029}
 		{D10D67A4-A275-4418-923B-0BF2A6C60ED5} = {2A350112-47E5-446A-A286-A9053A473029}
+		{D1A7960F-53D6-4972-BB49-C2A60107540C} = {9446BA36-14CD-448B-AFDB-CCD61A30E7B0}
+		{FF680A97-F76F-4DF5-A55F-34F9AA1D8C40} = {9446BA36-14CD-448B-AFDB-CCD61A30E7B0}
 		{AAAE4D5E-6297-4ED5-91A3-E2B46D8DD2FC} = {8426B420-E188-46C9-B98C-02014D4F0EED}
 		{B8833D46-65B3-4858-BA80-84658D31A999} = {8426B420-E188-46C9-B98C-02014D4F0EED}
 		{1D1987D0-3CA1-4FAA-839A-F3510FA3A4A4} = {AC074377-1D21-43EA-8CC6-280FD0B613AD}
@@ -223,8 +260,8 @@ Global
 		{A0EF3EDF-8C2E-439C-8A4F-47ED1FA6BD58} = {ECB3345B-F0FB-469B-B9E6-4E2D3657B13D}
 		{E2A89CD8-ECA4-4EE2-845A-7D1B982E5220} = {EF85946C-67A6-42BB-88B9-55F2285FEC6D}
 		{3B26052F-CA9E-4CAE-9CB0-842BD420A321} = {EF85946C-67A6-42BB-88B9-55F2285FEC6D}
-		{4EB75B38-C40D-40DE-8EC3-E99D80F59A08} = {9446BA36-14CD-448B-AFDB-CCD61A30E7B0}
-		{B436EB87-75D4-4C65-AAC8-2551A21407C8} = {9446BA36-14CD-448B-AFDB-CCD61A30E7B0}
+		{3939005B-F419-4A33-A3ED-3347682B5FBE} = {6232ADE8-36DF-40C4-A87D-2E4BAC32333B}
+		{56867867-AB9E-4346-88C9-FCA3564FBB07} = {6232ADE8-36DF-40C4-A87D-2E4BAC32333B}
 		{19750400-E086-4B67-8A93-5BD7FB1A4B3C} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
 		{A37248E8-E8DE-437C-9C81-DBDF40B3880D} = {19750400-E086-4B67-8A93-5BD7FB1A4B3C}
 		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA} = {19750400-E086-4B67-8A93-5BD7FB1A4B3C}
@@ -233,10 +270,16 @@ Global
 		{FBE2039F-10E7-4D5C-A85C-07339CF150AA} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
 		{6D3343C6-F1CE-496A-8CBD-92EC539528E2} = {0DB4BE87-F690-4B64-AA52-850CF1EAB3D4}
 		{EF7FB29D-5AA1-430E-B350-EE953E1E82AE} = {6D3343C6-F1CE-496A-8CBD-92EC539528E2}
-		{3939005B-F419-4A33-A3ED-3347682B5FBE} = {6232ADE8-36DF-40C4-A87D-2E4BAC32333B}
-		{56867867-AB9E-4346-88C9-FCA3564FBB07} = {6232ADE8-36DF-40C4-A87D-2E4BAC32333B}
+		{0D17B042-B320-43E1-A4C1-0AF9B140927E} = {C166538D-ECB8-45DD-B88F-B262E348407A}
+		{6C55355D-6A32-47F5-BEDE-8AA5E87E9727} = {C166538D-ECB8-45DD-B88F-B262E348407A}
+		{3CD0C1D6-B6E9-4B4E-8704-B4DBCCCDE393} = {C166538D-ECB8-45DD-B88F-B262E348407A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7EDA96F-4985-48C5-80B2-764F45AA8EA5}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		tools\VersionCommon\VersionCommon.projitems*{06752938-b8ee-4a6c-aec1-aec2175bedea}*SharedItemsImports = 5
+		tools\VersionCommon\VersionCommon.projitems*{a37248e8-e8de-437c-9c81-dbdf40b3880d}*SharedItemsImports = 5
+		tools\VersionCommon\VersionCommon.projitems*{bf383459-a583-456b-a4cf-1001954dd9d2}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal
