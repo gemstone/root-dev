@@ -44,7 +44,7 @@ namespace UpdateVersion
 
                 string projectFileSearchPath = args[0].Trim();
                 string version = args[1].Trim();
-                List<string> projectFilePaths = new List<string>();
+                List<string> projectFilePaths = new();
 
                 if (!ValidateGemstoneProjectPath(projectFilePaths, projectFileSearchPath, out int result))
                     return result;

@@ -41,7 +41,7 @@ namespace ReadVersion
                     return ExitBadArgs;
 
                 string projectFileSearchPath = args[0].Trim();
-                List<string> projectFilePaths = new List<string>();
+                List<string> projectFilePaths = new();
                 
                 if (!ValidateGemstoneProjectPath(projectFilePaths, projectFileSearchPath, out int result))
                     return result;

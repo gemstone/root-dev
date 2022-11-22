@@ -128,7 +128,7 @@ namespace VersionCommon
 
         public static XmlDocument OpenProjectFile(string projectFilePath)
         {
-            XmlDocument projectFile = new XmlDocument { PreserveWhitespace = true };
+            XmlDocument projectFile = new() { PreserveWhitespace = true };
             projectFile.Load(projectFilePath);
 
             return projectFile;
