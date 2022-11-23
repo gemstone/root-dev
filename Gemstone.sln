@@ -230,6 +230,50 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "styles", "styles", "{37AB42
 		..\shared-content\src\DocGen\styles\branding.css = ..\shared-content\src\DocGen\styles\branding.css
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{75FA0AE3-F599-4103-964E-32F79F98D330}"
+	ProjectSection(SolutionItems) = preProject
+		..\configuration\appveyor.yml = ..\configuration\appveyor.yml
+		..\configuration\.github\workflows\codeql-analysis.yml = ..\configuration\.github\workflows\codeql-analysis.yml
+		..\configuration\docs\README.md = ..\configuration\docs\README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Configuration", "..\configuration\src\Gemstone.Configuration\Gemstone.Configuration.csproj", "{62D95ECF-B9DA-440B-8073-0C6A18D58D13}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Configuration.UnitTests", "..\configuration\src\UnitTests\Gemstone.Configuration.UnitTests.csproj", "{B7160F64-D2D6-4AC2-A236-4154BA1BBEEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagnostics", "Diagnostics", "{390619F7-E853-4573-920F-A50CA6B317DB}"
+	ProjectSection(SolutionItems) = preProject
+		..\diagnostics\appveyor.yml = ..\diagnostics\appveyor.yml
+		..\diagnostics\.github\workflows\codeql-analysis.yml = ..\diagnostics\.github\workflows\codeql-analysis.yml
+		..\diagnostics\docs\README.md = ..\diagnostics\docs\README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Diagnostics", "..\diagnostics\src\Gemstone.Diagnostics\Gemstone.Diagnostics.csproj", "{822426B8-D670-4388-8448-1CD0BD0FED83}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Diagnostics.UnitTests", "..\diagnostics\src\UnitTests\Gemstone.Diagnostics.UnitTests.csproj", "{4D120408-166B-4C53-A0C6-A8FB9385075F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{EE0D5464-D20B-48EC-926C-9D61501962BB}"
+	ProjectSection(SolutionItems) = preProject
+		..\logging\appveyor.yml = ..\logging\appveyor.yml
+		..\logging\.github\workflows\codeql-analysis.yml = ..\logging\.github\workflows\codeql-analysis.yml
+		..\logging\docs\README.md = ..\logging\docs\README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Logging", "..\logging\src\Gemstone.Logging\Gemstone.Logging.csproj", "{68E95495-9E26-4BB2-9A5C-E80C0E552B52}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Logging.UnitTests", "..\logging\src\UnitTests\Gemstone.Logging.UnitTests.csproj", "{95E7C82F-41B7-4B04-9388-D399327AD0B3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "COMTRADE", "COMTRADE", "{E1BAB327-65C9-485C-94D3-F1B375011845}"
+	ProjectSection(SolutionItems) = preProject
+		..\comtrade\appveyor.yml = ..\comtrade\appveyor.yml
+		..\comtrade\.github\workflows\codeql-analysis.yml = ..\comtrade\.github\workflows\codeql-analysis.yml
+		..\comtrade\docs\README.md = ..\comtrade\docs\README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.COMTRADE", "..\comtrade\src\Gemstone.COMTRADE\Gemstone.COMTRADE.csproj", "{082C87EB-FC20-4983-9C49-77299F6DEE30}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.COMTRADE.UnitTests", "..\comtrade\src\UnitTests\Gemstone.COMTRADE.UnitTests.csproj", "{8BC429A0-0DA8-4CF6-86CE-443CC6AC4063}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Development|Any CPU = Development|Any CPU
@@ -289,6 +333,22 @@ Global
 		{A37248E8-E8DE-437C-9C81-DBDF40B3880D}.Development|Any CPU.Build.0 = Development|Any CPU
 		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{06752938-B8EE-4A6C-AEC1-AEC2175BEDEA}.Development|Any CPU.Build.0 = Development|Any CPU
+		{62D95ECF-B9DA-440B-8073-0C6A18D58D13}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{62D95ECF-B9DA-440B-8073-0C6A18D58D13}.Development|Any CPU.Build.0 = Development|Any CPU
+		{B7160F64-D2D6-4AC2-A236-4154BA1BBEEB}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{B7160F64-D2D6-4AC2-A236-4154BA1BBEEB}.Development|Any CPU.Build.0 = Development|Any CPU
+		{822426B8-D670-4388-8448-1CD0BD0FED83}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{822426B8-D670-4388-8448-1CD0BD0FED83}.Development|Any CPU.Build.0 = Development|Any CPU
+		{4D120408-166B-4C53-A0C6-A8FB9385075F}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{4D120408-166B-4C53-A0C6-A8FB9385075F}.Development|Any CPU.Build.0 = Development|Any CPU
+		{68E95495-9E26-4BB2-9A5C-E80C0E552B52}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{68E95495-9E26-4BB2-9A5C-E80C0E552B52}.Development|Any CPU.Build.0 = Development|Any CPU
+		{95E7C82F-41B7-4B04-9388-D399327AD0B3}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{95E7C82F-41B7-4B04-9388-D399327AD0B3}.Development|Any CPU.Build.0 = Development|Any CPU
+		{082C87EB-FC20-4983-9C49-77299F6DEE30}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{082C87EB-FC20-4983-9C49-77299F6DEE30}.Development|Any CPU.Build.0 = Development|Any CPU
+		{8BC429A0-0DA8-4CF6-86CE-443CC6AC4063}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{8BC429A0-0DA8-4CF6-86CE-443CC6AC4063}.Development|Any CPU.Build.0 = Development|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -335,6 +395,14 @@ Global
 		{CB035F36-AEA4-4DAC-B51F-A0680B7BD8F7} = {E5A661A1-DB89-409B-83AC-8971DF56DC92}
 		{E0C6F140-1597-4896-8749-3FC11FAF1919} = {CB035F36-AEA4-4DAC-B51F-A0680B7BD8F7}
 		{37AB420A-8231-49D0-B38C-62BA5E9DD9FB} = {CB035F36-AEA4-4DAC-B51F-A0680B7BD8F7}
+		{62D95ECF-B9DA-440B-8073-0C6A18D58D13} = {75FA0AE3-F599-4103-964E-32F79F98D330}
+		{B7160F64-D2D6-4AC2-A236-4154BA1BBEEB} = {75FA0AE3-F599-4103-964E-32F79F98D330}
+		{822426B8-D670-4388-8448-1CD0BD0FED83} = {390619F7-E853-4573-920F-A50CA6B317DB}
+		{4D120408-166B-4C53-A0C6-A8FB9385075F} = {390619F7-E853-4573-920F-A50CA6B317DB}
+		{68E95495-9E26-4BB2-9A5C-E80C0E552B52} = {EE0D5464-D20B-48EC-926C-9D61501962BB}
+		{95E7C82F-41B7-4B04-9388-D399327AD0B3} = {EE0D5464-D20B-48EC-926C-9D61501962BB}
+		{082C87EB-FC20-4983-9C49-77299F6DEE30} = {E1BAB327-65C9-485C-94D3-F1B375011845}
+		{8BC429A0-0DA8-4CF6-86CE-443CC6AC4063} = {E1BAB327-65C9-485C-94D3-F1B375011845}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7EDA96F-4985-48C5-80B2-764F45AA8EA5}
