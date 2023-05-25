@@ -137,7 +137,7 @@ namespace VersionCommon
         public static bool TryGetVersionNode(XmlDocument projectFile, out XmlNode versionNode)
         {
             versionNode = projectFile.SelectSingleNode("Project/PropertyGroup/Version");
-            return versionNode != null;
+            return versionNode is not null;
         }
 
         public static string GetRawVersion(string version)
