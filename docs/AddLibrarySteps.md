@@ -2,13 +2,13 @@
 
 ### Philosophies
 
-As its name infers, the Gemstone Libraries site is for "libraries", i.e., sets of reusable code that can be packaged and referenced by other libraries and applications. As such, an "application" project is not commonly a suitable project type. However, an exception to this rule is that the application is directly related to a particuar Gemstone library; case in point: [`pqdif-explorer`](https://github.com/gemstone/pqdif-explorer). Also, it is certianly fine if libraries contain helper applications as part of their source code, but the primary project should normally be a library, i.e., `<OutputType>Library</OutputType>`.
+As its name infers, the Gemstone Libraries site is for "libraries", i.e., sets of reusable code that can be packaged and referenced by other libraries and applications. As such, an "application" project is not commonly a suitable project type. However, an exception to this rule is that the application is directly related to a particular Gemstone library; case in point: [`pqdif-explorer`](https://github.com/gemstone/pqdif-explorer). Also, it is certainly fine if libraries contain helper applications as part of their source code, but the primary project should normally be a library, i.e., `<OutputType>Library</OutputType>`.
 
 Each new library in Gemstone should be as standalone as possible to make it readily accessible as a package and usable by a variety of projects. It is OK to reference other Gemstone libraries as well as other packages, but this should be limited to exactly what is needed. External package sources should be limited to either NuGet or GitHub.
 
 When choosing external packages to reference, care should be taken to evaluate the source quality. Consequently, only libraries that are open source should be used so that source quality _can_ be evaluated. Additionally, make sure the license of referenced packages is compatible with the [Gemstone MIT license]( https://github.com/gemstone/root-dev/blob/master/LICENSE).
 
-Currently Gemstone libraries target [.NET Standard 2.1]( https://dotnet.microsoft.com/platform/dotnet-standard), in addition to .NET 7.0, to make the library more widely accessible. However, it is exepcted that this codebase will eventually only target newer versions of .NET and the standard libaries will be abandoned so code can properly accomodate new language and runtime features that may not be available to .NET Standard.
+Currently Gemstone libraries target [.NET Standard 2.1]( https://dotnet.microsoft.com/platform/dotnet-standard), in addition to .NET 7.0, to make the library more widely accessible. However, it is expected that this code-base will eventually only target newer versions of .NET and the standard libraries will be abandoned so code can properly accommodate new language and runtime features that may not be available to .NET Standard.
 
 Ideally Gemstone libraries should [target multiple frameworks]( https://docs.microsoft.com/en-us/dotnet/standard/frameworks) to accommodate more deployment options. As new C# and/or .NET features become available that improve a library's security, performance, or portability, dropping older _less used_ target frameworks should be preferred to using [`#if/#else/endif` preprocessor directives]( https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/preprocessor-directives/preprocessor-if) for multiple code implementations, as this becomes more difficult to maintain. If the change separates one or more _highly used_ framework targets, use your best judgment, as a primary goal is always to make the library widely usable.
 
@@ -66,11 +66,11 @@ Make sure this tool is installed before proceeding with documentation.
 3. Build Gemstone library, then navigate to "docs/help" in the solution and build the "docgen" project
 4. Monitor for warnings here - it will show you what documentation comments you may have missed
 5. You can check out your locally compiled documentation by navigating to "...\gemstone\security\docs\help\" and opening "index.html" in a browser
-6. Check-in documenation when complete, GitHub pages will auto-deploy updates within a couple minutes
+6. Check-in documentation when complete, GitHub pages will auto-deploy updates within a couple minutes
 7. After documentation has been posted, update "docs/README.md" home page again and add a few links to commonly used library classes
 8. Note that the home page content of the automated documentation comes from the [shared-content](https://github.com/gemstone/shared-content) repo, if the new library should be added to the list,
    1. Add link to [common.tokens](https://github.com/gemstone/shared-content/blob/master/src/DocGen/common.tokens)
-   2. Shared content udpates will be rolled into all Gemstone library repos as part of the nightly build process
+   2. Shared content updates will be rolled into all Gemstone library repos as part of the nightly build process
 
 #### Old Steps for Manual Removal of Debug/Release Build Configurations:
 
