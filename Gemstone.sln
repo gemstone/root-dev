@@ -274,6 +274,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.COMTRADE", "..\com
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.COMTRADE.UnitTests", "..\comtrade\src\UnitTests\Gemstone.COMTRADE.UnitTests.csproj", "{8BC429A0-0DA8-4CF6-86CE-443CC6AC4063}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PhasorProtocols", "PhasorProtocols", "{6F30CACB-A4F8-4DC2-A3AB-E27C128D418D}"
+	ProjectSection(SolutionItems) = preProject
+		..\phasor-protocols\appveyor.yml = ..\phasor-protocols\appveyor.yml
+		..\phasor-protocols\.github\workflows\codeql-analysis.yml = ..\phasor-protocols\.github\workflows\codeql-analysis.yml
+		..\phasor-protocols\docs\README.md = ..\phasor-protocols\docs\README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.PhasorProtocols", "..\phasor-protocols\src\Gemstone.PhasorProtocols\Gemstone.PhasorProtocols.csproj", "{CD1B7AA1-6332-4D9C-A97A-B42867038B3B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.PhasorProtocols.UnitTests", "..\phasor-protocols\src\UnitTests\Gemstone.PhasorProtocols.UnitTests.csproj", "{75CDC4AC-D620-448B-B14A-21F97C6F3787}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Development|Any CPU = Development|Any CPU
@@ -349,6 +360,10 @@ Global
 		{082C87EB-FC20-4983-9C49-77299F6DEE30}.Development|Any CPU.Build.0 = Development|Any CPU
 		{8BC429A0-0DA8-4CF6-86CE-443CC6AC4063}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{8BC429A0-0DA8-4CF6-86CE-443CC6AC4063}.Development|Any CPU.Build.0 = Development|Any CPU
+		{CD1B7AA1-6332-4D9C-A97A-B42867038B3B}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{CD1B7AA1-6332-4D9C-A97A-B42867038B3B}.Development|Any CPU.Build.0 = Development|Any CPU
+		{75CDC4AC-D620-448B-B14A-21F97C6F3787}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{75CDC4AC-D620-448B-B14A-21F97C6F3787}.Development|Any CPU.Build.0 = Development|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -403,6 +418,8 @@ Global
 		{95E7C82F-41B7-4B04-9388-D399327AD0B3} = {EE0D5464-D20B-48EC-926C-9D61501962BB}
 		{082C87EB-FC20-4983-9C49-77299F6DEE30} = {E1BAB327-65C9-485C-94D3-F1B375011845}
 		{8BC429A0-0DA8-4CF6-86CE-443CC6AC4063} = {E1BAB327-65C9-485C-94D3-F1B375011845}
+		{CD1B7AA1-6332-4D9C-A97A-B42867038B3B} = {6F30CACB-A4F8-4DC2-A3AB-E27C128D418D}
+		{75CDC4AC-D620-448B-B14A-21F97C6F3787} = {6F30CACB-A4F8-4DC2-A3AB-E27C128D418D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7EDA96F-4985-48C5-80B2-764F45AA8EA5}
