@@ -285,6 +285,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.PhasorProtocols", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.PhasorProtocols.UnitTests", "..\phasor-protocols\src\UnitTests\Gemstone.PhasorProtocols.UnitTests.csproj", "{75CDC4AC-D620-448B-B14A-21F97C6F3787}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Timeseries", "Timeseries", "{53B0C803-41DA-4693-8E59-605128E267BE}"
+	ProjectSection(SolutionItems) = preProject
+		..\timeseries\appveyor.yml = ..\timeseries\appveyor.yml
+		..\timeseries\.github\workflows\codeql-analysis.yml = ..\timeseries\.github\workflows\codeql-analysis.yml
+		..\timeseries\docs\README.md = ..\timeseries\docs\README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Timeseries", "..\timeseries\src\Gemstone.Timeseries\Gemstone.Timeseries.csproj", "{5A75BC8E-3025-48FA-8700-4E8050E46AE3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gemstone.Timeseries.UnitTests", "..\timeseries\src\UnitTests\Gemstone.Timeseries.UnitTests.csproj", "{B8DDB9A2-00C5-420C-AEBA-42804D2D29AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Development|Any CPU = Development|Any CPU
@@ -364,6 +375,10 @@ Global
 		{CD1B7AA1-6332-4D9C-A97A-B42867038B3B}.Development|Any CPU.Build.0 = Development|Any CPU
 		{75CDC4AC-D620-448B-B14A-21F97C6F3787}.Development|Any CPU.ActiveCfg = Development|Any CPU
 		{75CDC4AC-D620-448B-B14A-21F97C6F3787}.Development|Any CPU.Build.0 = Development|Any CPU
+		{5A75BC8E-3025-48FA-8700-4E8050E46AE3}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{5A75BC8E-3025-48FA-8700-4E8050E46AE3}.Development|Any CPU.Build.0 = Development|Any CPU
+		{B8DDB9A2-00C5-420C-AEBA-42804D2D29AF}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{B8DDB9A2-00C5-420C-AEBA-42804D2D29AF}.Development|Any CPU.Build.0 = Development|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -420,6 +435,8 @@ Global
 		{8BC429A0-0DA8-4CF6-86CE-443CC6AC4063} = {E1BAB327-65C9-485C-94D3-F1B375011845}
 		{CD1B7AA1-6332-4D9C-A97A-B42867038B3B} = {6F30CACB-A4F8-4DC2-A3AB-E27C128D418D}
 		{75CDC4AC-D620-448B-B14A-21F97C6F3787} = {6F30CACB-A4F8-4DC2-A3AB-E27C128D418D}
+		{5A75BC8E-3025-48FA-8700-4E8050E46AE3} = {53B0C803-41DA-4693-8E59-605128E267BE}
+		{B8DDB9A2-00C5-420C-AEBA-42804D2D29AF} = {53B0C803-41DA-4693-8E59-605128E267BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7EDA96F-4985-48C5-80B2-764F45AA8EA5}
