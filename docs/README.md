@@ -49,9 +49,4 @@ In this example, dependencies are configured as local project references only fo
 
 #### Managing git for Multiple Repositories
 
-Newer versions of Visual Studio can now manage multiple repos at once, but as of VS 2022 the limit is 10 repos. The number of Gemstone libraries already exceeds this limit.
-
-For now, when developing from the [Gemstone.sln](https://github.com/gemstone/root-dev/blob/master/Gemstone.sln) in `root-dev`, it is recommended to use Visual Studio 2022 or better for code development and also run Visual Studio Code opened at root Gemstone source code to manage check-ins for multiple repos.
-
-##### For Older Versions of Visual Studio
-When developing using older versions of Visual Studio with the [Gemstone.sln](https://github.com/gemstone/root-dev/blob/master/Gemstone.sln) be mindful that only one GitHub repository can be active at once from within Visual Studio, because of this command line Git operations may be simpler. To check-in changes to a particular repo from within Visual Studio, click the :electric_plug: icon for "Manage Connections" on the "Team Explorer" window. When the "Manage Connections" panel is opened, navigate to the "Local Git Repositories" list visible at the bottom of the panel, then right-click on desired repo and select "Open". The selected repo will now be active &mdash; proceed as normal for GitHub operations on that project repository.
+Newer versions of Visual Studio can now manage multiple repos at once. When developing from the [Gemstone.sln](https://github.com/gemstone/root-dev/blob/master/Gemstone.sln) in `root-dev`, it is recommended to use Visual Studio 2022 (at least version 17.8) to manage check-ins for multiple repos.
