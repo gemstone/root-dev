@@ -35,7 +35,7 @@ Set-Variable sharedContentProj -Option Constant -Scope Script -Value "SharedCont
 Set-Variable templateRepo      -Option Constant -Scope Script -Value "gemtem"
 Set-Variable reposFile         -Option Constant -Scope Script -Value "repos.txt"
 Set-Variable libBuildFolder    -Option Constant -Scope Script -Value "build\$buildConfig"
-Set-Variable appBuildFolder    -Option Constant -Scope Script -Value "bin\$buildConfig\net6.0"
+Set-Variable appBuildFolder    -Option Constant -Scope Script -Value "bin\$buildConfig\net8.0"
 Set-Variable toolsFolder       -Option Constant -Scope Script -Value "$projectDir\$rootDevRepo\tools"
 
 # Script Functions
