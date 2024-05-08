@@ -6,9 +6,9 @@ shared-content/SharedContent
 pqdif/PQDIF
 common/Common
 gemtem/GemTem
+expressions/Expressions
 configuration/Configuration
 numeric/Numeric
-expressions/Expressions
 threading/Threading
 io/IO
 data/Data
