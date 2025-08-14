@@ -130,6 +130,8 @@ function Publish-Package($package) {
         # Push package to NuGet
         if ($env:GemstoneNuGetApiKey) {
             try {
+                Write-Host "Pushing package to NuGet..."
+
                 & dotnet nuget push $package -k $env:GemstoneNuGetApiKey --skip-duplicate -s "https://api.nuget.org/v3/index.json"
             }
             catch {
@@ -139,28 +141,36 @@ function Publish-Package($package) {
 
         # Push package to GitHub Packages
         if ($env:GHPackagesUser -ne $null -and $env:GHPackagesToken -ne $null) {
-            # This is a work around: https://github.com/NuGet/Home/issues/8580#issuecomment-555696372
-            $fileName = [IO.Path]::GetFileName($package)
-            $fileBytes = [IO.File]::ReadAllBytes($package)
-            $encodedData = [Text.Encoding]::GetEncoding("ISO-8859-1").GetString($fileBytes)
-            $boundary = [Guid]::NewGuid().ToString()
-            $lineFeed = "`r`n"
+            try {
+                Write-Host "Pushing package to GitHub Packages..."
 
-            $bodyLines = ( 
-                "--$boundary",
-                "Content-Disposition: form-data; name=`"package`"; filename=`"$fileName`"",
-                "Content-Type: application/octet-stream$lineFeed",
-                $encodedData,
-                "--$boundary--" 
-            ) -join $lineFeed
+                # This is a work around: https://github.com/NuGet/Home/issues/8580#issuecomment-555696372
+                $fileName = [IO.Path]::GetFileName($package)
+                $fileBytes = [IO.File]::ReadAllBytes($package)
+                $encodedData = [Text.Encoding]::GetEncoding("ISO-8859-1").GetString($fileBytes)
+                $boundary = [Guid]::NewGuid().ToString()
+                $lineFeed = "`r`n"
 
-            $credentials = "${env:GHPackagesUser}:${env:GHPackagesToken}"
-            $encodedCreds = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($credentials))
-            $headers = @{ Authorization = "Basic $encodedCreds" }
+                $bodyLines = ( 
+                    "--$boundary",
+                    "Content-Disposition: form-data; name=`"package`"; filename=`"$fileName`"",
+                    "Content-Type: application/octet-stream$lineFeed",
+                    $encodedData,
+                    "--$boundary--" 
+                ) -join $lineFeed
 
-            [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-            Invoke-WebRequest -Method PUT -ContentType "multipart/form-data; boundary=`"$boundary`"" -Body $bodyLines `
-                              -Uri "https://nuget.pkg.github.com/gemstone/" -Headers $headers -Verbose
+                $credentials = "${env:GHPackagesUser}:${env:GHPackagesToken}"
+                $encodedCreds = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($credentials))
+                $headers = @{ Authorization = "Basic $encodedCreds" }
+
+                [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+                Invoke-WebRequest -Method PUT -ContentType "multipart/form-data; boundary=`"$boundary`"" -Body $bodyLines `
+                                  -Uri "https://nuget.pkg.github.com/gemstone/" -Headers $headers -Verbose
+            }
+            catch {
+                Write-Warning "GitHub Packages push failed: $($_.Exception.Message)"
+                return
+            }
         }
 
         # Use this method when GitHub Packages for NuGet is fixed
