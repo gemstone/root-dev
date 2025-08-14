@@ -1,0 +1,202 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Development" />
+  </Configurations>
+  <Folder Name="/.root-dev/" />
+  <Folder Name="/.root-dev/build/" />
+  <Folder Name="/.root-dev/build/scripts/">
+    <File Path="build/scripts/build-gemstone.ps1" />
+  </Folder>
+  <Folder Name="/.root-dev/docs/">
+    <File Path="docs/AddLibrarySteps.md" />
+    <File Path="docs/README.md" />
+    <File Path="docs/SECURITY.md" />
+    <File Path="LICENSE" />
+  </Folder>
+  <Folder Name="/.root-dev/scripts/">
+    <File Path="clone-all.cmd" />
+    <File Path="clone-all.ps1" />
+    <File Path="clone-all.sh" />
+    <File Path="commit-all.cmd" />
+    <File Path="pull-all.cmd" />
+    <File Path="pull-all.sh" />
+    <File Path="push-all.cmd" />
+    <File Path="push-all.sh" />
+    <File Path="repos.txt" />
+    <File Path="status-all.cmd" />
+    <File Path="status-all.sh" />
+  </Folder>
+  <Folder Name="/.root-dev/tools/">
+    <Project Path="tools/ReadVersion/ReadVersion.csproj" />
+    <Project Path="tools/UpdateVersion/UpdateVersion.csproj" />
+    <Project Path="tools/VersionCommon/VersionCommon.shproj" />
+  </Folder>
+  <Folder Name="/Common/">
+    <File Path="../common/.github/workflows/codeql-analysis.yml" />
+    <File Path="../common/appveyor.yml" />
+    <File Path="../common/docs/README.md" />
+    <Project Path="../common/src/Gemstone.POSIX/Gemstone.POSIX.vcxproj">
+      <BuildType Project="Debug" />
+      <Platform Project="Win32" />
+      <Build Project="false" />
+    </Project>
+    <Project Path="../common/src/Gemstone/Gemstone.Common.csproj" />
+    <Project Path="../common/src/UnitTests/Gemstone.Common.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/Communication/">
+    <File Path="../communication/.github/workflows/codeql-analysis.yml" />
+    <File Path="../communication/appveyor.yml" />
+    <File Path="../communication/docs/README.md" />
+    <Project Path="../communication/src/Gemstone.Communication/Gemstone.Communication.csproj" />
+    <Project Path="../communication/src/UnitTests/Gemstone.Communication.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/COMTRADE/">
+    <File Path="../comtrade/.github/workflows/codeql-analysis.yml" />
+    <File Path="../comtrade/appveyor.yml" />
+    <File Path="../comtrade/docs/README.md" />
+    <Project Path="../comtrade/src/Gemstone.COMTRADE/Gemstone.COMTRADE.csproj" />
+    <Project Path="../comtrade/src/UnitTests/Gemstone.COMTRADE.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/Configuration/">
+    <File Path="../configuration/.github/workflows/codeql-analysis.yml" />
+    <File Path="../configuration/appveyor.yml" />
+    <File Path="../configuration/docs/README.md" />
+    <Project Path="../configuration/src/Gemstone.Configuration/Gemstone.Configuration.csproj" />
+    <Project Path="../configuration/src/UnitTests/Gemstone.Configuration.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/Data/">
+    <File Path="../data/.github/workflows/codeql-analysis.yml" />
+    <File Path="../data/appveyor.yml" />
+    <File Path="../data/docs/README.md" />
+    <Project Path="../data/src/Gemstone.Data/Gemstone.Data.csproj" />
+    <Project Path="../data/src/UnitTests/Gemstone.Data.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/Diagnostics/">
+    <File Path="../diagnostics/.github/workflows/codeql-analysis.yml" />
+    <File Path="../diagnostics/appveyor.yml" />
+    <File Path="../diagnostics/docs/README.md" />
+    <Project Path="../diagnostics/src/Gemstone.Diagnostics/Gemstone.Diagnostics.csproj" />
+    <Project Path="../diagnostics/src/UnitTests/Gemstone.Diagnostics.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/Expressions/">
+    <File Path="../expressions/.github/workflows/codeql-analysis.yml" />
+    <File Path="../expressions/appveyor.yml" />
+    <File Path="../expressions/docs/README.md" />
+    <Project Path="../expressions/src/Gemstone.Expressions/Gemstone.Expressions.csproj" />
+    <Project Path="../expressions/src/UnitTests/Gemstone.Expressions.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/IO/">
+    <File Path="../io/.github/workflows/codeql-analysis.yml" />
+    <File Path="../io/appveyor.yml" />
+    <File Path="../io/docs/README.md" />
+    <Project Path="../io/src/Gemstone.IO/Gemstone.IO.csproj" />
+    <Project Path="../io/src/UnitTests/Gemstone.IO.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/Logging/">
+    <File Path="../logging/.github/workflows/codeql-analysis.yml" />
+    <File Path="../logging/appveyor.yml" />
+    <File Path="../logging/docs/README.md" />
+    <Project Path="../logging/src/Gemstone.Logging/Gemstone.Logging.csproj" />
+    <Project Path="../logging/src/UnitTests/Gemstone.Logging.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/Numeric/">
+    <File Path="../numeric/.github/workflows/codeql-analysis.yml" />
+    <File Path="../numeric/appveyor.yml" />
+    <File Path="../numeric/docs/README.md" />
+    <Project Path="../numeric/src/Gemstone.Numeric/Gemstone.Numeric.csproj" />
+    <Project Path="../numeric/src/UnitTests/Gemstone.Numeric.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/PhasorProtocols/">
+    <File Path="../phasor-protocols/.github/workflows/codeql-analysis.yml" />
+    <File Path="../phasor-protocols/appveyor.yml" />
+    <File Path="../phasor-protocols/docs/README.md" />
+    <Project Path="../phasor-protocols/src/Gemstone.PhasorProtocols/Gemstone.PhasorProtocols.csproj" />
+    <Project Path="../phasor-protocols/src/UnitTests/Gemstone.PhasorProtocols.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/PQDIF/">
+    <File Path="../pqdif/.github/workflows/codeql-analysis.yml" />
+    <File Path="../pqdif/appveyor.yml" />
+    <File Path="../pqdif/docs/README.md" />
+    <Project Path="../pqdif/src/Gemstone.PQDIF/Gemstone.PQDIF.csproj" />
+    <Project Path="../pqdif/src/UnitTests/Gemstone.PQDIF.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/PQDS/">
+    <File Path="../pqds/.github/workflows/codeql-analysis.yml" />
+    <File Path="../pqds/appveyor.yml" />
+    <File Path="../pqds/docs/README.md" />
+    <Project Path="../pqds/src/Gemstone.PQDS/Gemstone.PQDS.csproj" />
+    <Project Path="../pqds/src/UnitTests/Gemstone.PQDS.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/Security/">
+    <File Path="../security/.github/workflows/codeql-analysis.yml" />
+    <File Path="../security/appveyor.yml" />
+    <File Path="../security/docs/README.md" />
+    <Project Path="../security/src/Gemstone.Security/Gemstone.Security.csproj" />
+    <Project Path="../security/src/UnitTests/Gemstone.Security.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/Threading/">
+    <File Path="../threading/.github/workflows/codeql-analysis.yml" />
+    <File Path="../threading/appveyor.yml" />
+    <File Path="../threading/docs/README.md" />
+    <Project Path="../threading/src/Gemstone.Threading/Gemstone.Threading.csproj" />
+    <Project Path="../threading/src/UnitTests/Gemstone.Threading.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/Timeseries/">
+    <File Path="../timeseries/.github/workflows/codeql-analysis.yml" />
+    <File Path="../timeseries/appveyor.yml" />
+    <File Path="../timeseries/docs/README.md" />
+    <Project Path="../timeseries/src/Gemstone.Timeseries/Gemstone.Timeseries.csproj" />
+    <Project Path="../timeseries/src/UnitTests/Gemstone.Timeseries.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/Web/">
+    <File Path="../web/.github/workflows/codeql-analysis.yml" />
+    <File Path="../web/appveyor.yml" />
+    <Project Path="../web/src/Gemstone.Web.Razor/Gemstone.Web.Razor.csproj" />
+    <Project Path="../web/src/Gemstone.Web/Gemstone.Web.csproj" />
+    <Project Path="../web/src/UnitTests/Gemstone.Web.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/Σ Project Template/">
+    <File Path="../gemtem/.github/workflows/codeql-analysis.yml" />
+    <File Path="../gemtem/appveyor.yml" />
+    <File Path="../gemtem/docs/README.md" />
+    <Project Path="../gemtem/src/Gemstone.GemTem/Gemstone.GemTem.csproj" />
+    <Project Path="../gemtem/src/UnitTests/Gemstone.GemTem.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/Σ Shared Content/">
+    <File Path="../shared-content/.editorconfig" />
+    <File Path="../shared-content/.gitignore" />
+    <File Path="../shared-content/LICENSE" />
+    <File Path="../shared-content/NOTICE.txt" />
+    <File Path="../shared-content/README.md" />
+  </Folder>
+  <Folder Name="/Σ Shared Content/docs/">
+    <File Path="../shared-content/docs/coding-style.md" />
+    <File Path="../shared-content/docs/SECURITY.md" />
+    <File Path="../shared-content/docs/_config.yml" />
+  </Folder>
+  <Folder Name="/Σ Shared Content/docs/img/">
+    <File Path="../shared-content/docs/img/favicon.ico" />
+    <File Path="../shared-content/docs/img/gemstone-social-preview.png" />
+    <File Path="../shared-content/docs/img/gemstone-square-1000.png" />
+    <File Path="../shared-content/docs/img/gemstone-square-128.png" />
+    <File Path="../shared-content/docs/img/gemstone-wide-600.png" />
+  </Folder>
+  <Folder Name="/Σ Shared Content/docs/_includes/">
+    <File Path="../shared-content/docs/_includes/anchor_headings.html" />
+  </Folder>
+  <Folder Name="/Σ Shared Content/docs/_layouts/">
+    <File Path="../shared-content/docs/_layouts/default.html" />
+  </Folder>
+  <Folder Name="/Σ Shared Content/src/" />
+  <Folder Name="/Σ Shared Content/src/DocGen/">
+    <File Path="../shared-content/src/DocGen/common.tokens" />
+  </Folder>
+  <Folder Name="/Σ Shared Content/src/DocGen/icons/">
+    <File Path="../shared-content/src/DocGen/icons/favicon.ico" />
+    <File Path="../shared-content/src/DocGen/icons/gemstone-square-48.png" />
+    <File Path="../shared-content/src/DocGen/icons/help.png" />
+  </Folder>
+  <Folder Name="/Σ Shared Content/src/DocGen/styles/">
+    <File Path="../shared-content/src/DocGen/styles/branding.css" />
+  </Folder>
+</Solution>
