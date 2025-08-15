@@ -146,8 +146,8 @@ function Publish-Package($package) {
             try {
                 Write-Host "Pushing package to GitHub Packages..."
 
-                # Use this method when GitHub Packages for NuGet is fixed
-                # & dotnet nuget push $package --skip-duplicate --source "github"
+                # Can try this method for GitHub Packages -- this should work as long as API key is set properly:
+                # & dotnet nuget push $package --skip-duplicate --source https://nuget.pkg.github.com/Gemstone/index.json --api-key ${env:GHPackagesToken}
 
                 # This is a work around: https://github.com/NuGet/Home/issues/8580#issuecomment-555696372
                 $fileName = [IO.Path]::GetFileName($package)
