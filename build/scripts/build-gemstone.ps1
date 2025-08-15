@@ -88,8 +88,9 @@ function Test-RepositoryChanged {
 }
 
 function Build-Code($target) {
-    & dotnet build -c $buildConfig "$target" | Write-Host
-    return $?
+    $cmd = "dotnet build -c $buildConfig `"$target`""
+    & cmd /c $cmd
+    return $LASTEXITCODE -eq 0
 }
 
 function Build-Documentation {
