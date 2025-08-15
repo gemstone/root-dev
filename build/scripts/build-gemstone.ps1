@@ -89,8 +89,8 @@ function Test-RepositoryChanged {
 
 function Build-Code($target) {
     $cmd = "dotnet build -c $buildConfig `"$target`""
-    & cmd /c $cmd
-    return $LASTEXITCODE -eq 0
+    cmd /d /c $cmd 2>&1 | Out-Host
+    return ($LASTEXITCODE -eq 0)
 }
 
 function Build-Documentation {
