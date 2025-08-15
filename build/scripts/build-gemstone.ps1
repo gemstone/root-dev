@@ -125,6 +125,8 @@ function Publish-Package($package) {
     Invoke-Command -ScriptBlock {
         # Sign NuGet package
         if ($env:NuGetCertFingerprint -ne $null) {
+            # Prime the certificate store to avoid issues with signing
+            certutil -scinfo | Out-Null     
             & dotnet nuget sign $package --certificate-fingerprint $env:NuGetCertFingerprint --timestamper http://timestamp.digicert.com
         }
 
@@ -132,7 +134,6 @@ function Publish-Package($package) {
         if ($env:GemstoneNuGetApiKey) {
             try {
                 Write-Host "Pushing package to NuGet..."
-
                 & dotnet nuget push $package -k $env:GemstoneNuGetApiKey --skip-duplicate -s "https://api.nuget.org/v3/index.json"
             }
             catch {
@@ -144,6 +145,9 @@ function Publish-Package($package) {
         if ($env:GHPackagesUser -ne $null -and $env:GHPackagesToken -ne $null) {
             try {
                 Write-Host "Pushing package to GitHub Packages..."
+
+                # Use this method when GitHub Packages for NuGet is fixed
+                # & dotnet nuget push $package --skip-duplicate --source "github"
 
                 # This is a work around: https://github.com/NuGet/Home/issues/8580#issuecomment-555696372
                 $fileName = [IO.Path]::GetFileName($package)
@@ -173,9 +177,6 @@ function Publish-Package($package) {
                 return
             }
         }
-
-        # Use this method when GitHub Packages for NuGet is fixed
-        # & dotnet nuget push $package --source "github"
     } | Write-Host
 }
 
