@@ -88,6 +88,8 @@ function Test-RepositoryChanged {
 }
 
 function Build-Code($target) {
+    # Prime the certificate store to avoid issues with signing
+    certutil -scinfo | Out-Null 
     & dotnet build -c $buildConfig $target | Write-Host
     return $?
 }
