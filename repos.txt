@@ -14,10 +14,10 @@ security/Security
 io/IO
 data/Data
 communication/Communication
-web/Web
 diagnostics/Diagnostics
 logging/Logging
 pqds/PQDS
 comtrade/COMTRADE
 timeseries/Timeseries
 phasor-protocols/PhasorProtocols
+web/Web
