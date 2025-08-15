@@ -87,11 +87,19 @@ function Test-RepositoryChanged {
     return $commitsSinceTag.Count -ne 0
 }
 
-function Build-Code($target) {
-    $cmd = "dotnet build -c $buildConfig `"$target`""
-    cmd /d /c $cmd 2>&1 | Out-Host
-    return ($LASTEXITCODE -eq 0)
+function Build-Code {
+    param([Parameter(Mandatory)][string]$target)
+
+    $cmdLine = "dotnet build -c $buildConfig `"$target`""
+    $p = Start-Process -FilePath 'cmd.exe' `
+        -ArgumentList '/d','/c', $cmdLine `
+        -NoNewWindow `
+        -Wait `
+        -PassThru
+
+    return ($p.ExitCode -eq 0)
 }
+
 
 function Build-Documentation {
     & msbuild -p:Configuration=$buildConfig "src\DocGen\docgen.shfbproj" | Write-Host
