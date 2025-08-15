@@ -35,7 +35,7 @@
     <File Path="../common/.github/workflows/codeql-analysis.yml" />
     <File Path="../common/appveyor.yml" />
     <File Path="../common/docs/README.md" />
-    <Project Path="../common/src/Gemstone.POSIX/Gemstone.POSIX.vcxproj">
+    <Project Path="../common/src/Gemstone.POSIX/Gemstone.POSIX.vcxproj" Id="63af9800-2cde-41f7-9706-76ef0ae181ce">
       <BuildType Project="Debug" />
       <Platform Project="Win32" />
       <Build Project="false" />
