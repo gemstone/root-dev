@@ -9,12 +9,12 @@ gemtem/GemTem
 threading/Threading
 expressions/Expressions
 configuration/Configuration
+diagnostics/Diagnostics
 numeric/Numeric
 security/Security
 io/IO
 data/Data
 communication/Communication
-diagnostics/Diagnostics
 logging/Logging
 pqds/PQDS
 comtrade/COMTRADE
